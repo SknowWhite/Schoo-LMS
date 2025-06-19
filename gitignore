@@ -1,0 +1,24 @@
+
+# Angular (aspnet-core)
+aspnet-core/node_modules/
+aspnet-core/dist/
+aspnet-core/.angular/
+aspnet-core/.env
+
+# .NET (API)
+API/bin/
+API/obj/
+API/*.user
+API/*.suo
+API/.vs/
+API/*.dbmdl
+API/.vscode/
+
+# Logs
+*.log
+
+# Common
+*.env
+*.DS_Store
+.vscode/
+Thumbs.db

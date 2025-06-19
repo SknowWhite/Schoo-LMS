@@ -1,0 +1,119 @@
+<!-- student-payment.component.html -->
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'education'" (click)="activeTab = 'education'">Educational Fees</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'bus'" (click)="activeTab = 'bus'">Bus Subscription</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <!-- Educational Fees Tab -->
+    <div *ngIf="activeTab === 'education'">
+      <div class="mb-4">
+        <h5>Student Info</h5>
+        <p><strong>Name:</strong> {{ PaymentDetails.student?.name }}</p>
+        <p><strong>Grade:</strong> {{ PaymentDetails.student?.grade }}</p>
+        <p><strong>Mobile Number:</strong> {{ PaymentDetails.student?.mobileNumber }}</p>
+        <p><strong>Previous Amount:</strong> {{ PaymentDetails.student?.previousAmount | currency }}</p>
+      </div>
+
+      <div class="mb-4">
+        <h5>Payment Option</h5>
+        <div *ngIf="isFulPaymentPaid">
+          <p>Full Payment is already {{PaymentDetails.PaymentStatus}}</p>
+        </div>
+        <div *ngIf="!isFulPaymentPaid">
+          <label *ngIf="!this.isInstallmentsPaid"
+            ><input type="radio" [disabled]="this.isInstallmentsPaid" [(ngModel)]="PaymentDetails.paymentMode" value="full" /> Full Payment</label
+          >
+          <label class="ml-3"
+            ><input type="radio" [checked]="this.isInstallmentsPaid" [(ngModel)]="PaymentDetails.paymentMode" value="installments" />
+            Installments</label
+          >
+        </div>
+      </div>
+
+      <div *ngIf="PaymentDetails.paymentMode === 'full' && !isFulPaymentPaid && !isInstallmentsPaid">
+        <p>Total Amount: {{ PaymentDetails.fullAmount | currency }}</p>
+        <p *ngIf="isEligibleForDiscount">
+          Discounted Amount (5%): {{ PaymentDetails.discountedAmount | currency }} (Due: {{ PaymentDetails.fullPaymentDueDate | date:'mediumDate' }})
+        </p>
+        <button [disabled]="!isInstallmentsPaid" class="btn btn-primary" (click)="payFull()">Pay Full</button>
+      </div>
+
+      <div *ngIf="PaymentDetails.paymentMode === 'installments' && !isFulPaymentPaid ">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Select</th>
+                <th>Due Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let installment of PaymentDetails.installments">
+                <td>
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="installment.selected"
+                    [disabled]="installment.status === 'Paid' ||installment.status === 'Pending'"
+                  />
+                </td>
+                <td>{{ installment.dueDate | date:'mediumDate' }}</td>
+                <td>{{ installment.amount | currency }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [ngClass]="{
+                    'badge-primary': installment.status === 'New',
+                    'badge-success': installment.status === 'Paid',
+                    'badge-warning': installment.status === 'Pending',
+                    'badge-danger': installment.status === 'Failed',
+                    'badge-dark': installment.status === 'Canceled' }"
+                  >
+                    {{ installment.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Total Selected:</strong> {{ totalSelectedAmount() | currency }}</p>
+        <button [disabled]="totalSelectedAmount() === 0" class="btn btn-success" (click)="payInstallments()">Pay Selected</button>
+      </div>
+    </div>
+
+    <!-- Bus Subscription Tab -->
+    <!-- student-payment.component.html (Bus Subscription Section) -->
+    <div *ngIf="activeTab === 'bus'">
+      <div class="form-group">
+        <label>Bus Line</label>
+        <select [disabled]="isBusSubscribed" class="form-control" [(ngModel)]="selectedBusLineId">
+          <option [ngValue]="null">-- Select Line --</option>
+          <option *ngFor="let line of PaymentDetails.busLines" [ngValue]="line.id">
+            {{ line.name }} - {{ line.expectedAmount | currency }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Home Address / Notes</label>
+        <textarea [disabled]="isBusSubscribed" class="form-control" rows="3" [(ngModel)]="subscriptionNote"></textarea>
+      </div>
+
+      <div *ngIf="isBusSubscribed">
+        <label>You have subscribed to bus to {{ subscribedBusName }} with status {{subscribedBusStatus}}</label>
+      </div>
+
+      <button class="btn btn-primary" [disabled]="!selectedBusLineId || isBusSubscribed" (click)="subscribeToBus()">
+        Request Bus Subscription
+      </button>
+    </div>
+  </div>
+</div>
