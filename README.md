@@ -1,9 +1,9 @@
 
-# School LNS Project
+# School LMS Project
 
 This repository contains a full-stack application built with:
-- **Angular** frontend located in the `aspnet-core/` folder.
-- **.NET API** backend located in the `API/` folder.
+- **Angular** frontend located in the `Portal/` folder.
+- **.NET API** backend located in the `WebAPI/` folder.
 - **SQL Script** for the database: `LMSDb.sql`.
 
 ---
@@ -11,11 +11,13 @@ This repository contains a full-stack application built with:
 ## 📁 Project Structure
 
 ```
-School LNS/
-├── API/                 # .NET backend
-├── aspnet-core/         # Angular frontend
-├── LMSDb.sql            # SQL Server DB script
+School LMS/
+├── WebAPI/               # .NET backend
+├── Portal/               # Angular frontend
+├── LMSDb.sql             # SQL Server DB script
 ├── UsersWithEnglishColumns.xlsx  # Excel reference
+├── README.md
+├── .gitignore
 ```
 
 ---
@@ -24,14 +26,14 @@ School LNS/
 
 ### 1. Backend (.NET API)
 
-1. Open the `API/` folder in Visual Studio.
+1. Open the `WebAPI/` folder in Visual Studio.
 2. Restore NuGet packages.
 3. Update `appsettings.json` with your DB connection string.
 4. Run the project (F5 or via `dotnet run`).
 
 ### 2. Frontend (Angular)
 
-1. Open terminal and go to the `aspnet-core/` folder.
+1. Open terminal and go to the `Portal/` folder.
 2. Install dependencies:
    ```bash
    npm install
