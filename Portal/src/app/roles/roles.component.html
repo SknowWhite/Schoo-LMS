@@ -5,14 +5,14 @@
         <div class="col-6">
           <h1>{{ "Roles" | localize }}</h1>
         </div>
-        <div class="col-6 text-right">
+        <!-- <div class="col-6 text-right">
           <a href="javascript:;"
             class="btn bg-blue"
             (click)="createRole()">
             <i class="fa fa-plus-square"></i>
             {{ "Create" | localize }}
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -49,7 +49,7 @@
                   <tr>
                     <th>{{ "RoleName" | localize }}</th>
                     <th>{{ "DisplayName" | localize }}</th>
-                    <th style="width: 200px;">{{ "Actions" | localize }}</th>
+                    <!-- <th style="width: 200px;">{{ "Actions" | localize }}</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@
                   <tr>
                     <td>{{ role.name }}</td>
                     <td>{{ role.displayName }}</td>
-                    <td>
+                    <!-- <td>
                       <button type="button"
                         class="btn btn-sm bg-secondary"
                         (click)="editRole(role)">
@@ -80,7 +80,7 @@
                         <i class="fas fa-trash"></i>
                         {{ "Delete" | localize }}
                       </button>
-                    </td>
+                    </td> -->
                   </tr>
                 }
               </tbody>

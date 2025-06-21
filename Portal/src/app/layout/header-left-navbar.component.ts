@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
+import { AppSessionService } from '@shared/session/app-session.service';
 
 @Component({
   selector: 'header-left-navbar',
@@ -9,7 +10,7 @@ import { LayoutStoreService } from '@shared/layout/layout-store.service';
 export class HeaderLeftNavbarComponent implements OnInit {
   sidebarExpanded: boolean;
 
-  constructor(private _layoutStore: LayoutStoreService) {}
+  constructor(private _layoutStore: LayoutStoreService,private appSession: AppSessionService) {}
 
   ngOnInit(): void {
     this._layoutStore.sidebarExpanded.subscribe((value) => {
@@ -20,4 +21,9 @@ export class HeaderLeftNavbarComponent implements OnInit {
   toggleSidebar(): void {
     this._layoutStore.setSidebarExpanded(!this.sidebarExpanded);
   }
+  
+  hasRole(role: string): boolean {
+    return this.appSession.userRoles?.includes(role);
+  }
+  
 }

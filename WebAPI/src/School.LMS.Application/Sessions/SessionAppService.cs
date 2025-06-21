@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Auditing;
 using School.LMS.Sessions.Dto;
+using School.LMS.Users.Dto;
 
 namespace School.LMS.Sessions
 {
@@ -27,7 +29,13 @@ namespace School.LMS.Sessions
 
             if (AbpSession.UserId.HasValue)
             {
-                output.User = ObjectMapper.Map<UserLoginInfoDto>(await GetCurrentUserAsync());
+                var currentUser = await GetCurrentUserAsync(); 
+
+                var roles = await UserManager.GetRolesAsync(currentUser); 
+
+                var userDto = ObjectMapper.Map<UserLoginInfoDto>(currentUser);
+                userDto.Roles = roles.ToList();
+                output.User = userDto;
             }
 
             return output;

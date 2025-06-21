@@ -176,6 +176,9 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
     }
 
     isMenuItemVisible(item: MenuItem): boolean {
+        if(item.label=="Multi Level Menu"){
+            item.permissionName="Multi Level Menu"
+        }
         if (!item.permissionName) {
             return true;
         }

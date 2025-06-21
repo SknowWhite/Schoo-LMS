@@ -50,6 +50,7 @@ import { StudentsPaymentDetailsComponent } from './students-payment-details/stud
             path: 'students',
             loadChildren: () => import('./students/students.module').then((m) => m.StudentsModule),
             canActivate: [AppRouteGuard],
+           
           },
           {
             path: 'studentPayment',
@@ -64,7 +65,7 @@ import { StudentsPaymentDetailsComponent } from './students-payment-details/stud
               path: 'AdminBusSubscription',
               component: AdminBusSubscriptionComponent,
               canActivate: [AppRouteGuard],
-              pathMatch: 'full',
+              pathMatch: 'full', 
           },
           {
               path: 'busFees',

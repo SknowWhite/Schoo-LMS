@@ -27,7 +27,9 @@ export class AppSessionService {
   get userId(): number {
     return this.user ? this.user.id : null;
   }
-
+get userRoles(): string[]{
+  return this._user.roles;
+}
   get tenant(): TenantLoginInfoDto {
     return this._tenant;
   }

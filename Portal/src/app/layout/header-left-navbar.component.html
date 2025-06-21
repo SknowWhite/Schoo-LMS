@@ -14,32 +14,36 @@
       {{ "About" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block">
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')"
+  >
     <a class="nav-link" [routerLink]="['students']">
       {{ "Students" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block">
-    <a class="nav-link" [routerLink]="['studentPayment']">
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Student')">
+    <a class="nav-link" [routerLink]="['studentPayment']" 
+    >
       {{ "studentPayment" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block">
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
     <a class="nav-link" [routerLink]="['importedStudents']">
       {{ "ImportedStudents" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block">
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
     <a class="nav-link" [routerLink]="['AdminBusSubscription']">
       {{ "AdminBusSubscription" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block">
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')"
+  >
     <a class="nav-link" [routerLink]="['busFees']">
       {{ "BusFees" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block">
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Student')"
+  >
     <a class="nav-link" [routerLink]="['studentspaymentdetails']">
       {{ "StudentPaymentDetails" | localize }}
     </a>

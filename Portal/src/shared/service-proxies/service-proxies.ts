@@ -3776,7 +3776,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
   surname: string | undefined;
   userName: string | undefined;
   emailAddress: string | undefined;
-
+  roles: string[] = [];
   constructor(data?: IUserLoginInfoDto) {
     if (data) {
       for (var property in data) {
@@ -3792,6 +3792,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
       this.surname = _data['surname'];
       this.userName = _data['userName'];
       this.emailAddress = _data['emailAddress'];
+      this.roles = _data['roles'] ?? [];
     }
   }
 
@@ -3809,6 +3810,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
     data['surname'] = this.surname;
     data['userName'] = this.userName;
     data['emailAddress'] = this.emailAddress;
+    data['roles'] = this.roles;
     return data;
   }
 
@@ -3826,6 +3828,7 @@ export interface IUserLoginInfoDto {
   surname: string | undefined;
   userName: string | undefined;
   emailAddress: string | undefined;
+  roles?: string[]|[];
 }
 
 export class ApiException extends Error {
