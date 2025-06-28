@@ -17,6 +17,12 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
+using School.LMS.StudentEducationalPayment;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using Hangfire;
+using Hangfire.Storage;
 
 namespace School.LMS.Web.Host.Startup
 {
@@ -47,6 +53,11 @@ namespace School.LMS.Web.Host.Startup
             AuthConfigurer.Configure(services, _appConfiguration);
 
             services.AddSignalR();
+            services.AddHangfire(config =>
+    config.UseSqlServerStorage(_appConfiguration.GetConnectionString("Default")));
+
+            services.AddHangfireServer();
+
 
             // Configure CORS for angular2 UI
             services.AddCors(
@@ -68,6 +79,22 @@ namespace School.LMS.Web.Host.Startup
 
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             ConfigureSwagger(services);
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", false);
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", false);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            services.AddTransient<FawryService>();
+
+            services.AddHttpClient("Fawry", client =>
+            {
+                client.BaseAddress = new Uri("https://atfawry.fawrystaging.com/");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            })
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            });
+
 
             // Configure Abp and Dependency Injection
             services.AddAbpWithoutCreatingServiceProvider<LMSWebHostModule>(
@@ -102,7 +129,18 @@ namespace School.LMS.Web.Host.Startup
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
             });
-
+            app.UseHangfireDashboard("/hangfire");
+            using (var connection = JobStorage.Current.GetConnection())
+            {
+                foreach (var recurringJob in connection.GetRecurringJobs())
+                {
+                    if (string.Compare(recurringJob.Id, "CheckInvoiceStatus", true) != 0)
+                    {
+                        RecurringJob.RemoveIfExists(recurringJob.Id);
+                    }
+                }
+            }
+        
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger(c => { c.RouteTemplate = "swagger/{documentName}/swagger.json"; });
 
@@ -115,6 +153,9 @@ namespace School.LMS.Web.Host.Startup
                     .GetManifestResourceStream("School.LMS.Web.Host.wwwroot.swagger.ui.index.html");
                 options.DisplayRequestDuration(); // Controls the display of the request duration (in milliseconds) for "Try it out" requests.
             }); // URL: /swagger
+
+            RecurringJob.AddOrUpdate<FawryInvoiceStatusChecker>("CheckInvoiceStatus", x => x.CheckPendingInvoicesAsync(), Cron.Hourly());//The same as @daily 
+
         }
 
         private void ConfigureSwagger(IServiceCollection services)

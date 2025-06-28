@@ -13,3 +13,13 @@ h5 {
 label.form-check-label {
   font-weight: 500;
 }
+.badge {
+  font-size: 0.85rem;
+  padding: 0.35em 0.6em;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 6px;
+}
+

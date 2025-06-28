@@ -5599,7 +5599,7 @@ export class StudentPaymentDetails {
   isFullPayment: boolean;
   amountPaid!: number;
   paymentDate!: Date;
-  selectedInstallmentIds?: number[];
+  selectedInstallmentIds?: number;
 }
 export class StudentSubscribtion {
   studentId: number;

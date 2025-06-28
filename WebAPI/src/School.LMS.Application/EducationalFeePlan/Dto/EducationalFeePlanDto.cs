@@ -13,6 +13,9 @@ namespace School.LMS.EducationalFeePlan.Dto
         public decimal ExpectedTotalAmount { get; set; }
         public decimal FullAmountWith5PercentDiscount { get; set; }
         public DateTime FullAmountDueDate { get; set; }
+        // in EducationalPaymentDto or equivalent
+        public string InvoiceNumber { get; set; }
+
 
         public List<EducationalInstallmentDto> Installments { get; set; }
     }
@@ -22,6 +25,9 @@ namespace School.LMS.EducationalFeePlan.Dto
         public int Order { get; set; } // 1-4
         public decimal Amount { get; set; }
         public DateTime DueDate { get; set; }
+        // in EducationalPaymentDto or equivalent
+        public string InvoiceNumber { get; set; }
+
     }
 
 }

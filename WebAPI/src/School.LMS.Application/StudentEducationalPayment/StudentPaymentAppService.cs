@@ -1,7 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
-using Abp.Timing;
 using Abp.UI;
+using Newtonsoft.Json;
 using School.LMS.BusFeePlan.Dto;
 using School.LMS.EducationalFeePlan.Dto;
 using School.LMS.Helpers;
@@ -11,7 +11,7 @@ using School.LMS.Students.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace School.LMS.StudentEducationalPayment
@@ -27,6 +27,7 @@ namespace School.LMS.StudentEducationalPayment
 
         private readonly IRepository<Models.EducationalFeePlan> _eduFeePlanRepo;
         private readonly IRepository<Models.BusFeePlan> _busFeePlanRepo;
+        private readonly FawryService _fawryService;
 
         public StudentPaymentAppService(
             IRepository<Models.StudentEducationalPayment> eduPaymentRepo,
@@ -36,7 +37,8 @@ namespace School.LMS.StudentEducationalPayment
             IRepository<Student> studentRepo,
             IRepository<Models.EducationalFeePlan> eduPlanRepo,
             IRepository<Models.BusFeePlan> busPlanRepo,
-            IRepository<BusInstallment> busInstallmentRepo)
+            IRepository<BusInstallment> busInstallmentRepo,
+            FawryService fawryService)
         {
             _eduPaymentRepo = eduPaymentRepo;
             _installmentRepo = installmentRepo;
@@ -46,23 +48,20 @@ namespace School.LMS.StudentEducationalPayment
             _busFeePlanRepo = busPlanRepo;
             _busInstallmentRepo = busInstallmentRepo;
             _busPaymentRepo = busPaymentRepo;
+            _fawryService = fawryService;
         }
 
         public async Task<StudentPaymentDetailsDto> GetStudentPaymentDetailsAsync(string studentId)
         {
-            // Get student data
-
             var student = _studentRepo.GetAll()
-                .Where(x => x.StudentId == studentId)
-                .FirstOrDefault();
+                .FirstOrDefault(x => x.StudentId == studentId);
 
             if (student == null)
                 throw new UserFriendlyException("Student not found");
 
             var studentDto = student.MapToStudentDto();
 
-            // Get educational fee plan based on grade
-            EducationalFeePlanDto studentEduFeePlan = _eduFeePlanRepo
+            var studentEduFeePlan = _eduFeePlanRepo
                 .GetAllIncluding(x => x.Installments)
                 .Where(x => x.Grade == student.Grade)
                 .Select(x => new EducationalFeePlanDto
@@ -85,7 +84,6 @@ namespace School.LMS.StudentEducationalPayment
             if (studentEduFeePlan == null)
                 throw new UserFriendlyException("No educational fee plan found for this grade");
 
-            // Generate default pending installment payments
             var eduPayments = studentEduFeePlan.Installments.Select(i => new EducationalPaymentDto
             {
                 Id = i.Id,
@@ -93,10 +91,10 @@ namespace School.LMS.StudentEducationalPayment
                 PaymentDate = i.DueDate,
                 AmountPaid = i.Amount,
                 PaymentStatus = PaymentStatus.New,
-                IsFullPayment = false
+                IsFullPayment = false,
+                InvoiceNumber = null
             }).ToList();
 
-            // Check for existing actual payments
             var actualPayments = _eduPaymentRepo
                 .GetAllIncluding(x => x.Installment)
                 .Where(x => x.StudentId == student.Id)
@@ -104,57 +102,57 @@ namespace School.LMS.StudentEducationalPayment
 
             if (actualPayments.Any())
             {
-                if (actualPayments.Any(x => x.IsFullPayment)) {
-                    eduPayments = new List<EducationalPaymentDto>();
-                    eduPayments.Add(new EducationalPaymentDto()
-                    {
-                        Id = actualPayments.First().Id,
-                        AmountPaid=actualPayments.First().AmountPaid,
-                        PaymentStatus = actualPayments.First().PaymentStatus,
-                        IsFullPayment = true,
-                        InstallmentName="Full Payment",
-                        PaymentDate=actualPayments.First().PaymentDate,
-                    });
+                if (actualPayments.Any(x => x.IsFullPayment))
+                {
+                    var fullPayment = actualPayments.First(x => x.IsFullPayment);
 
+                    eduPayments = new List<EducationalPaymentDto>
+            {
+                new EducationalPaymentDto
+                {
+                    Id = fullPayment.Id,
+                    AmountPaid = fullPayment.AmountPaid,
+                    PaymentStatus = fullPayment.PaymentStatus,
+                    IsFullPayment = true,
+                    InstallmentName = "Full Payment",
+                    PaymentDate = fullPayment.PaymentDate,
+                    InvoiceNumber =     $"https://atfawry.fawrystaging.com/invoice-ui/pay/{fullPayment.InvoiceNumber}"
+                }
+            };
                 }
                 else
                 {
                     foreach (var item in actualPayments)
                     {
-                        eduPayments.First(x => x.Id == item.EducationalInstallmentId).PaymentDate = item.PaymentDate;
-                        eduPayments.First(x => x.Id == item.EducationalInstallmentId).PaymentStatus = item.PaymentStatus;
-
+                        var target = eduPayments.FirstOrDefault(x => x.Id == item.EducationalInstallmentId);
+                        if (target != null)
+                        {
+                            target.PaymentDate = item.PaymentDate;
+                            target.PaymentStatus = item.PaymentStatus;
+                            target.InvoiceNumber = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{item.InvoiceNumber}";
+                        }
                     }
                 }
-                
-
-                
             }
             else
             {
-                // If no payments yet, assume full payment is available
                 eduPayments.Insert(0, new EducationalPaymentDto
                 {
                     InstallmentName = "Full Payment",
                     PaymentDate = studentEduFeePlan.FullAmountDueDate,
                     AmountPaid = studentEduFeePlan.FullAmountWith5PercentDiscount,
                     PaymentStatus = PaymentStatus.New,
-                    IsFullPayment = true
+                    IsFullPayment = true,
+                    InvoiceNumber = null
                 });
             }
 
-            // Get student's current bus subscriptions
             var studentBusSubscriptions = _busSubscriptionRepo.GetAll()
                 .Where(x => x.StudentId == student.Id)
                 .ToList();
 
-            // Get all bus lines and map to DTOs
-          
-
-            // Load all bus lines into memory
             var allBusLines = _busFeePlanRepo.GetAll().ToList();
 
-            // Project BusLineDto with subscription info
             var busLines = allBusLines.Select(line => new BusLineDto
             {
                 Id = line.Id,
@@ -165,7 +163,6 @@ namespace School.LMS.StudentEducationalPayment
                     .FirstOrDefault(s => s.BusFeePlanId == line.Id)?.Status.ToString() ?? "NotSubscribed"
             }).ToList();
 
-            // Final DTO
             return new StudentPaymentDetailsDto
             {
                 StudentInfo = studentDto,
@@ -173,6 +170,7 @@ namespace School.LMS.StudentEducationalPayment
                 BusLines = busLines
             };
         }
+
 
         public async Task<StudentPaymentBusDetailsDto> GetStudentPaymentBusDetailsAsync(string studentId)
         {
@@ -185,10 +183,10 @@ namespace School.LMS.StudentEducationalPayment
 
             var studentDto = student.MapToStudentDto();
 
-            StudentBusSubscription studentBusSubscription = _busSubscriptionRepo.GetAllIncluding(x => x.BusFeePlan).Where(x=>x.StudentId==studentDto.Id).FirstOrDefault();
+            StudentBusSubscription studentBusSubscription = _busSubscriptionRepo.GetAllIncluding(x => x.BusFeePlan).Where(x => x.StudentId == studentDto.Id).FirstOrDefault();
             BusFeePlanDto busPlanFees = _busFeePlanRepo.GetAllIncluding(x => x.Installments)
                 .Where(x => x.Id == studentBusSubscription.BusFeePlanId)
-                .Select(x=>new BusFeePlanDto()
+                .Select(x => new BusFeePlanDto()
                 {
                     Id = x.Id,
                     Line = x.Line,
@@ -280,11 +278,12 @@ namespace School.LMS.StudentEducationalPayment
             {
                 StudentInfo = studentDto,
                 BusPayments = busPayments,
-                BusSubscriptionDto = new BusSubscriptionDto() { 
-                    LineName= studentBusSubscription.BusFeePlan.Line,
-                    Notes= studentBusSubscription.Notes,
-                    Status= studentBusSubscription.Status,
-                    SubscriptionDate= studentBusSubscription.SubscriptionDate
+                BusSubscriptionDto = new BusSubscriptionDto()
+                {
+                    LineName = studentBusSubscription.BusFeePlan.Line,
+                    Notes = studentBusSubscription.Notes,
+                    Status = studentBusSubscription.Status,
+                    SubscriptionDate = studentBusSubscription.SubscriptionDate
                 }
             };
         }
@@ -300,14 +299,15 @@ namespace School.LMS.StudentEducationalPayment
             {
                 var payment = new Models.StudentBusPayment
                 {
-                    BusSubscriptionId= busSubscription.Id,
-                    BusSubscription= busSubscription,
+                    BusSubscriptionId = busSubscription.Id,
+                    BusSubscription = busSubscription,
                     IsFullPayment = true,
                     AmountPaid = input.AmountPaid,
                     PaymentDate = input.PaymentDate,
                     Status = PaymentStatus.Pending
                 };
                 await _busPaymentRepo.InsertAsync(payment);
+
             }
             else if (input.SelectedInstallmentIds?.Any() == true)
             {
@@ -317,9 +317,9 @@ namespace School.LMS.StudentEducationalPayment
 
                     var payment = new StudentBusPayment
                     {
-                        BusSubscriptionId= busSubscription.Id,
-                        BusSubscription= busSubscription,
-                        BusInstallmentId= installment.Id,
+                        BusSubscriptionId = busSubscription.Id,
+                        BusSubscription = busSubscription,
+                        BusInstallmentId = installment.Id,
                         IsFullPayment = false,
                         AmountPaid = installment.Amount,
                         PaymentDate = input.PaymentDate,
@@ -330,11 +330,14 @@ namespace School.LMS.StudentEducationalPayment
                 }
             }
         }
-        public async Task SubmitEducationalPaymentAsync(StudentEducationalPaymentInputDto input)
+        public async Task<string> SubmitEducationalPaymentAsync(StudentEducationalPaymentInputDto input)
         {
             var student = _studentRepo.GetAll()
-             .Where(x => x.StudentId == input.StudentId.ToString())
-             .FirstOrDefault();
+                .FirstOrDefault(x => x.StudentId == input.StudentId.ToString());
+
+            if (student == null)
+                throw new UserFriendlyException("Student not found");
+
             if (input.IsFullPayment)
             {
                 var payment = new Models.StudentEducationalPayment
@@ -345,27 +348,61 @@ namespace School.LMS.StudentEducationalPayment
                     PaymentDate = input.PaymentDate,
                     PaymentStatus = PaymentStatus.Pending
                 };
+
+                var invoiceData = await _fawryService.CreatePaymentLinkAsync(
+                    student.Name,
+                    student.StudentId,
+                    student.MobileNumber,
+                    Convert.ToDouble(payment.AmountPaid),
+                    "Full amount Educational Fees"
+                );
+
+                if (string.IsNullOrEmpty(invoiceData.invoiceNumber))
+                    throw new UserFriendlyException("Failed to create payment link");
+
+                payment.InvoiceNumber = invoiceData.invoiceNumber;
+                payment.TransactionId = invoiceData.businessReference;
+
                 await _eduPaymentRepo.InsertAsync(payment);
+                string paymentLink = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{payment.InvoiceNumber}";
+                return paymentLink;
             }
-            else if (input.SelectedInstallmentIds?.Any() == true)
+
+            if (input.SelectedInstallmentIds.HasValue)
             {
-                foreach (var installmentId in input.SelectedInstallmentIds)
+                var installment = await _installmentRepo.GetAsync(input.SelectedInstallmentIds.Value);
+
+                var payment = new Models.StudentEducationalPayment
                 {
-                    var installment = await _installmentRepo.GetAsync(installmentId);
+                    StudentId = student.Id,
+                    EducationalInstallmentId = installment.Id,
+                    IsFullPayment = false,
+                    AmountPaid = installment.Amount,
+                    PaymentDate = input.PaymentDate,
+                    PaymentStatus = PaymentStatus.Pending
+                };
 
-                    var payment = new Models.StudentEducationalPayment
-                    {
-                        StudentId = student.Id,
-                        EducationalInstallmentId = installment.Id,
-                        IsFullPayment = false,
-                        AmountPaid = installment.Amount,
-                        PaymentDate = input.PaymentDate,
-                        PaymentStatus = PaymentStatus.Pending
-                    };
+                var invoiceData = await _fawryService.CreatePaymentLinkAsync(
+                    student.Name,
+                    student.StudentId,
+                    student.MobileNumber,
+                    Convert.ToDouble(payment.AmountPaid),
+                    $"Educational Installment #{installment.Order}"
+                );
 
-                    await _eduPaymentRepo.InsertAsync(payment);
-                }
+                if (string.IsNullOrEmpty(invoiceData.invoiceNumber))
+                    throw new UserFriendlyException("Failed to create payment link");
+
+                payment.InvoiceNumber = invoiceData.invoiceNumber;
+                payment.TransactionId = invoiceData.businessReference;
+
+                await _eduPaymentRepo.InsertAsync(payment);
+                string paymentLink = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{payment.InvoiceNumber}";
+
+                return paymentLink;
             }
+
+            throw new UserFriendlyException("Please select a valid installment.");
         }
 
         public async Task SubscribeToBusAsync(BusSubscriptionRequestDto input)
@@ -392,7 +429,71 @@ namespace School.LMS.StudentEducationalPayment
              .FirstOrDefault();
             return student.MapToStudentDto();
         }
-      
+        public async Task<string> CreateFawryPaymentLinkAsync(string studentId, double amount, string description)
+        {
+            var student = _studentRepo.GetAll()
+                .Where(x => x.StudentId == studentId)
+                .FirstOrDefault();
+
+            if (student == null)
+                throw new UserFriendlyException("Student not found");
+
+            using (var client = new HttpClient())
+            {
+                // Step 1: Login to Fawry to get token
+                var loginPayload = new
+                {
+                    userIdentifier = "I.accounting@nozhaschools.com",
+                    password = "P#ssw0rd"
+                };
+
+                var loginContent = new StringContent(JsonConvert.SerializeObject(loginPayload), System.Text.Encoding.UTF8, "application/json");
+                var loginResponse = await client.PostAsync("https://atfawry.fawrystaging.com/user-api/auth/login", loginContent);
+                var loginResponseContent = await loginResponse.Content.ReadAsStringAsync();
+                dynamic loginResult = JsonConvert.DeserializeObject(loginResponseContent);
+                string token = loginResult?.token;
+
+                if (string.IsNullOrEmpty(token))
+                    throw new Exception("Failed to retrieve token from Fawry");
+
+                // Step 2: Create payment link
+                var requestUrl = "https://atfawry.fawrystaging.com/invoice-api/invoices/payment-link";
+                DateTime currentDate = DateTime.UtcNow;
+                string currentDateString = currentDate.ToString("yyyy-MM-dd");
+                var payload = new
+                {
+                    sendingDate = currentDateString,
+                    expiryDate = currentDate.AddDays(7).ToString("yyyy-MM-dd"),
+                    note = description,
+                    releaseDate = currentDateString,
+                    alertMerchantUponExpiry = false,
+                    customer = new
+                    {
+                        name = student.Name,
+                        email = student.StudentId,
+                        mobile = student.MobileNumber
+                    },
+                    amount = amount,
+                    preferredPaymentMethod = "PayAtFawry",
+                    communicationLang = "en-gb",
+                    businessReference = currentDateString + "-" + student.StudentId,
+
+                };
+
+                var jsonPayload = JsonConvert.SerializeObject(payload);
+                var httpContent = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+                var response = await client.PostAsync(requestUrl, httpContent);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                dynamic result = JsonConvert.DeserializeObject(responseContent);
+                return result?.paymentLink ?? "No payment link returned";
+            }
+        }
+
+
     }
 
 }

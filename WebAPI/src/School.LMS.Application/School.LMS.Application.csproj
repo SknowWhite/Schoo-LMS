@@ -12,6 +12,10 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.8.20" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.8.20" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\School.LMS.Core\School.LMS.Core.csproj" />
   </ItemGroup>
 </Project>

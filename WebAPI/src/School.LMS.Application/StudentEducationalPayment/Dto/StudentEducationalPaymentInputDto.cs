@@ -15,7 +15,7 @@ namespace School.LMS.StudentEducationalPayment.Dto
         public bool IsFullPayment { get; set; }
         public decimal AmountPaid { get; set; }
         public DateTime PaymentDate { get; set; }
-        public List<int>? SelectedInstallmentIds { get; set; }
+        public int? SelectedInstallmentIds { get; set; }
     }
 
     public class StudentBusPaymentInputDto : EntityDto
@@ -55,6 +55,7 @@ namespace School.LMS.StudentEducationalPayment.Dto
         public decimal AmountPaid { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
         public bool IsFullPayment { get; set; }
+        public string? InvoiceNumber { get; set; }
     }
 
     public class BusPaymentDto : EntityDto
