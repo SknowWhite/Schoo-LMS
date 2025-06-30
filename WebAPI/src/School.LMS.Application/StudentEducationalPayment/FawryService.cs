@@ -68,8 +68,8 @@ namespace School.LMS.StudentEducationalPayment
                         mobile = mobile             // local format
                     },
                     amount = amount,
-                    sendingDate = "2025-06-25",
-                    expiryDate = "2025-06-29T13:19:17.000Z",
+                    sendingDate = "2025-06-29",
+                    expiryDate = "2026-06-29T13:19:17.000Z",
                     releaseDate = "2025-06-25T13:16:50.668Z",
                     businessReference = businessReference,
                     note =description,
