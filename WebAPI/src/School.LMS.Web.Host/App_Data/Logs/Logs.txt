@@ -21678,3 +21678,330 @@ INNER JOIN (
     WHERE (@__ef_filter__p_2 = CAST(1 AS bit) OR [a0].[IsDeleted] = CAST(0 AS bit)) AND (@__ef_filter__p_0 = CAST(1 AS bit) OR [a0].[TenantId] = @__ef_filter__CurrentTenantId_1)
 ) AS [t] ON [a].[RoleId] = [t].[Id]
 WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [a].[TenantId] = @__ef_filter__CurrentTenantId_1) AND [a].[UserId] = @__user_Id_0
+INFO  2025-07-02 16:26:11,529 [86   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (17ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:26:13,733 [86   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (7,202ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter__p_1='?' (DbType = Boolean), @__ef_filter__CurrentTenantId_2='?' (DbType = Int32), @__user_Id_0='?' (DbType = Int64)], CommandType='Text', CommandTimeout='30']
+SELECT [t0].[Name]
+FROM [AbpUserOrganizationUnits] AS [a]
+INNER JOIN (
+    SELECT [a0].[OrganizationUnitId], [a0].[RoleId]
+    FROM [AbpOrganizationUnitRoles] AS [a0]
+    WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [a0].[IsDeleted] = CAST(0 AS bit)) AND (@__ef_filter__p_1 = CAST(1 AS bit) OR [a0].[TenantId] = @__ef_filter__CurrentTenantId_2)
+) AS [t] ON [a].[OrganizationUnitId] = [t].[OrganizationUnitId]
+INNER JOIN (
+    SELECT [a1].[Id], [a1].[Name]
+    FROM [AbpRoles] AS [a1]
+    WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [a1].[IsDeleted] = CAST(0 AS bit)) AND (@__ef_filter__p_1 = CAST(1 AS bit) OR [a1].[TenantId] = @__ef_filter__CurrentTenantId_2)
+) AS [t0] ON [t].[RoleId] = [t0].[Id]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [a].[IsDeleted] = CAST(0 AS bit)) AND (@__ef_filter__p_1 = CAST(1 AS bit) OR [a].[TenantId] = @__ef_filter__CurrentTenantId_2) AND [a].[UserId] = @__user_Id_0
+INFO  2025-07-02 16:26:13,737 [86   ] c.Infrastructure.ControllerActionInvoker - Executed action method School.LMS.Sessions.SessionAppService.GetCurrentLoginInformations (School.LMS.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 12186.2092ms.
+INFO  2025-07-02 16:26:13,741 [86   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2025-07-02 16:26:13,744 [86   ] c.Infrastructure.ControllerActionInvoker - Executed action School.LMS.Sessions.SessionAppService.GetCurrentLoginInformations (School.LMS.Application) in 12211.1069ms
+INFO  2025-07-02 16:26:13,747 [86   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'School.LMS.Sessions.SessionAppService.GetCurrentLoginInformations (School.LMS.Application)'
+INFO  2025-07-02 16:26:13,750 [86   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/api/services/app/Session/GetCurrentLoginInformations - 200 - application/json;+charset=utf-8 12230.7431ms
+INFO  2025-07-02 16:26:13,870 [86   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 OPTIONS https://localhost:44311/api/services/app/AdminBusSubscription/GetBusFeePlans?Keyword=&SkipCount=0&MaxResultCount=1000 - - -
+INFO  2025-07-02 16:26:13,873 [80   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 OPTIONS https://localhost:44311/api/services/app/AdminBusSubscription/GetList?Keyword=&SkipCount=0&MaxResultCount=1000 - - -
+INFO  2025-07-02 16:26:13,876 [86   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2025-07-02 16:26:13,879 [80   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2025-07-02 16:26:13,883 [86   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 OPTIONS https://localhost:44311/api/services/app/AdminBusSubscription/GetBusFeePlans?Keyword=&SkipCount=0&MaxResultCount=1000 - 204 - - 12.3229ms
+INFO  2025-07-02 16:26:13,886 [80   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 OPTIONS https://localhost:44311/api/services/app/AdminBusSubscription/GetList?Keyword=&SkipCount=0&MaxResultCount=1000 - 204 - - 13.3250ms
+INFO  2025-07-02 16:26:13,889 [83   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/api/services/app/AdminBusSubscription/GetBusFeePlans?Keyword=&SkipCount=0&MaxResultCount=1000 - - -
+INFO  2025-07-02 16:26:13,892 [86   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/api/services/app/AdminBusSubscription/GetList?Keyword=&SkipCount=0&MaxResultCount=1000 - - -
+INFO  2025-07-02 16:26:13,895 [83   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2025-07-02 16:26:13,898 [86   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2025-07-02 16:26:13,901 [83   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetBusFeePlansAsync (School.LMS.Application)'
+INFO  2025-07-02 16:26:13,904 [86   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetListAsync (School.LMS.Application)'
+INFO  2025-07-02 16:26:13,907 [90   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 OPTIONS https://localhost:44311/signalr/negotiate?enc_auth_token=wNYmO41%2F48SHNstaLVXxHCCre29BZQl1NhC6NM3R3rzpXtPQxVzH6jEzA%2FQhXFN5tu6Fk7pO53uppm1mVXMZgxbyRVz26dnepi%2FFyB6axBY%2B6gq1GL%2BuRQgoiFUCjRN2p8w6LevViwKlHyWZZJZO1DGVSjAi1m2U%2Bog9pkHw9%2FRkp3UZ8A1gKoReYXpvXHc0KFXzGY3aUxaXUOjpNPSTn4LyfFvWqGRq42yefBXGrkBTbBN3h9UXPP%2B25Rfae1rBCQrd8mQ0G3JHpGlVZBMKMD5RSIjWMCe3sPKe05J4ZS4J04kFI7IwvG1YujIyWBTn2mpzsQnQS6Ra1%2BnJNCceCjn20hOr24hTyw2b14yETbSNqqkk42JOjzRuEqkw4LpT8q5UWtqxRIzr%2F4CIBrJNCfYA76UUozRiMA8HGSXwhWoeynUhbhs3KOshiLE1Pf%2F8uJSG4FLbCOET4JS%2B5gWgmzpgm%2FTx5%2F85g3UyzVj6ax8QphUUillW%2FdEwV58D9%2BsgRIH%2BmgUzn3XRqvfvoS9h1188jsH4lLBDN05G9M0F%2B6n%2ByAcC01uV3mpyFtHRCKxqS5WRswkkxj4CFNqHDILIEU03m%2FFq2vGanJiUvfbmodfR%2Fivze0fQgXedLGnKJrhSsYunTFd17QVA%2BHppFe84sdYT%2FZvJVE0j1HCkjO0V4Kkj7mZOA1AOLRsOjn33e1gf6BY1qd4F9kHUxM7t%2BHV0MCV%2BDQm5SaKfGBvh80WdP2DFR90l0amOUHYRmWLN%2FlSwOA39kKOOm35EGpx9XUa2I28mLOy0wOxdVSo60rygtCe91ssaeQsGiw0ZqjjP7FdA%2Bn%2BhPKXh%2FwJ3BQHwn4tqQt3DvZumZOZvl%2FY3F%2BCRh0yrro%2BLWPYn9YpibQzW%2BFj%2FWYkj6cfknbLgSLoURLqPjVcndFfa%2FiZ90DaCQOE6dCpyZbgVMYFXxRbVdCcQ6rrhWwnLMW3iuTWDsT8Z00kglcwsrdolpv%2FW1EjmHtMt35vLgKBDOtIrcpwQcQLLr9Jmd3pFXUYUiMr77gtG61E%2F68rz6jq0nDx3a3LMsWBlnZPdqa2mwtLWLJKxA0R9PWgAMahkVIkQgUydr%2FTSMUzGZdcKfX7as5mBoZvqYmAAbkClvcXpEpmorks9thkqGKVY&negotiateVersion=1 - - -
+INFO  2025-07-02 16:26:13,910 [83   ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetBusFeePlans", controller = "AdminBusSubscription"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[School.LMS.BusFeePlan.Dto.BusFeePlanDto]] GetBusFeePlansAsync() on controller School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService (School.LMS.Application).
+INFO  2025-07-02 16:26:13,913 [90   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2025-07-02 16:26:13,926 [86   ] c.Infrastructure.ControllerActionInvoker - Route matched with {area = "app", action = "GetList", controller = "AdminBusSubscription"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[School.LMS.BusSubscriptionManagement.Dto.AdminStudentBusSubscriptionDto]] GetListAsync() on controller School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService (School.LMS.Application).
+INFO  2025-07-02 16:26:13,938 [83   ] c.Infrastructure.ControllerActionInvoker - Executing action method School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetBusFeePlansAsync (School.LMS.Application) - Validation state: Valid
+INFO  2025-07-02 16:26:13,941 [88   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 POST https://localhost:44311/signalr/negotiate?enc_auth_token=wNYmO41%2F48SHNstaLVXxHCCre29BZQl1NhC6NM3R3rzpXtPQxVzH6jEzA%2FQhXFN5tu6Fk7pO53uppm1mVXMZgxbyRVz26dnepi%2FFyB6axBY%2B6gq1GL%2BuRQgoiFUCjRN2p8w6LevViwKlHyWZZJZO1DGVSjAi1m2U%2Bog9pkHw9%2FRkp3UZ8A1gKoReYXpvXHc0KFXzGY3aUxaXUOjpNPSTn4LyfFvWqGRq42yefBXGrkBTbBN3h9UXPP%2B25Rfae1rBCQrd8mQ0G3JHpGlVZBMKMD5RSIjWMCe3sPKe05J4ZS4J04kFI7IwvG1YujIyWBTn2mpzsQnQS6Ra1%2BnJNCceCjn20hOr24hTyw2b14yETbSNqqkk42JOjzRuEqkw4LpT8q5UWtqxRIzr%2F4CIBrJNCfYA76UUozRiMA8HGSXwhWoeynUhbhs3KOshiLE1Pf%2F8uJSG4FLbCOET4JS%2B5gWgmzpgm%2FTx5%2F85g3UyzVj6ax8QphUUillW%2FdEwV58D9%2BsgRIH%2BmgUzn3XRqvfvoS9h1188jsH4lLBDN05G9M0F%2B6n%2ByAcC01uV3mpyFtHRCKxqS5WRswkkxj4CFNqHDILIEU03m%2FFq2vGanJiUvfbmodfR%2Fivze0fQgXedLGnKJrhSsYunTFd17QVA%2BHppFe84sdYT%2FZvJVE0j1HCkjO0V4Kkj7mZOA1AOLRsOjn33e1gf6BY1qd4F9kHUxM7t%2BHV0MCV%2BDQm5SaKfGBvh80WdP2DFR90l0amOUHYRmWLN%2FlSwOA39kKOOm35EGpx9XUa2I28mLOy0wOxdVSo60rygtCe91ssaeQsGiw0ZqjjP7FdA%2Bn%2BhPKXh%2FwJ3BQHwn4tqQt3DvZumZOZvl%2FY3F%2BCRh0yrro%2BLWPYn9YpibQzW%2BFj%2FWYkj6cfknbLgSLoURLqPjVcndFfa%2FiZ90DaCQOE6dCpyZbgVMYFXxRbVdCcQ6rrhWwnLMW3iuTWDsT8Z00kglcwsrdolpv%2FW1EjmHtMt35vLgKBDOtIrcpwQcQLLr9Jmd3pFXUYUiMr77gtG61E%2F68rz6jq0nDx3a3LMsWBlnZPdqa2mwtLWLJKxA0R9PWgAMahkVIkQgUydr%2FTSMUzGZdcKfX7as5mBoZvqYmAAbkClvcXpEpmorks9thkqGKVY&negotiateVersion=1 - - 0
+INFO  2025-07-02 16:26:13,943 [86   ] c.Infrastructure.ControllerActionInvoker - Executing action method School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetListAsync (School.LMS.Application) - Validation state: Valid
+INFO  2025-07-02 16:26:13,946 [88   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2025-07-02 16:26:13,949 [90   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 OPTIONS https://localhost:44311/signalr/negotiate?enc_auth_token=wNYmO41%2F48SHNstaLVXxHCCre29BZQl1NhC6NM3R3rzpXtPQxVzH6jEzA%2FQhXFN5tu6Fk7pO53uppm1mVXMZgxbyRVz26dnepi%2FFyB6axBY%2B6gq1GL%2BuRQgoiFUCjRN2p8w6LevViwKlHyWZZJZO1DGVSjAi1m2U%2Bog9pkHw9%2FRkp3UZ8A1gKoReYXpvXHc0KFXzGY3aUxaXUOjpNPSTn4LyfFvWqGRq42yefBXGrkBTbBN3h9UXPP%2B25Rfae1rBCQrd8mQ0G3JHpGlVZBMKMD5RSIjWMCe3sPKe05J4ZS4J04kFI7IwvG1YujIyWBTn2mpzsQnQS6Ra1%2BnJNCceCjn20hOr24hTyw2b14yETbSNqqkk42JOjzRuEqkw4LpT8q5UWtqxRIzr%2F4CIBrJNCfYA76UUozRiMA8HGSXwhWoeynUhbhs3KOshiLE1Pf%2F8uJSG4FLbCOET4JS%2B5gWgmzpgm%2FTx5%2F85g3UyzVj6ax8QphUUillW%2FdEwV58D9%2BsgRIH%2BmgUzn3XRqvfvoS9h1188jsH4lLBDN05G9M0F%2B6n%2ByAcC01uV3mpyFtHRCKxqS5WRswkkxj4CFNqHDILIEU03m%2FFq2vGanJiUvfbmodfR%2Fivze0fQgXedLGnKJrhSsYunTFd17QVA%2BHppFe84sdYT%2FZvJVE0j1HCkjO0V4Kkj7mZOA1AOLRsOjn33e1gf6BY1qd4F9kHUxM7t%2BHV0MCV%2BDQm5SaKfGBvh80WdP2DFR90l0amOUHYRmWLN%2FlSwOA39kKOOm35EGpx9XUa2I28mLOy0wOxdVSo60rygtCe91ssaeQsGiw0ZqjjP7FdA%2Bn%2BhPKXh%2FwJ3BQHwn4tqQt3DvZumZOZvl%2FY3F%2BCRh0yrro%2BLWPYn9YpibQzW%2BFj%2FWYkj6cfknbLgSLoURLqPjVcndFfa%2FiZ90DaCQOE6dCpyZbgVMYFXxRbVdCcQ6rrhWwnLMW3iuTWDsT8Z00kglcwsrdolpv%2FW1EjmHtMt35vLgKBDOtIrcpwQcQLLr9Jmd3pFXUYUiMr77gtG61E%2F68rz6jq0nDx3a3LMsWBlnZPdqa2mwtLWLJKxA0R9PWgAMahkVIkQgUydr%2FTSMUzGZdcKfX7as5mBoZvqYmAAbkClvcXpEpmorks9thkqGKVY&negotiateVersion=1 - 204 - - 17.3081ms
+INFO  2025-07-02 16:26:13,952 [88   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr/negotiate'
+INFO  2025-07-02 16:26:13,955 [88   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint '/signalr/negotiate'
+INFO  2025-07-02 16:26:13,959 [88   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 POST https://localhost:44311/signalr/negotiate?enc_auth_token=wNYmO41%2F48SHNstaLVXxHCCre29BZQl1NhC6NM3R3rzpXtPQxVzH6jEzA%2FQhXFN5tu6Fk7pO53uppm1mVXMZgxbyRVz26dnepi%2FFyB6axBY%2B6gq1GL%2BuRQgoiFUCjRN2p8w6LevViwKlHyWZZJZO1DGVSjAi1m2U%2Bog9pkHw9%2FRkp3UZ8A1gKoReYXpvXHc0KFXzGY3aUxaXUOjpNPSTn4LyfFvWqGRq42yefBXGrkBTbBN3h9UXPP%2B25Rfae1rBCQrd8mQ0G3JHpGlVZBMKMD5RSIjWMCe3sPKe05J4ZS4J04kFI7IwvG1YujIyWBTn2mpzsQnQS6Ra1%2BnJNCceCjn20hOr24hTyw2b14yETbSNqqkk42JOjzRuEqkw4LpT8q5UWtqxRIzr%2F4CIBrJNCfYA76UUozRiMA8HGSXwhWoeynUhbhs3KOshiLE1Pf%2F8uJSG4FLbCOET4JS%2B5gWgmzpgm%2FTx5%2F85g3UyzVj6ax8QphUUillW%2FdEwV58D9%2BsgRIH%2BmgUzn3XRqvfvoS9h1188jsH4lLBDN05G9M0F%2B6n%2ByAcC01uV3mpyFtHRCKxqS5WRswkkxj4CFNqHDILIEU03m%2FFq2vGanJiUvfbmodfR%2Fivze0fQgXedLGnKJrhSsYunTFd17QVA%2BHppFe84sdYT%2FZvJVE0j1HCkjO0V4Kkj7mZOA1AOLRsOjn33e1gf6BY1qd4F9kHUxM7t%2BHV0MCV%2BDQm5SaKfGBvh80WdP2DFR90l0amOUHYRmWLN%2FlSwOA39kKOOm35EGpx9XUa2I28mLOy0wOxdVSo60rygtCe91ssaeQsGiw0ZqjjP7FdA%2Bn%2BhPKXh%2FwJ3BQHwn4tqQt3DvZumZOZvl%2FY3F%2BCRh0yrro%2BLWPYn9YpibQzW%2BFj%2FWYkj6cfknbLgSLoURLqPjVcndFfa%2FiZ90DaCQOE6dCpyZbgVMYFXxRbVdCcQ6rrhWwnLMW3iuTWDsT8Z00kglcwsrdolpv%2FW1EjmHtMt35vLgKBDOtIrcpwQcQLLr9Jmd3pFXUYUiMr77gtG61E%2F68rz6jq0nDx3a3LMsWBlnZPdqa2mwtLWLJKxA0R9PWgAMahkVIkQgUydr%2FTSMUzGZdcKfX7as5mBoZvqYmAAbkClvcXpEpmorks9thkqGKVY&negotiateVersion=1 - 200 316 application/json 30.5124ms
+INFO  2025-07-02 16:26:13,967 [88   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET https://localhost:44311/signalr?enc_auth_token=wNYmO41%2F48SHNstaLVXxHCCre29BZQl1NhC6NM3R3rzpXtPQxVzH6jEzA%2FQhXFN5tu6Fk7pO53uppm1mVXMZgxbyRVz26dnepi%2FFyB6axBY%2B6gq1GL%2BuRQgoiFUCjRN2p8w6LevViwKlHyWZZJZO1DGVSjAi1m2U%2Bog9pkHw9%2FRkp3UZ8A1gKoReYXpvXHc0KFXzGY3aUxaXUOjpNPSTn4LyfFvWqGRq42yefBXGrkBTbBN3h9UXPP%2B25Rfae1rBCQrd8mQ0G3JHpGlVZBMKMD5RSIjWMCe3sPKe05J4ZS4J04kFI7IwvG1YujIyWBTn2mpzsQnQS6Ra1%2BnJNCceCjn20hOr24hTyw2b14yETbSNqqkk42JOjzRuEqkw4LpT8q5UWtqxRIzr%2F4CIBrJNCfYA76UUozRiMA8HGSXwhWoeynUhbhs3KOshiLE1Pf%2F8uJSG4FLbCOET4JS%2B5gWgmzpgm%2FTx5%2F85g3UyzVj6ax8QphUUillW%2FdEwV58D9%2BsgRIH%2BmgUzn3XRqvfvoS9h1188jsH4lLBDN05G9M0F%2B6n%2ByAcC01uV3mpyFtHRCKxqS5WRswkkxj4CFNqHDILIEU03m%2FFq2vGanJiUvfbmodfR%2Fivze0fQgXedLGnKJrhSsYunTFd17QVA%2BHppFe84sdYT%2FZvJVE0j1HCkjO0V4Kkj7mZOA1AOLRsOjn33e1gf6BY1qd4F9kHUxM7t%2BHV0MCV%2BDQm5SaKfGBvh80WdP2DFR90l0amOUHYRmWLN%2FlSwOA39kKOOm35EGpx9XUa2I28mLOy0wOxdVSo60rygtCe91ssaeQsGiw0ZqjjP7FdA%2Bn%2BhPKXh%2FwJ3BQHwn4tqQt3DvZumZOZvl%2FY3F%2BCRh0yrro%2BLWPYn9YpibQzW%2BFj%2FWYkj6cfknbLgSLoURLqPjVcndFfa%2FiZ90DaCQOE6dCpyZbgVMYFXxRbVdCcQ6rrhWwnLMW3iuTWDsT8Z00kglcwsrdolpv%2FW1EjmHtMt35vLgKBDOtIrcpwQcQLLr9Jmd3pFXUYUiMr77gtG61E%2F68rz6jq0nDx3a3LMsWBlnZPdqa2mwtLWLJKxA0R9PWgAMahkVIkQgUydr%2FTSMUzGZdcKfX7as5mBoZvqYmAAbkClvcXpEpmorks9thkqGKVY&id=o9mjHtUOJzd1y07mQU4nCg - - -
+INFO  2025-07-02 16:26:13,970 [88   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution successful.
+INFO  2025-07-02 16:26:13,973 [83   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (28ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[ExpectedTotalAmount], [b].[FullAmountDueDate], [b].[FullAmountWith5PercentDiscount], [b].[Line]
+FROM [BusFeePlans] AS [b]
+INFO  2025-07-02 16:26:13,976 [83   ] c.Infrastructure.ControllerActionInvoker - Executed action method School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetBusFeePlansAsync (School.LMS.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 33.9897ms.
+INFO  2025-07-02 16:26:13,978 [88   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint '/signalr'
+DEBUG 2025-07-02 16:26:13,984 [80   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is connected: {"ConnectionId":"8uFlCFgy_ys89YFARbZAzQ","IpAddress":"::1","TenantId":1,"UserId":2,"ConnectTime":"2025-07-02T16:26:13.9839067+03:00","Properties":{}}
+DEBUG 2025-07-02 16:26:13,989 [90   ] Abp.AspNetCore.SignalR.Hubs.AbpCommonHub - A client is registered: 8uFlCFgy_ys89YFARbZAzQ
+INFO  2025-07-02 16:26:13,996 [86   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (46ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [s].[Id], [s].[BusFeePlanId], [s].[Notes], [s].[Status], [s].[StudentId], [s].[SubscriptionDate], [s0].[Id], [s0].[Grade], [s0].[MobileNumber], [s0].[Name], [s0].[PreviousAmount], [s0].[Status], [s0].[StudentId], [b].[Id], [b].[ExpectedTotalAmount], [b].[FullAmountDueDate], [b].[FullAmountWith5PercentDiscount], [b].[Line]
+FROM [StudentBusSubscriptions] AS [s]
+INNER JOIN [Students] AS [s0] ON [s].[StudentId] = [s0].[Id]
+INNER JOIN [BusFeePlans] AS [b] ON [s].[BusFeePlanId] = [b].[Id]
+INFO  2025-07-02 16:26:14,000 [86   ] c.Infrastructure.ControllerActionInvoker - Executed action method School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetListAsync (School.LMS.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 52.448ms.
+INFO  2025-07-02 16:26:14,486 [86   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (475ms) [Parameters=[@p0='?' (Size = 512), @p1='?' (Size = 64), @p2='?' (Size = 128), @p3='?' (Size = 2000), @p4='?' (Size = 2000), @p5='?' (Size = 1024), @p6='?' (DbType = Int32), @p7='?' (DbType = DateTime2), @p8='?' (DbType = Int32), @p9='?' (DbType = Int64), @p10='?' (Size = 256), @p11='?' (Size = 1024), @p12='?' (Size = 4000), @p13='?' (Size = 256), @p14='?' (DbType = Int32), @p15='?' (DbType = Int64)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AbpAuditLogs] ([BrowserInfo], [ClientIpAddress], [ClientName], [CustomData], [Exception], [ExceptionMessage], [ExecutionDuration], [ExecutionTime], [ImpersonatorTenantId], [ImpersonatorUserId], [MethodName], [Parameters], [ReturnValue], [ServiceName], [TenantId], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15);
+INFO  2025-07-02 16:26:14,491 [86   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2025-07-02 16:26:14,495 [86   ] c.Infrastructure.ControllerActionInvoker - Executed action School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetListAsync (School.LMS.Application) in 563.93ms
+INFO  2025-07-02 16:26:14,498 [86   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetListAsync (School.LMS.Application)'
+INFO  2025-07-02 16:26:14,502 [80   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 512), @p1='?' (Size = 64), @p2='?' (Size = 128), @p3='?' (Size = 2000), @p4='?' (Size = 2000), @p5='?' (Size = 1024), @p6='?' (DbType = Int32), @p7='?' (DbType = DateTime2), @p8='?' (DbType = Int32), @p9='?' (DbType = Int64), @p10='?' (Size = 256), @p11='?' (Size = 1024), @p12='?' (Size = 4000), @p13='?' (Size = 256), @p14='?' (DbType = Int32), @p15='?' (DbType = Int64)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AbpAuditLogs] ([BrowserInfo], [ClientIpAddress], [ClientName], [CustomData], [Exception], [ExceptionMessage], [ExecutionDuration], [ExecutionTime], [ImpersonatorTenantId], [ImpersonatorUserId], [MethodName], [Parameters], [ReturnValue], [ServiceName], [TenantId], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15);
+INFO  2025-07-02 16:26:14,505 [86   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/api/services/app/AdminBusSubscription/GetList?Keyword=&SkipCount=0&MaxResultCount=1000 - 200 - application/json;+charset=utf-8 615.3539ms
+INFO  2025-07-02 16:26:14,508 [80   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2025-07-02 16:26:14,512 [80   ] c.Infrastructure.ControllerActionInvoker - Executed action School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetBusFeePlansAsync (School.LMS.Application) in 598.4094ms
+INFO  2025-07-02 16:26:14,515 [80   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'School.LMS.BusSubscriptionManagement.AdminBusSubscriptionAppService.GetBusFeePlansAsync (School.LMS.Application)'
+INFO  2025-07-02 16:26:14,518 [80   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/api/services/app/AdminBusSubscription/GetBusFeePlans?Keyword=&SkipCount=0&MaxResultCount=1000 - 200 - application/json;+charset=utf-8 634.1212ms
+INFO  2025-07-02 16:26:16,537 [80   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:26:21,831 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (272ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:26:27,385 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (544ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:26:28,223 [er #1] Hangfire.Processing.BackgroundExecution  - Execution RecurringJobScheduler recovered from the Faulted state after 00:00:38.6690318 and is in the Running state now
+INFO  2025-07-02 16:26:28,489 [er #1] Hangfire.Processing.BackgroundExecution  - Execution DelayedJobScheduler recovered from the Faulted state after 00:00:34.4899994 and is in the Running state now
+INFO  2025-07-02 16:26:32,399 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:26:37,410 [83   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:26:42,430 [86   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:26:47,452 [86   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:26:50,524 [er #1] Hangfire.Processing.BackgroundExecution  - Execution DelayedJobScheduler recovered from the Faulted state after 00:00:16.0161062 and is in the Running state now
+INFO  2025-07-02 16:26:51,308 [er #1] Hangfire.Processing.BackgroundExecution  - Execution RecurringJobScheduler recovered from the Faulted state after 00:00:16.0155613 and is in the Running state now
+INFO  2025-07-02 16:26:52,464 [86   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:26:57,476 [89   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (4ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:02,488 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:07,514 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:12,526 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:17,546 [86   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:22,558 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:27,560 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:32,574 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:37,589 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:42,616 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:47,640 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:52,655 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:27:57,678 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:02,689 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:07,707 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:12,719 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:17,740 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:22,756 [89   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:27,775 [89   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:32,795 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:37,806 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (3ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:42,820 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:47,837 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:52,855 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:28:57,872 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:02,886 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:07,913 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:12,935 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:17,948 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:22,967 [92   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:27,986 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:32,995 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:38,016 [92   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:43,032 [88   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:48,044 [91   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:53,060 [90   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:29:58,081 [91   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:30:03,086 [92   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:30:08,104 [92   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-02 16:30:13,121 [92   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
