@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using School.LMS.Models;
 using Abp.UI;
 using School.LMS.BusFeePlan.Dto;
+using Abp.Application.Services.Dto;
 
 namespace School.LMS.BusSubscriptionManagement
 {
@@ -76,6 +77,10 @@ namespace School.LMS.BusSubscriptionManagement
             }).ToList();
         }
 
+        public  async Task DeleteAsync(int Id)
+        {
+           await _busSubscriptionRepo.DeleteAsync(x => x.StudentId == Id);
+        }
 
     }
 

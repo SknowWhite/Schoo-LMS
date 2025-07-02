@@ -32,6 +32,7 @@
 
       <td>
         <button
+        [disabled]="sub.status !== subscriptionStatus.Pending"
           class="btn btn-success btn-sm"
           (click)="changeStatus(sub, subscriptionStatus.Approved)">
           Approve
@@ -39,9 +40,18 @@
         &nbsp;
         &nbsp;
         <button
+          [disabled]="sub.status !== subscriptionStatus.Pending"
           class="btn btn-danger btn-sm"
           (click)="changeStatus(sub, subscriptionStatus.Rejected)">
           Reject
+        </button>
+         &nbsp;
+        &nbsp;
+           <button
+          
+          class="btn btn-danger btn-sm"
+          (click)="delete(sub)">
+          Delete
         </button>
       </td>
 
