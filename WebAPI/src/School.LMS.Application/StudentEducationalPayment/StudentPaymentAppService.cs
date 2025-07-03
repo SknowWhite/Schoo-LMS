@@ -116,7 +116,7 @@ namespace School.LMS.StudentEducationalPayment
                     IsFullPayment = true,
                     InstallmentName = "Full Payment",
                     PaymentDate = fullPayment.PaymentDate,
-                    InvoiceNumber =     $"https://atfawry.fawrystaging.com/invoice-ui/pay/{fullPayment.InvoiceNumber}"
+                    InvoiceNumber =     $"{fullPayment.InvoiceNumber}"
                 }
             };
                 }
@@ -129,7 +129,7 @@ namespace School.LMS.StudentEducationalPayment
                         {
                             target.PaymentDate = item.PaymentDate;
                             target.PaymentStatus = item.PaymentStatus;
-                            target.InvoiceNumber = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{item.InvoiceNumber}";
+                            target.InvoiceNumber = $"{item.InvoiceNumber}";
                         }
                     }
                 }
