@@ -5056,6 +5056,7 @@ export class StudentImportServiceProxy {
 
 @Injectable()
 export class EducationalPaymentServiceProxy {
+
   private http: HttpClient;
   private baseUrl: string;
   protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -5292,6 +5293,44 @@ export class EducationalPaymentServiceProxy {
     }
     return _observableOf(null as any);
   }
+
+getAllStudentWithPayments(
+  name: string,
+  mobileNumber: string,
+  pageNumber: number,
+  pageSize: number
+): Observable<{ items: any[]; totalCount: number; pageNumber: number }> {
+  let url_ = this.baseUrl + '/api/services/app/StudentPayment/GetAllStudentWithPayments?';
+
+  if (name) url_ += 'name=' + encodeURIComponent(name) + '&';
+  if (mobileNumber) url_ += 'phoneNumber=' + encodeURIComponent(mobileNumber) + '&';
+  url_ += 'pageNumber=' + encodeURIComponent(pageNumber) + '&';
+  url_ += 'pageSize=' + encodeURIComponent(pageSize);
+
+  const options_: any = {
+    observe: 'response',
+    responseType: 'blob',
+    headers: new HttpHeaders({
+      Accept: 'text/plain',
+    }),
+  };
+
+  return this.http.request('get', url_, options_).pipe(
+    _observableMergeMap((response_: any) => this.processEduPaymentData(response_)),
+    _observableCatch((response_: any) => {
+      if (response_ instanceof HttpResponseBase) {
+        try {
+          return this.processEduPaymentData(response_ as any);
+        } catch (e) {
+          return _observableThrow(e) as Observable<any>;
+        }
+      } else return _observableThrow(response_) as Observable<any>;
+    })
+  );
+}
+
+
+
 }
 
 @Injectable()

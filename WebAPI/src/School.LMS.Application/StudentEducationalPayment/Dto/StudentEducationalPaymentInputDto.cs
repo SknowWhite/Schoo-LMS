@@ -87,7 +87,29 @@ namespace School.LMS.StudentEducationalPayment.Dto
     }
 
 
+    public class StudentEductionalPaymentDto : EntityDto
+    {
+        public int? StudentId { get; set; }
+        public string Name { get; set; }
+        public decimal AmountPaid { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public string Installments { get; set; }
+        public string Grade { get; set; }
+        public string MobileNumber { get; set; }
+        public decimal? PreviousAmount { get; set; }
+    }
 
+    public class PagedResultDto<T>
+    {
+        public List<T> Items { get; set; }
+        public int TotalCount { get; set; }
+        public int PageNumber { get; set; }
+
+        public PagedResultDto()
+        {
+            Items = new List<T>();
+        }
+    }
 
 
 }

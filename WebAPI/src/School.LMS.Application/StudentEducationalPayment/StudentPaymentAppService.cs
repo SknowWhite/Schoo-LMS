@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using Abp.UI;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using School.LMS.BusFeePlan.Dto;
 using School.LMS.EducationalFeePlan.Dto;
@@ -493,7 +494,73 @@ namespace School.LMS.StudentEducationalPayment
             }
         }
 
+        public async Task<PagedResultDto<StudentEductionalPaymentDto>> GetAllStudentWithPaymentsAsync(string name, string phoneNumber, int pageNumber = 1, int pageSize = 10)
+        {
+            var query = _eduPaymentRepo.GetAll()
+                .Include(x => x.Student)
+                .Include(x => x.Installment)
+                .AsQueryable();
 
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(x => x.Student.Name.Contains(name));
+            }
+
+            if (!string.IsNullOrEmpty(phoneNumber))
+            {
+                query = query.Where(x => x.Student.MobileNumber.Contains(phoneNumber));
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var rawData = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var students = rawData.Select(x => new StudentEductionalPaymentDto
+            {
+                StudentId = x.Student?.Id ?? 0,
+                Name = x.Student?.Name,
+                AmountPaid = x.AmountPaid,
+                PaymentDate = x.PaymentDate,
+                Installments = GetInstallments(x.Installment, x.IsFullPayment),
+                Grade = x.Student?.Grade,
+                MobileNumber = x.Student?.MobileNumber,
+                PreviousAmount = x.IsFullPayment ? x.AmountPaid : x.Installment?.Amount ?? 0
+            }).ToList();
+
+            return new PagedResultDto<StudentEductionalPaymentDto>
+            {
+                Items = students,
+                TotalCount = totalCount,
+                PageNumber = pageNumber
+            };
+        }
+
+        private string GetInstallments(EducationalInstallment installment, bool isFullPayment)
+        {
+            if (isFullPayment)
+                return "Full";
+
+            else if (installment == null && !isFullPayment)
+                return "";
+
+            else if (installment.Order == 1)
+                return "1";
+
+            else if (installment.Order == 2)
+                return "1, 2";
+
+            else if (installment.Order == 3)
+                return "1, 2, 3";
+
+            else if (installment.Order == 4)
+                return "1, 2, 3, 4";
+
+            else
+                throw new UserFriendlyException("Student not found");
+        }
     }
 
 }

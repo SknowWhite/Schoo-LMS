@@ -62,6 +62,12 @@ import { StudentsPaymentDetailsComponent } from './students-payment-details/stud
             canActivate: [AppRouteGuard],
           },*/,
           {
+            path: 'studenteducationalpayments',
+            loadChildren: () => import('./student-educational-payments/student-educational-payments.module').then((m) => m.StudentEducationalPaymentsModule),
+            canActivate: [AppRouteGuard],
+          }
+          ,
+          {
               path: 'AdminBusSubscription',
               component: AdminBusSubscriptionComponent,
               canActivate: [AppRouteGuard],
