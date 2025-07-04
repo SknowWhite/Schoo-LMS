@@ -503,7 +503,7 @@ namespace School.LMS.StudentEducationalPayment
                 .Include(s => s.BusSubscriptions).ThenInclude(bs => bs.Payments).ThenInclude(p => p.Installment)
                 .AsQueryable();
 
-            // Apply filters
+            // Apply Filters
             if (!string.IsNullOrWhiteSpace(name))
                 query = query.Where(s => s.Name.Contains(name));
 
