@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Injector } from '@angular/core';
 import { adminBusSubscriptionsServiceProxy, pagedAdminBusSucbription } from '../../shared/service-proxies/service-proxies';
 import { PagedListingComponentBase, PagedRequestDto } from '../../shared/paged-listing-component-base';
-import { getActionCache } from '@node_modules/@angular/core/primitives/event-dispatch';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-bus-subscription',
@@ -16,6 +16,25 @@ export class AdminBusSubscriptionComponent extends PagedListingComponentBase<Adm
     this.loadData();
   }
   protected delete(entity: AdminStudentBusSubscriptionDto): void {
+         abp.message.confirm(
+        this.l('DeleteBusSubscription'),
+        undefined,
+        (result: boolean) => {
+          if (result) {
+            this.service
+              .delete(entity.studentId)
+              .pipe(
+                finalize(() => {
+                  abp.notify.success(this.l('SuccessfullyDeleted'));
+                  this.loadBusLines();
+    this.loadData();
+                  this.refresh();
+                })
+              )
+              .subscribe(() => {});
+          }
+        }
+      );
   }
   subscriptions: AdminStudentBusSubscriptionDto[];
   busLines: BusFeesPlanDto[];
@@ -99,3 +118,5 @@ export interface BusFeesPlanDto {
   id: number;
   line?: string;
 }
+
+

@@ -23,6 +23,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using Hangfire;
 using Hangfire.Storage;
+using School.LMS.StudentEducationalPayment.Dto;
 
 namespace School.LMS.Web.Host.Startup
 {
@@ -129,7 +130,10 @@ namespace School.LMS.Web.Host.Startup
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
             });
-            app.UseHangfireDashboard("/hangfire");
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new AllowAllDashboardAuthorizationFilter() }
+            });
             using (var connection = JobStorage.Current.GetConnection())
             {
                 foreach (var recurringJob in connection.GetRecurringJobs())
