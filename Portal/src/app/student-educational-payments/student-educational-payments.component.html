@@ -1,22 +1,48 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+
+  <!-- Student ID -->
   <div class="form-group">
+    <label for="studentId">Student ID</label>
+    <input id="studentId" type="text" formControlName="studentId" placeholder="Enter Student ID" />
+  </div>
+
+  <!-- Name -->
+  <div class="form-group name-field">
     <label for="name">Name</label>
     <input id="name" type="text" formControlName="name" placeholder="Enter Name" />
   </div>
 
+  <!-- Mobile -->
   <div class="form-group">
     <label for="mobileNumber">Mobile</label>
     <input id="mobileNumber" type="text" formControlName="mobileNumber" placeholder="Enter Mobile" />
   </div>
 
-  <button type="submit" class="search-btn">
-    🔍 Search
-  </button>
+  <!-- Grade -->
+  <div class="form-group">
+    <label for="grade">Grade</label>
+    <input id="grade" type="text" formControlName="grade" placeholder="Enter Grade" />
+  </div>
 
-  <button type="button" class="clear-btn" (click)="onClear()">
-    ❌ Clear
-  </button>
+  <!-- Installments -->
+  <div class="form-group installment-field">
+  <label for="installments">Installments</label>
+  <select id="installments" formControlName="installments" class="dropdown-select">
+    <option value="">-- Select Installment --</option>
+    <option *ngFor="let option of installmentOptions" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
+  </div>
+
+
+  <!-- Buttons -->
+  <button type="submit" class="search-btn">🔍 Search</button>
+  <button type="button" class="clear-btn" (click)="onClear()">❌ Clear</button>
 </form>
+
+
+
 
 
 <div class="table-container">
@@ -27,6 +53,8 @@
     <span class="column-amount">Previous Amount</span>
     <span class="column-mobile">Mobile Number</span>
     <span class="column-status">Installments</span>
+    <span class="column-status">Is BusSubscribed</span>
+    <span class="column-status">Bus Installments</span>
   </div>
 
   <ul class="student-list">
@@ -37,17 +65,29 @@
       <span class="column-amount">{{ student.previousAmount | currency }}</span>
       <span class="column-mobile">{{ student.mobileNumber }}</span>
       <span class="column-status">{{ student.installments }}</span>
+      <span class="column-status">{{ student.isBusSubscribed }}</span>
+      <span class="column-status">{{ student.busInstallments }}</span>
     </li>
   </ul>
 </div>
 
 <!-- Pagination Controls -->
 <div class="pagination-controls">
-  <button (click)="onPageChange(pageNumber - 1)" [disabled]="pageNumber === 1">Previous</button>
-  <span>Page {{ pageNumber }}</span>
-  <button (click)="onPageChange(pageNumber + 1)" [disabled]="filteredStudents.length < pageSize">Next</button>
-<div *ngIf="totalCount > 0" class="total-count">
-  Total Results: {{ totalCount }}
-</div>
-</div>
+  <button (click)="onPageChange(pageNumber - 1)" [disabled]="pageNumber === 1">
+    Previous
+  </button>
 
+  <span>Page {{ pageNumber }}</span>
+
+  <button (click)="onPageChange(pageNumber + 1)" [disabled]="filteredStudents.length < pageSize">
+    Next
+  </button>
+
+  <!-- Page Size Selector -->
+  <div class="page-size-selector">
+    <label for="pageSize">Page Size:</label>
+    <select id="pageSize" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)">
+      <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+</div>

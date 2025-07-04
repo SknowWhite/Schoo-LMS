@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using Abp.UI;
+using Abp.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using School.LMS.BusFeePlan.Dto;
@@ -494,72 +495,197 @@ namespace School.LMS.StudentEducationalPayment
             }
         }
 
-        public async Task<PagedResultDto<StudentEductionalPaymentDto>> GetAllStudentWithPaymentsAsync(string name, string phoneNumber, int pageNumber = 1, int pageSize = 10)
+        [DontWrapResult]
+        public async Task<PagedResultDto<StudentEductionalPaymentDto>> GetAllStudentWithPaymentsAsync(string name, string phoneNumber, string installments,string grade, string studentId ,int pageNumber = 1, int pageSize = 10)
         {
-            var query = _eduPaymentRepo.GetAll()
-                .Include(x => x.Student)
-                .Include(x => x.Installment)
+            var query = _studentRepo.GetAll()
+                .Include(s => s.EducationalPayments).ThenInclude(e => e.Installment)
+                .Include(s => s.BusSubscriptions).ThenInclude(bs => bs.Payments).ThenInclude(p => p.Installment)
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(name))
-            {
-                query = query.Where(x => x.Student.Name.Contains(name));
-            }
+            // Apply filters
+            if (!string.IsNullOrWhiteSpace(name))
+                query = query.Where(s => s.Name.Contains(name));
 
-            if (!string.IsNullOrEmpty(phoneNumber))
-            {
-                query = query.Where(x => x.Student.MobileNumber.Contains(phoneNumber));
-            }
+            if (!string.IsNullOrWhiteSpace(phoneNumber))
+                query = query.Where(s => s.MobileNumber.Contains(phoneNumber));
+
+            if (!string.IsNullOrWhiteSpace(studentId))
+                query = query.Where(s => s.StudentId.Contains(studentId));
+
+            if (!string.IsNullOrWhiteSpace(grade))
+                query = query.Where(s => s.Grade.Contains(grade));
+
+            if (!string.IsNullOrWhiteSpace(installments))
+                query = ApplyInstallmentFilter(query, installments);
 
             var totalCount = await query.CountAsync();
 
-            var rawData = await query
+            var students = await query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
-            var students = rawData.Select(x => new StudentEductionalPaymentDto
-            {
-                StudentId = x.Student?.Id ?? 0,
-                Name = x.Student?.Name,
-                AmountPaid = x.AmountPaid,
-                PaymentDate = x.PaymentDate,
-                Installments = GetInstallments(x.Installment, x.IsFullPayment),
-                Grade = x.Student?.Grade,
-                MobileNumber = x.Student?.MobileNumber,
-                PreviousAmount = x.IsFullPayment ? x.AmountPaid : x.Installment?.Amount ?? 0
-            }).ToList();
+            var studentDtos = students.Select(MapToDto).ToList();
 
             return new PagedResultDto<StudentEductionalPaymentDto>
             {
-                Items = students,
+                Items = studentDtos,
                 TotalCount = totalCount,
                 PageNumber = pageNumber
             };
         }
 
-        private string GetInstallments(EducationalInstallment installment, bool isFullPayment)
+        private IQueryable<Student> ApplyInstallmentFilter(IQueryable<Student> query, string installments)
+        {
+            switch (installments)
+            {
+                case "installment1":
+                    return query.Where(x =>
+                        x.EducationalPayments
+                            .OrderByDescending(e => e.PaymentDate)
+                            .Where(e => e.PaymentStatus == PaymentStatus.Paid && e.Installment.DueDate >= DateTime.Now)
+                            .Select(e => e.Installment.Order)
+                            .FirstOrDefault() == 1);
+
+                case "installment2":
+                    return query.Where(x =>
+                        x.EducationalPayments
+                            .OrderByDescending(e => e.PaymentDate)
+                            .Where(e => e.PaymentStatus == PaymentStatus.Paid && e.Installment.DueDate >= DateTime.Now)
+                            .Select(e => e.Installment.Order)
+                            .FirstOrDefault() == 2);
+
+                case "installment3":
+                    return query.Where(x =>
+                        x.EducationalPayments
+                            .OrderByDescending(e => e.PaymentDate)
+                            .Where(e => e.PaymentStatus == PaymentStatus.Paid && e.Installment.DueDate >= DateTime.Now)
+                            .Select(e => e.Installment.Order)
+                            .FirstOrDefault() == 3);
+
+                case "installment4":
+                    return query.Where(x =>
+                        x.EducationalPayments
+                            .OrderByDescending(e => e.PaymentDate)
+                            .Where(e => e.PaymentStatus == PaymentStatus.Paid && e.Installment.DueDate >= DateTime.Now)
+                            .Select(e => e.Installment.Order)
+                            .FirstOrDefault() == 4);
+
+                case "full":
+                    return query.Where(x =>
+                        x.EducationalPayments
+                            .OrderByDescending(e => e.PaymentDate)
+                            .Where(e => e.PaymentStatus == PaymentStatus.Paid && e.Installment.DueDate >= DateTime.Now)
+                            .Select(e => e.IsFullPayment)
+                            .FirstOrDefault() == true);
+
+                case "bus":
+                    return query.Where(x =>
+                        x.BusSubscriptions.Any(bs =>
+                            bs.Payments
+                                .Where(p => p.Status == PaymentStatus.Paid)
+                                .OrderByDescending(p => p.PaymentDate)
+                                .Select(p => p.Installment.DueDate)
+                                .FirstOrDefault() >= DateTime.Now
+                        )
+                    );
+
+
+                default:
+                    return query; // No filtering
+            }
+        }
+
+        private StudentEductionalPaymentDto MapToDto(Student s)
+        {
+            var latestPayment = GetLatestPaidEducationalPayment(s);
+
+            return new StudentEductionalPaymentDto
+            {
+                StudentId = int.Parse(s.StudentId),
+                Name = s.Name,
+                AmountPaid = latestPayment?.AmountPaid,
+                PaymentDate = latestPayment?.PaymentDate,
+                Installments = GetInstallments(latestPayment?.Installment, latestPayment?.IsFullPayment ?? false),
+                Grade = s.Grade,
+                MobileNumber = s.MobileNumber,
+                PreviousAmount = GetPreviousAmount(latestPayment),
+                IsBusSubscribed = IsBusSubscribed(s.BusSubscriptions),
+                BusInstallments = GetBusInstallments(s.BusSubscriptions)
+            };
+        }
+
+        private School.LMS.Models.StudentEducationalPayment? GetLatestPaidEducationalPayment(Student student)
+        {
+            return student.EducationalPayments?
+                .Where(p => p.PaymentStatus == PaymentStatus.Paid)
+                .OrderByDescending(p => p.PaymentDate)
+                .FirstOrDefault();
+        }
+        private string GetInstallments(EducationalInstallment? installment, bool isFullPayment)
         {
             if (isFullPayment)
                 return "Full";
 
-            else if (installment == null && !isFullPayment)
+            if (installment == null)
                 return "";
 
-            else if (installment.Order == 1)
-                return "1";
+            return installment.Order switch
+            {
+                1 => "1",
+                2 => "1, 2",
+                3 => "1, 2, 3",
+                4 => "1, 2, 3, 4",
+                _ => throw new UserFriendlyException("Invalid installment order")
+            };
+        }
+        private bool IsBusSubscribed(ICollection<StudentBusSubscription> busSubscriptions)
+        {
+            var latestPaid = busSubscriptions?
+                .SelectMany(bs => bs.Payments)
+                .Where(p => p.Status == PaymentStatus.Paid)
+                .OrderByDescending(p => p.PaymentDate)
+                .FirstOrDefault();
 
-            else if (installment.Order == 2)
-                return "1, 2";
+            return latestPaid?.Installment?.DueDate >= DateTime.Now;
+        }
 
-            else if (installment.Order == 3)
-                return "1, 2, 3";
+        private string GetBusInstallments(ICollection<StudentBusSubscription> busSubscriptions)
+        {
+            var latestPaid = busSubscriptions?
+                .SelectMany(bs => bs.Payments)
+                .Where(p => p.Status == PaymentStatus.Paid)
+                .OrderByDescending(p => p.PaymentDate)
+                .FirstOrDefault();
 
-            else if (installment.Order == 4)
-                return "1, 2, 3, 4";
+            if (latestPaid?.Installment is null || latestPaid.Installment.DueDate < DateTime.Now)
+                return "";
 
-            else
-                throw new UserFriendlyException("Student not found");
+            return GetInstallments(latestPaid.Installment, latestPaid.IsFullPayment);
+        }
+
+        private string GetInstallments(BusInstallment installment, bool isFullPayment)
+        {
+            if (isFullPayment)
+                return "Full";
+
+            if (installment == null)
+                return "";
+
+            return installment.Order switch
+            {
+                1 => "1",
+                2 => "1, 2",
+                3 => "1, 2, 3",
+                4 => "1, 2, 3, 4",
+                _ => throw new UserFriendlyException("Invalid installment order")
+            };
+        }
+        private decimal? GetPreviousAmount(Models.StudentEducationalPayment studentEducationalPayment)
+        {
+            if (studentEducationalPayment == null) return 0;
+            return studentEducationalPayment.IsFullPayment ? studentEducationalPayment?.AmountPaid : studentEducationalPayment?.Installment?.Amount ?? 0;
         }
     }
 

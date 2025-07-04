@@ -91,12 +91,14 @@ namespace School.LMS.StudentEducationalPayment.Dto
     {
         public int? StudentId { get; set; }
         public string Name { get; set; }
-        public decimal AmountPaid { get; set; }
-        public DateTime PaymentDate { get; set; }
+        public decimal? AmountPaid { get; set; }
+        public DateTime? PaymentDate { get; set; }
         public string Installments { get; set; }
         public string Grade { get; set; }
-        public string MobileNumber { get; set; }
+        public string? MobileNumber { get; set; }
         public decimal? PreviousAmount { get; set; }
+        public bool IsBusSubscribed { get; set; }
+        public string BusInstallments { get; set; }
     }
 
     public class PagedResultDto<T>

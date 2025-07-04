@@ -139,3 +139,125 @@
 .pagination-controls span {
   font-weight: 500;
 }
+
+.form-group div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-group input[type="radio"] {
+  margin-right: 0.25rem;
+}
+/* Make the form group flex to align radio group with other inputs */
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: flex-end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 180px; /* Keeps each form field neat */
+}
+
+.radio-group {
+  flex: 2 1 300px; /* Give radio buttons a bit more width */
+}
+
+.radio-group label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: #333;
+  font-size: 0.85rem;
+}
+
+.radio-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Space between each radio option */
+  align-items: center;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.radio-option input[type="radio"] {
+  margin: 0;
+}
+
+/* Align pagination controls and page size selector */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Buttons styling */
+.pagination-controls button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-controls button:hover {
+  background-color: #0056b3;
+}
+
+/* Page size selector styling */
+.page-size-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-size-selector label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.page-size-selector select {
+  height: 32px;
+  padding: 0 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.page-size-selector select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.dropdown-select {
+  height: 32px;
+  padding: 0 0.6rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.dropdown-select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}

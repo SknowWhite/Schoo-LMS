@@ -5298,36 +5298,27 @@ getAllStudentWithPayments(
   name: string,
   mobileNumber: string,
   pageNumber: number,
-  pageSize: number
+  pageSize: number,
+  installments?: any,
+  studentId?: string,
+  grade?: string
 ): Observable<{ items: any[]; totalCount: number; pageNumber: number }> {
-  let url_ = this.baseUrl + '/api/services/app/StudentPayment/GetAllStudentWithPayments?';
+  const params = new URLSearchParams();
 
-  if (name) url_ += 'name=' + encodeURIComponent(name) + '&';
-  if (mobileNumber) url_ += 'phoneNumber=' + encodeURIComponent(mobileNumber) + '&';
-  url_ += 'pageNumber=' + encodeURIComponent(pageNumber) + '&';
-  url_ += 'pageSize=' + encodeURIComponent(pageSize);
+  if (name) params.append('name', name);
+  if (mobileNumber) params.append('phoneNumber', mobileNumber);
+  if (installments) params.append('installments', installments);
+  if (studentId) params.append('studentId', studentId);
+  if (grade) params.append('grade', grade);
+  params.append('pageNumber', pageNumber.toString());
+  params.append('pageSize', pageSize.toString());
 
-  const options_: any = {
-    observe: 'response',
-    responseType: 'blob',
-    headers: new HttpHeaders({
-      Accept: 'text/plain',
-    }),
-  };
+  const url_ = `${this.baseUrl}/api/services/app/StudentPayment/GetAllStudentWithPayments?${params.toString()}`;
 
-  return this.http.request('get', url_, options_).pipe(
-    _observableMergeMap((response_: any) => this.processEduPaymentData(response_)),
-    _observableCatch((response_: any) => {
-      if (response_ instanceof HttpResponseBase) {
-        try {
-          return this.processEduPaymentData(response_ as any);
-        } catch (e) {
-          return _observableThrow(e) as Observable<any>;
-        }
-      } else return _observableThrow(response_) as Observable<any>;
-    })
-  );
+  return this.http.get<{ items: any[]; totalCount: number; pageNumber: number }>(url_);
 }
+
+
 
 
 
