@@ -42,10 +42,11 @@
       {{ "BusFees" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Student')"
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')"
   >
-    <a class="nav-link" [routerLink]="['studentspaymentdetails']">
-      {{ "StudentPaymentDetails" | localize }}
+    <a class="nav-link" [routerLink]="['StudentEducationalPayments']">
+      {{ "StudentEducationalPayments" | localize }}
     </a>
   </li>
+
 </ul>

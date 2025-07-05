@@ -43,7 +43,7 @@ namespace School.LMS.StudentPayments
         public async Task<List<StudentPaymentDetailsDto>> GetListAsync()
         {
             var students = _studentRepo.GetAllIncluding(x => x.EducationalPayments,x=>x.BusSubscriptions).ToList(); // Optional: Include more if needed
-            var allBusLines = _busFeePlanRepo.GetAll().ToList();
+           // var allBusLines = _busFeePlanRepo.GetAll().ToList();
             var allEduPlans = _eduFeePlanRepo.GetAllIncluding(x => x.Installments).ToList();
             var allEduPayments = _eduPaymentRepo.GetAllIncluding(x => x.Installment).ToList();
             var allBusSubscriptions = _busSubscriptionRepo.GetAll().ToList();
@@ -137,26 +137,28 @@ namespace School.LMS.StudentPayments
                     }
                 }
 
-                // --- Bus Subscription ---
-                var studentBusSubscriptions = allBusSubscriptions
-                    .Where(x => x.StudentId == student.Id)
-                    .ToList();
+                //// --- Bus Subscription ---
+                //var studentBusSubscriptions = allBusSubscriptions
+                //    .Where(x => x.StudentId == student.Id)
+                //    .ToList();
 
-                var busLines = allBusLines.Select(line => new BusLineDto
-                {
-                    Id = line.Id,
-                    Name = line.Line,
-                    ExpectedAmount = line.ExpectedTotalAmount,
-                    IsSubscribed = studentBusSubscriptions.Any(s => s.BusFeePlanId == line.Id),
-                    SubscriptionStatus = studentBusSubscriptions
-                        .FirstOrDefault(s => s.BusFeePlanId == line.Id)?.Status.ToString() ?? "NotSubscribed"
-                }).ToList();
+                //var busLines = allBusLines.Select(line => new BusLineDto
+                //{
+                //    Id = line.Id,
+                //    Name = line.Line,
+                //    ExpectedAmount = line.ExpectedTotalAmount,
+                //    IsSubscribed = studentBusSubscriptions.Any(s => s.BusFeePlanId == line.Id),
+                //    SubscriptionStatus = studentBusSubscriptions
+                //        .FirstOrDefault(s => s.BusFeePlanId == line.Id)?.Status.ToString() ?? "NotSubscribed",
+                //    Notes= studentBusSubscriptions
+                //        .FirstOrDefault(s => s.BusFeePlanId == line.Id)?.Notes
+                //}).ToList();
 
                 result.Add(new StudentPaymentDetailsDto
                 {
                     StudentInfo = studentDto,
                     EducationalPayments = eduPayments,
-                    BusLines = busLines
+                   // BusLines = busLines
                 });
             }
 

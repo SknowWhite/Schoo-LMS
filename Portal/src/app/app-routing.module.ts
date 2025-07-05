@@ -62,7 +62,7 @@ import { StudentsPaymentDetailsComponent } from './students-payment-details/stud
             canActivate: [AppRouteGuard],
           },*/,
           {
-            path: 'studenteducationalpayments',
+            path: 'StudentEducationalPayments',
             loadChildren: () => import('./student-educational-payments/student-educational-payments.module').then((m) => m.StudentEducationalPaymentsModule),
             canActivate: [AppRouteGuard],
           }

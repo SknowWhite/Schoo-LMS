@@ -81,6 +81,7 @@ namespace School.LMS.StudentEducationalPayment.Dto
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal ExpectedAmount { get; set; }
+        public string Notes { get; set; }
 
         public bool IsSubscribed { get; set; }
         public string SubscriptionStatus { get; set; } // "Pending", "Approved", etc.

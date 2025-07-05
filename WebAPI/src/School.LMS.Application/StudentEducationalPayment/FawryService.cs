@@ -132,12 +132,7 @@ namespace School.LMS.StudentEducationalPayment
 
             return (result?.token, result?.refreshToken);
         }
-        string NormalizeEgyptianMobile(string mobile)
-        {
-            if (mobile.StartsWith("01") && mobile.Length == 11)
-                return "+2" + mobile; // Convert to international format
-            return mobile;
-        }
+     
     
             private async Task<string> RefreshAccessTokenAsync(string refreshToken)
         {

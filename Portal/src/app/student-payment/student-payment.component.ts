@@ -42,6 +42,13 @@ export class StudentPaymentComponent extends AppComponentBase implements OnInit 
     this._PaymentService.getEduPaymentData(this.studentId).subscribe((data: any) => {
       const paymentDetails: PaymentDetails = new PaymentDetails();
       paymentDetails.student = data.studentInfo;
+      paymentDetails.busLines = data.busLines.map((bus: any) => ({
+        id: bus.id,
+        name: bus.name,
+        amount: bus.amount,
+        status: this.mapPaymentStatus(bus.paymentStatus),
+        invoiceNumber: bus.invoiceNumber
+      }));
 
       const hasFullPayment = data.educationalPayments.some(p => p.isFullPayment);
       paymentDetails.paymentMode = hasFullPayment ? 'full' : 'installments';
@@ -133,6 +140,31 @@ export class StudentPaymentComponent extends AppComponentBase implements OnInit 
   private isInstallmentsPayment(details: PaymentDetails) {
     this.isInstallmentsPaid = details.installments.some(x => x.status === 'Paid' || x.status === 'Pending');
   }
+payBus(): void {
+  const selectedBus = this.PaymentDetails.busLines.find(x => x.id === this.PaymentDetails.selectedBusLineId);
+  if (!selectedBus || selectedBus.status === 'Paid') return;
+
+  const payment = new StudentPaymentDetails();
+  payment.studentId = this.studentId;
+  payment.isFullPayment = false;
+  //payment.amountPaid = selectedBus.amount;
+  payment.paymentDate = new Date();
+  payment.selectedInstallmentIds = 0; // for bus
+
+ /* this._PaymentService.SubmitBusPayment(payment).subscribe((data: any) => {
+    this.fawryLink = data;
+    this.notify.success('Bus payment submitted successfully!');
+    this.refreshPaymentData();
+  });*/
+}
+
+isBusLinePaymentDisabled(): boolean {
+  const selectedId = this.PaymentDetails.selectedBusLineId;
+  if (!selectedId) return true;
+
+  const selected = this.PaymentDetails.busLines.find(x => x.id === selectedId);
+  return !selected || selected.status === 'Paid';
+}
 }
 
 export class PaymentDetails {
@@ -143,6 +175,15 @@ export class PaymentDetails {
   PaymentStatus: string = '';
   fullPaymentDueDate!: Date;
   invoiceNumber?: string;
+busLines: {
+  id: number;
+  name: string;
+  notes: string;
+  status: string;
+  invoiceNumber?: string;
+}[];
+
+selectedBusLineId?: number;
 
   installments: {
     id: number;

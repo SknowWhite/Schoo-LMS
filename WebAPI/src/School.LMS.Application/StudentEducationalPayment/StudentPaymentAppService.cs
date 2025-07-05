@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Abp.UI;
 using Abp.Web.Models;
@@ -362,12 +363,11 @@ namespace School.LMS.StudentEducationalPayment
                 if (string.IsNullOrEmpty(invoiceData.invoiceNumber))
                     throw new UserFriendlyException("Failed to create payment link");
 
-                payment.InvoiceNumber = invoiceData.invoiceNumber;
+                payment.InvoiceNumber = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{invoiceData.invoiceNumber}";
                 payment.TransactionId = invoiceData.businessReference;
 
                 await _eduPaymentRepo.InsertAsync(payment);
-                string paymentLink = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{payment.InvoiceNumber}";
-                return paymentLink;
+                return payment.InvoiceNumber;
             }
 
             if (input.SelectedInstallmentIds.HasValue)
@@ -395,13 +395,12 @@ namespace School.LMS.StudentEducationalPayment
                 if (string.IsNullOrEmpty(invoiceData.invoiceNumber))
                     throw new UserFriendlyException("Failed to create payment link");
 
-                payment.InvoiceNumber = invoiceData.invoiceNumber;
+                payment.InvoiceNumber = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{invoiceData.invoiceNumber}";
                 payment.TransactionId = invoiceData.businessReference;
 
                 await _eduPaymentRepo.InsertAsync(payment);
-                string paymentLink = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{payment.InvoiceNumber}";
 
-                return paymentLink;
+                return payment.InvoiceNumber;
             }
 
             throw new UserFriendlyException("Please select a valid installment.");
@@ -496,7 +495,7 @@ namespace School.LMS.StudentEducationalPayment
         }
 
         [DontWrapResult]
-        public async Task<PagedResultDto<StudentEductionalPaymentDto>> GetAllStudentWithPaymentsAsync(string name, string phoneNumber, string installments,string grade, string studentId ,int pageNumber = 1, int pageSize = 10)
+        public async Task<Dto.PagedResultDto<StudentEductionalPaymentDto>> GetAllStudentWithPaymentsAsync(string name, string phoneNumber, string installments,string grade, string studentId ,int pageNumber = 1, int pageSize = 10)
         {
             var query = _studentRepo.GetAll()
                 .Include(s => s.EducationalPayments).ThenInclude(e => e.Installment)
@@ -528,7 +527,7 @@ namespace School.LMS.StudentEducationalPayment
 
             var studentDtos = students.Select(MapToDto).ToList();
 
-            return new PagedResultDto<StudentEductionalPaymentDto>
+            return new Dto.PagedResultDto<StudentEductionalPaymentDto>
             {
                 Items = studentDtos,
                 TotalCount = totalCount,
@@ -616,7 +615,7 @@ namespace School.LMS.StudentEducationalPayment
             };
         }
 
-        private School.LMS.Models.StudentEducationalPayment? GetLatestPaidEducationalPayment(Student student)
+        private Models.StudentEducationalPayment? GetLatestPaidEducationalPayment(Student student)
         {
             return student.EducationalPayments?
                 .Where(p => p.PaymentStatus == PaymentStatus.Paid)

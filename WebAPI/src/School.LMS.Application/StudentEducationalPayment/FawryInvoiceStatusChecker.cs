@@ -16,14 +16,17 @@ namespace School.LMS.StudentEducationalPayment
         private readonly IRepository<Models.StudentEducationalPayment> _eduPaymentRepo;
         private readonly FawryService _fawryService;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
+        private readonly IRepository<Student> _studentRepo;
+
 
         public FawryInvoiceStatusChecker(
-            IRepository<Models.StudentEducationalPayment> eduPaymentRepo,
+            IRepository<Models.StudentEducationalPayment> eduPaymentRepo, IRepository<Student> studentRepo,
             FawryService fawryService, IUnitOfWorkManager unitOfWorkManager)
         {
             _eduPaymentRepo = eduPaymentRepo;
             _fawryService = fawryService;
             _unitOfWorkManager = unitOfWorkManager;
+            _studentRepo = studentRepo;
         }
 
         public async Task CheckPendingInvoicesAsync()
@@ -66,7 +69,10 @@ namespace School.LMS.StudentEducationalPayment
                     }
 
                     payment.PaymentStatusLastUpdate = DateTime.UtcNow;
+                    
                     await _eduPaymentRepo.UpdateAsync(payment);
+                     _studentRepo.FirstOrDefault(payment.StudentId).PreviousAmount = 0; // Reset previous amount
+
                 }
 
                 await uow.CompleteAsync();
