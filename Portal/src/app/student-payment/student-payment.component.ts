@@ -86,7 +86,7 @@ export class StudentPaymentComponent extends AppComponentBase implements OnInit 
 
   getSelectedInstallmentAmount(): number {
     const inst = this.PaymentDetails.installments.find(i => i.id === this.selectedInstallmentId);
-    return inst ? inst.amount : 0;
+    return inst ? inst.amount+ this.PaymentDetails.student.previousAmount : 0 ;
   }
 
   payFull(): void {
@@ -94,7 +94,7 @@ export class StudentPaymentComponent extends AppComponentBase implements OnInit 
     const payment = new StudentPaymentDetails();
     payment.studentId = this.studentId;
     payment.isFullPayment = true;
-    payment.amountPaid = amount;
+    payment.amountPaid = amount + this.PaymentDetails.student.previousAmount;
     payment.paymentDate = new Date();
     payment.selectedInstallmentIds =0;
 

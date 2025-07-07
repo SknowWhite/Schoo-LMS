@@ -23,9 +23,11 @@
   <div *ngIf="PaymentDetails.paymentMode === 'full' && !isFulPaymentPaid && !isInstallmentsPaid" class="card pay-card">
     <p class="pay-amount">
       Amount:
-      <strong>{{ isEligibleForDiscount ? PaymentDetails.discountedAmount : PaymentDetails.fullAmount | currency }}</strong>
+      <strong>{{ isEligibleForDiscount ? PaymentDetails.discountedAmount + this.PaymentDetails.student?.previousAmount : PaymentDetails.fullAmount+this.PaymentDetails.student?.previousAmount | currency }}</strong>
     </p>
-    <button class="btn primary-btn" (click)="payFull()">💳 Pay Full</button>
+    <button class="btn primary-btn" (click)="payFull()">💳 Pay Full <span
+        *ngIf="PaymentDetails.student?.previousAmount > 0" class="button-text">+ Previous amount</span>
+    </button>
   </div>
 
   <!-- Installments Table -->
@@ -44,8 +46,8 @@
         <tbody>
           <tr *ngFor="let inst of PaymentDetails.installments">
             <td>
-              <input type="radio" name="selectedInstallment" [value]="inst.id"
-                [(ngModel)]="selectedInstallmentId" [disabled]="inst.status !== 'New'" />
+              <input type="radio" name="selectedInstallment" [value]="inst.id" [(ngModel)]="selectedInstallmentId"
+                [disabled]="inst.status !== 'New'" />
             </td>
             <td>{{ inst.dueDate | date:'shortDate' }}</td>
             <td>{{ inst.amount | currency }}</td>
@@ -57,7 +59,8 @@
               'canceled': inst.status === 'Canceled'
             }">{{ inst.status }}</span></td>
             <td>
-              <a *ngIf="inst.invoiceNumber && inst.status !== 'Paid'" [href]="inst.invoiceNumber" target="_blank">View</a>
+              <a *ngIf="inst.invoiceNumber && inst.status !== 'Paid'" [href]="inst.invoiceNumber"
+                target="_blank">View</a>
             </td>
           </tr>
         </tbody>
@@ -66,48 +69,35 @@
     <div class="installment-action">
       <div><strong>Selected Amount:</strong> {{ getSelectedInstallmentAmount() | currency }}</div>
       <button class="btn success-btn" [disabled]="!selectedInstallmentId" (click)="paySelectedInstallment()">
-        🧾 Pay Installment
+        🧾 Pay Installment <span *ngIf="PaymentDetails.student?.previousAmount > 0" class="button-text">+ Previous
+          amount</span>
+
       </button>
     </div>
   </div>
 
- <!-- Bus Subscription Section -->
-<!-- Bus Subscription Section -->
-<div  class="card bus-card" *ngIf="PaymentDetails.busLines?.length > 0 && false">
-  <h5>🚌 Bus Subscription</h5>
+  <!-- Bus Subscription Section -->
+  <!-- Bus Subscription Section -->
+  <div class="card bus-card" *ngIf="PaymentDetails.busLines?.length > 0 && false">
+    <h5>🚌 Bus Subscription</h5>
 
-  <label class="form-check" *ngFor="let line of PaymentDetails.busLines">
-    <input
-      type="radio"
-      name="busLine"
-      [value]="line.id"
-      [(ngModel)]="PaymentDetails.selectedBusLineId"
-      [disabled]="line.status === 'Paid'"
-    />
-    {{ line.name }} - {{ line.amount | currency }}
-    <span *ngIf="line.status === 'Paid'" class="badge paid">Paid</span>
-  </label>
+    <label class="form-check" *ngFor="let line of PaymentDetails.busLines">
+      <input type="radio" name="busLine" [value]="line.id" [(ngModel)]="PaymentDetails.selectedBusLineId"
+        [disabled]="line.status === 'Paid'" />
+      {{ line.name }} - {{ line.amount | currency }}
+      <span *ngIf="line.status === 'Paid'" class="badge paid">Paid</span>
+    </label>
 
-  <!-- Notes input -->
-  <div class="form-group mt-2">
-    <label for="busNotes" class="form-label">📝 Notes </label>
-    <textarea
-      id="busNotes"
-     
-      rows="2"
-      placeholder="Add any home address..."
-      class="form-control"
-    ></textarea>
+    <!-- Notes input -->
+    <div class="form-group mt-2">
+      <label for="busNotes" class="form-label">📝 Notes </label>
+      <textarea id="busNotes" rows="2" placeholder="Add any home address..." class="form-control"></textarea>
+    </div>
+
+    <button class="btn warning-btn" [disabled]="isBusLinePaymentDisabled()" (click)="payBus()">
+      🚍 Subscribe to bus
+    </button>
   </div>
-
-  <button
-    class="btn warning-btn"
-    [disabled]="isBusLinePaymentDisabled()"
-    (click)="payBus()"
-  >
-    🚍 Subscribe to bus
-  </button>
-</div>
 
 
 

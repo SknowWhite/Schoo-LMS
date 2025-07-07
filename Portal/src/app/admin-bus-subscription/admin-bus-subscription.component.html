@@ -1,62 +1,188 @@
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Student Name</th>
-      <th>Bus Line</th>
-      <th>Notes</th>
-      <th>Status</th>
-      <th>Actions</th>
-      <th>Change Bus Line</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let sub of subscriptions">
-      <td>{{ sub.studentName }}</td>
+<div [@routerTransition]>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <h1>{{ "BusSubscriptions" | localize }}</h1>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <!-- Editable Bus Line Name -->
-      <td>
-        <select class="form-control" [(ngModel)]="sub.busFeePlanId">
-          <option *ngFor="let line of busLines" [value]="line.id">
+  <section class="content px-2">
+    <div class="container-fluid">
+      <!-- Student Form -->
+      <form
+        (ngSubmit)="submitSubscription()"
+        *ngIf="!isAdmin"
+        class="form-inline mb-3"
+      >
+        <select
+          [disabled]="
+            studentSubscription?.status === subscriptionStatus.Approved
+          "
+          class="form-control mr-2"
+          [(ngModel)]="selectedLine"
+          name="selectedLine"
+          required
+        >
+          <option *ngFor="let line of busLines" [value]="line.line">
             {{ line.line }}
           </option>
         </select>
-      </td>
-      
 
-      <!-- Editable Notes -->
-      <td>
-        <textarea [(ngModel)]="sub.notes" rows="1" class="form-control"></textarea>
-      </td>
+        <input
+          [disabled]="
+            studentSubscription?.status === subscriptionStatus.Approved
+          "
+          type="text"
+          class="form-control mr-2"
+          [(ngModel)]="notes"
+          name="notes"
+          placeholder="Notes"
+        />
 
-      <td>{{ subscriptionStatus[sub.status] }}</td>
-
-      <td>
         <button
-        [disabled]="sub.status !== subscriptionStatus.Pending"
-          class="btn btn-success btn-sm"
-          (click)="changeStatus(sub, subscriptionStatus.Approved)">
-          Approve
+          [disabled]="
+            studentSubscription?.status === subscriptionStatus.Approved
+          "
+          type="submit"
+          class="btn btn-primary"
+        >
+          <i class="fa fa-paper-plane"></i>
+          {{ studentSubscription ? "Update" : ("Subscribe" | localize) }}
         </button>
-        &nbsp;
-        &nbsp;
-        <button
-          [disabled]="sub.status !== subscriptionStatus.Pending"
-          class="btn btn-danger btn-sm"
-          (click)="changeStatus(sub, subscriptionStatus.Rejected)">
-          Reject
-        </button>
-         &nbsp;
-        &nbsp;
-           <button
-          
-          class="btn btn-danger btn-sm"
-          (click)="delete(sub)">
-          Delete
-        </button>
-      </td>
+      </form>
 
-      <!-- Optional: show original bus line -->
-      <td>{{ sub.busLineName }}</td>
-    </tr>
-  </tbody>
-</table>
+      <!-- Admin Table -->
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6 text-right">
+              <div class="input-group" *ngIf="isAdmin">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="keyword"
+                  name="keyword"
+                  [placeholder]="'SearchWithThreeDot' | localize"
+                  (keyup.enter)="getDataPage(1)"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-secondary" (click)="getDataPage(1)">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+              <tr>
+                <th>{{ "StudentName" | localize }}</th>
+                <th>{{ "BusLine" | localize }}</th>
+                <th>{{ "Notes" | localize }}</th>
+                <th>{{ "Status" | localize }}</th>
+                <th *ngIf="isAdmin">{{ "Actions" | localize }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let sub of subscriptions
+                    | paginate
+                      : {
+                          id: 'subs',
+                          itemsPerPage: pageSize,
+                          currentPage: pageNumber,
+                          totalItems: totalItems
+                        }
+                "
+              >
+                <td>{{ sub.studentName }}</td>
+                <td>
+                  <select
+                    [disabled]="sub?.status === subscriptionStatus.Approved"
+                    class="form-control"
+                    [(ngModel)]="sub.busLineName"
+                    (change)="updateSubscription(sub)"
+                  >
+                    <option *ngFor="let line of busLines" [value]="line.line">
+                      {{ line.line }}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <input
+                    [disabled]="sub?.status === subscriptionStatus.Approved"
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="sub.notes"
+                    (blur)="updateSubscription(sub)"
+                  />
+                </td>
+                <td>
+                  <span
+                    class="badge"
+                    [ngClass]="{
+                      'badge-warning':
+                        sub.status === subscriptionStatus.Pending,
+                      'badge-success':
+                        sub.status === subscriptionStatus.Approved,
+                      'badge-danger': sub.status === subscriptionStatus.Rejected
+                    }"
+                  >
+                    {{ subscriptionStatus[sub.status] }}
+                  </span>
+                </td>
+                <td *ngIf="isAdmin">
+                  <button
+                    class="btn btn-sm btn-success mr-1"
+                    (click)="changeStatus(sub, subscriptionStatus.Approved)"
+                  >
+                    <i class="fa fa-check"></i>
+                  </button>
+                  <button
+                    class="btn btn-sm btn-warning mr-1"
+                    (click)="changeStatus(sub, subscriptionStatus.Rejected)"
+                  >
+                    <i class="fa fa-times"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="delete(sub)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card-footer bg-light border-top">
+          <div class="row">
+            <div class="col-sm-4 text-left">
+              <button class="btn btn-secondary" (click)="refresh()">
+                <i class="fas fa-redo-alt"></i>
+              </button>
+            </div>
+            <div class="col-sm-4 text-center">
+              <p class="mb-0 my-2">
+                {{ "TotalRecordsCount" | localize : totalItems }}
+              </p>
+            </div>
+            <div class="col-sm-4 text-right">
+              <abp-pagination-controls
+                id="subs"
+                (pageChange)="getDataPage($event)"
+              >
+              </abp-pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

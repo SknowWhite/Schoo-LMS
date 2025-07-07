@@ -77,6 +77,7 @@ export class AppAuthService {
         expireInSeconds: number,
         rememberMe?: boolean
     ): void {
+        debugger;
         const tokenExpireDate = rememberMe
             ? new Date(new Date().getTime() + 1000 * expireInSeconds)
             : undefined;

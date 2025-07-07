@@ -9,7 +9,6 @@ export class AppRouteGuard {
   constructor(private _permissionChecker: PermissionCheckerService, private _router: Router, private _sessionService: AppSessionService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    //debugger;
     if (!this._sessionService.user) {
       this._router.navigate(['/account/login']);
       return false;
