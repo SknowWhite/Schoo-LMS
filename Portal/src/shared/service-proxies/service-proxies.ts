@@ -5685,6 +5685,35 @@ export class studentsPaymentDetailsServiceProxy{
   }
 
 }
+
+@Injectable()
+export class HomepageDashboard{
+  private http: HttpClient;
+  private baseUrl: string;
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+  constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+    this.http = http;
+    this.baseUrl = baseUrl ?? ''; 
+  }
+getHomepageDashboard(): Observable<{
+  busLinesCount: number;
+  studentCount: number;
+  studentFullPaidCount: number;
+  studentSubscribedToBusCount: number;
+}> {
+
+  const url_ = `${this.baseUrl}/api/services/app/HomePageDashboard/GetHomepageDashboard`;
+  return this.http.get<{
+    busLinesCount: number;
+    studentCount: number;
+    studentFullPaidCount: number;
+    studentSubscribedToBusCount: number;
+  }>(url_);
+}
+
+}
+
 export class StudentPaymentDetails {
   studentId: number;
   isFullPayment: boolean;
