@@ -31,11 +31,11 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
         this.router.events.subscribe((event: NavigationEnd) => {
             const currentUrl = event.url !== '/' ? event.url : this.homeRoute;
-                const primaryUrlSegmentGroup = this.router.parseUrl(currentUrl).root
-                    .children[PRIMARY_OUTLET];
-                if (primaryUrlSegmentGroup) {
-                    this.activateMenuItems('/' + primaryUrlSegmentGroup.toString());
-                }
+            const primaryUrlSegmentGroup = this.router.parseUrl(currentUrl).root
+                .children[PRIMARY_OUTLET];
+            if (primaryUrlSegmentGroup) {
+                this.activateMenuItems('/' + primaryUrlSegmentGroup.toString());
+            }
         });
     }
 
@@ -43,24 +43,24 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         return [
             new MenuItem(this.l('About'), '/app/about', 'fas fa-info-circle'),
             new MenuItem(this.l('HomePage'), '/app/home', 'fas fa-home'),
-            new MenuItem(
-                this.l('Roles'),
-                '/app/roles',
-                'fas fa-theater-masks',
-                'Pages.Roles'
-            ),
+            // new MenuItem(
+            //     this.l('Roles'),
+            //     '/app/roles',
+            //     'fas fa-theater-masks',
+            //     'Pages.Roles'
+            // ),
             new MenuItem(
                 this.l('Tenants'),
                 '/app/tenants',
                 'fas fa-building',
                 'Pages.Tenants'
             ),
-            new MenuItem(
-                this.l('Users'),
-                '/app/users',
-                'fas fa-users',
-                'Pages.Users'
-            ),
+            // new MenuItem(
+            //     this.l('Users'),
+            //     '/app/users',
+            //     'fas fa-users',
+            //     'Pages.Users'
+            // ),
             new MenuItem(this.l('MultiLevelMenu'), '', 'fas fa-circle', '', [
                 new MenuItem('ASP.NET Boilerplate', '', 'fas fa-dot-circle', '', [
                     new MenuItem(
@@ -111,7 +111,49 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                         'far fa-circle'
                     )
                 ])
-            ])
+            ]),
+            new MenuItem(
+                this.l('Students'),
+                '/app/students',
+                'fas fa-user-graduate'
+            ),
+
+            new MenuItem(
+                this.l('student Payment'),
+                '/app/studentPayment',
+                'fas fa-credit-card',
+                'student'
+            ),
+
+            new MenuItem(
+                this.l('Imported Students'),
+                '/app/importedStudents',
+                'fas fa-user-plus'
+            ),
+
+            new MenuItem(
+                this.l('Admin Bus Subscription'),
+                '/app/AdminBusSubscription',
+                'fas fa-bus'
+            ),
+
+            new MenuItem(
+                this.l('Bus Fees'),
+                '/app/busFees',
+                'fas fa-money-bill'
+            ),
+
+            new MenuItem(
+                this.l('Student Payment Details'),
+                '/app/studentspaymentdetails',
+                'fas fa-receipt'
+            ),
+            new MenuItem(
+                this.l('student Payments'),
+                '/app/studenteducationalpayments',
+                'fas fa-money-bill'
+            ),
+
         ];
     }
 

@@ -1,4 +1,6 @@
-<form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+<div [@routerTransition]>
+  <section class="content-header">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
 
   <!-- Student ID -->
   <div class="form-group">
@@ -90,4 +92,6 @@
       <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
     </select>
   </div>
+</div>
+  </section>
 </div>
