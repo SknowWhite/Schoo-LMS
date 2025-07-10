@@ -18,6 +18,7 @@ import * as ApiServiceProxies from './service-proxies';
         ApiServiceProxies.adminBusSubscriptionsServiceProxy,
         ApiServiceProxies.busFeesServiceProxy,
         ApiServiceProxies.studentsPaymentDetailsServiceProxy,
+        ApiServiceProxies.HomepageDashboard,
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })
