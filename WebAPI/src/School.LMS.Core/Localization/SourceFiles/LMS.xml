@@ -2,7 +2,7 @@
 <localizationDictionary culture="en">
   <texts>
     <text name="HomePage" value="Home page" />
-    <text name="About" value="About" />
+    <text name="About" value="About LMS" />
     <text name="WelcomeMessage" value="Welcome to LMS!" />
     <text name="FormIsNotValidMessage" value="Form is not valid. Please check and fix errors." />
     <text name="TenantNameCanNotBeEmpty" value="Tenant name can not be empty" />
