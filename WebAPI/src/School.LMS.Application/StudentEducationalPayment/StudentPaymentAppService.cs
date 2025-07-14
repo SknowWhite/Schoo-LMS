@@ -174,6 +174,43 @@ namespace School.LMS.StudentEducationalPayment
             };
         }
 
+        public async Task<BusPaymentDetails> GetBusPaymentDetailsAsync(string studentId)
+        {
+            var student = _studentRepo.GetAll()
+                .FirstOrDefault(x => x.StudentId == studentId);
+
+            if (student == null)
+                throw new UserFriendlyException("Student not found");
+
+            var studentDto = student.MapToStudentDto();
+
+            var actualPayments = _eduPaymentRepo
+                .GetAllIncluding(x => x.Installment)
+                .Where(x => x.StudentId == student.Id)
+                .ToList();
+
+            var studentBusSubscriptions = _busSubscriptionRepo.GetAll()
+                .Where(x => x.StudentId == student.Id)
+                .ToList();
+
+            var allBusLines = _busFeePlanRepo.GetAll().ToList();
+
+            var busLines = allBusLines.Select(line => new BusLineDto
+            {
+                Id = line.Id,
+                Name = line.Line,
+                ExpectedAmount = line.ExpectedTotalAmount,
+                IsSubscribed = studentBusSubscriptions.Any(s => s.BusFeePlanId == line.Id),
+                SubscriptionStatus = studentBusSubscriptions
+                    .FirstOrDefault(s => s.BusFeePlanId == line.Id)?.Status.ToString() ?? "NotSubscribed"
+            }).ToList();
+
+            return new BusPaymentDetails
+            {
+                StudentInfo = studentDto,
+                BusLines = busLines
+            };
+        }
 
         public async Task<StudentPaymentBusDetailsDto> GetStudentPaymentBusDetailsAsync(string studentId)
         {

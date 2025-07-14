@@ -39,6 +39,12 @@ namespace School.LMS.StudentEducationalPayment.Dto
         public List<EducationalPaymentDto> EducationalPayments { get; set; }
         public List<BusLineDto> BusLines { get; set; }
     }
+
+    public class BusPaymentDetails
+    {
+        public StudentDto StudentInfo { get; set; }
+        public List<BusLineDto> BusLines { get; set; }
+    }
     public class StudentPaymentBusDetailsDto
     {
         public StudentDto StudentInfo { get; set; }

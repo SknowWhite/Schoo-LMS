@@ -47,7 +47,8 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
             return [
                 new MenuItem(this.l('HomePage'), '/app/home', 'fas fa-home'),
                 new MenuItem(this.l('About'), '/app/about', 'fas fa-info-circle'),
-                new MenuItem(this.l('Payments'), '/app/studentPayment', 'fas fa-credit-card')
+                new MenuItem(this.l('Payments'), '/app/studentPayment', 'fas fa-credit-card'),
+                new MenuItem(this.l('Bus Fees'), '/app/busFees', 'fas fa-money-bill')
             ];
         } else {
             // ✅ Full menu for other users

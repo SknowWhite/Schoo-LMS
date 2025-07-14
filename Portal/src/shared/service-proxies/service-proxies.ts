@@ -5949,6 +5949,43 @@ export class EducationalPaymentServiceProxy {
         })
       );
   }
+  getBusPaymentData(studentId: number): Observable<any[]> {
+    let url_ =
+      this.baseUrl +
+      "/api/services/app/StudentPayment/GetBusPaymentDetails?";
+    if (studentId === null)
+      throw new Error("The parameter 'keyword' cannot be null.");
+    else if (studentId !== undefined)
+      url_ += "studentId=" + encodeURIComponent("" + studentId) + "&";
+
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_: any = {
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+        Accept: "text/plain",
+      }),
+    };
+    return this.http
+      .request("get", url_, options_)
+      .pipe(
+        _observableMergeMap((response_: any) => {
+          return this.processEduPaymentData(response_);
+        })
+      )
+      .pipe(
+        _observableCatch((response_: any) => {
+          if (response_ instanceof HttpResponseBase) {
+            try {
+              return this.processEduPaymentData(response_ as any);
+            } catch (e) {
+              return _observableThrow(e) as any as Observable<any[]>;
+            }
+          } else return _observableThrow(response_) as any as Observable<any[]>;
+        })
+      );
+  }
 
   protected processEduPaymentData(
     response: HttpResponseBase
