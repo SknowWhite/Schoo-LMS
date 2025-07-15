@@ -45,28 +45,30 @@ export class BusFeesComponent extends AppComponentBase implements OnInit {
         invoiceNumber: bus.invoiceNumber
       }));
 
-      const hasFullPayment = data.educationalPayments.some(p => p.isFullPayment);
-      paymentDetails.paymentMode = hasFullPayment ? 'full' : 'installments';
+      if (data.busPayments) {
+        const hasFullPayment = data.busPayments?.some(p => p.isFullPayment);
+        paymentDetails.paymentMode = hasFullPayment ? 'full' : 'installments';
 
-      const fullPayment = data.educationalPayments.find(p => p.isFullPayment);
-      if (fullPayment) {
-        paymentDetails.fullAmount = fullPayment.amountPaid;
-        paymentDetails.discountedAmount = fullPayment.amountPaid * 0.95;
-        paymentDetails.fullPaymentDueDate = new Date(fullPayment.paymentDate);
-        paymentDetails.PaymentStatus = this.mapPaymentStatus(fullPayment.paymentStatus);
-        paymentDetails.invoiceNumber = fullPayment.invoiceNumber;
+        const fullPayment = data.busPayments?.find(p => p.isFullPayment);
+        if (fullPayment) {
+          paymentDetails.fullAmount = fullPayment.amountPaid;
+          paymentDetails.discountedAmount = fullPayment.amountPaid * 0.95;
+          paymentDetails.fullPaymentDueDate = new Date(fullPayment.paymentDate);
+          paymentDetails.PaymentStatus = this.mapPaymentStatus(fullPayment.paymentStatus);
+          paymentDetails.invoiceNumber = fullPayment.invoiceNumber;
 
+        }
+        paymentDetails.installments = data.busPayments
+          .filter(p => !p.isFullPayment)
+          .map(p => ({
+            id: p.id,
+            dueDate: new Date(p.paymentDate),
+            amount: p.amountPaid,
+            status: this.mapPaymentStatus(p.paymentStatus),
+            invoiceNumber: p.invoiceNumber
+          }));
       }
 
-      paymentDetails.installments = data.educationalPayments
-        .filter(p => !p.isFullPayment)
-        .map(p => ({
-          id: p.id,
-          dueDate: new Date(p.paymentDate),
-          amount: p.amountPaid,
-          status: this.mapPaymentStatus(p.paymentStatus),
-          invoiceNumber: p.invoiceNumber
-        }));
 
       this.PaymentDetails = paymentDetails;
       this.isFullPayment(this.PaymentDetails);
@@ -81,7 +83,7 @@ export class BusFeesComponent extends AppComponentBase implements OnInit {
 
   getSelectedInstallmentAmount(): number {
     const inst = this.PaymentDetails.installments.find(i => i.id === this.selectedInstallmentId);
-    return inst ? inst.amount+ this.PaymentDetails.student.previousAmount : 0 ;
+    return inst ? inst.amount + this.PaymentDetails.student.previousAmount : 0;
   }
 
   payFull(): void {
@@ -91,7 +93,7 @@ export class BusFeesComponent extends AppComponentBase implements OnInit {
     payment.isFullPayment = true;
     payment.amountPaid = amount + this.PaymentDetails.student.previousAmount;
     payment.paymentDate = new Date();
-    payment.selectedInstallmentIds =0;
+    payment.selectedInstallmentIds = 0;
 
     this._PaymentService.SubmitPayment(payment).subscribe((data: any) => {
       this.fawryLink = data;
@@ -110,7 +112,7 @@ export class BusFeesComponent extends AppComponentBase implements OnInit {
     payment.paymentDate = new Date();
     payment.selectedInstallmentIds = this.selectedInstallmentId;
 
-    this._PaymentService.SubmitPayment(payment).subscribe((data: any) => {
+    this._PaymentService.SubmitBusPayment(payment).subscribe((data: any) => {
       this.fawryLink = data;
       this.notify.success('Installment payment submitted successfully!');
       this.refreshPaymentData();
@@ -135,31 +137,31 @@ export class BusFeesComponent extends AppComponentBase implements OnInit {
   private isInstallmentsPayment(details: PaymentDetails) {
     this.isInstallmentsPaid = details.installments.some(x => x.status === 'Paid' || x.status === 'Pending');
   }
-payBus(): void {
-  const selectedBus = this.PaymentDetails.busLines.find(x => x.id === this.PaymentDetails.selectedBusLineId);
-  if (!selectedBus || selectedBus.status === 'Paid') return;
+  payBus(): void {
+    const selectedBus = this.PaymentDetails.busLines.find(x => x.id === this.PaymentDetails.selectedBusLineId);
+    if (!selectedBus || selectedBus.status === 'Paid') return;
 
-  const payment = new StudentPaymentDetails();
-  payment.studentId = this.studentId;
-  payment.isFullPayment = false;
-  //payment.amountPaid = selectedBus.amount;
-  payment.paymentDate = new Date();
-  payment.selectedInstallmentIds = 0; // for bus
+    const payment = new StudentPaymentDetails();
+    payment.studentId = this.studentId;
+    payment.isFullPayment = false;
+    //payment.amountPaid = selectedBus.amount;
+    payment.paymentDate = new Date();
+    payment.selectedInstallmentIds = 0; // for bus
 
- /* this._PaymentService.SubmitBusPayment(payment).subscribe((data: any) => {
-    this.fawryLink = data;
-    this.notify.success('Bus payment submitted successfully!');
-    this.refreshPaymentData();
-  });*/
-}
+    /* this._PaymentService.SubmitBusPayment(payment).subscribe((data: any) => {
+       this.fawryLink = data;
+       this.notify.success('Bus payment submitted successfully!');
+       this.refreshPaymentData();
+     });*/
+  }
 
-isBusLinePaymentDisabled(): boolean {
-  const selectedId = this.PaymentDetails.selectedBusLineId;
-  if (!selectedId) return true;
+  isBusLinePaymentDisabled(): boolean {
+    const selectedId = this.PaymentDetails.selectedBusLineId;
+    if (!selectedId) return true;
 
-  const selected = this.PaymentDetails.busLines.find(x => x.id === selectedId);
-  return !selected || selected.status === 'Paid';
-}
+    const selected = this.PaymentDetails.busLines.find(x => x.id === selectedId);
+    return !selected || selected.status === 'Paid';
+  }
 }
 
 export class PaymentDetails {
@@ -170,22 +172,22 @@ export class PaymentDetails {
   PaymentStatus: string = '';
   fullPaymentDueDate!: Date;
   invoiceNumber?: string;
-busLines: {
-  id: number;
-  name: string;
-  notes: string;
-  status: string;
-  invoiceNumber?: string;
-}[];
+  busLines: {
+    id: number;
+    name: string;
+    notes: string;
+    status: string;
+    invoiceNumber?: string;
+  }[];
 
-selectedBusLineId?: number;
+  selectedBusLineId?: number;
 
   installments: {
     id: number;
     dueDate: Date;
     amount: number;
     status: string;
-      invoiceNumber?: string; // <-- NEW
+    invoiceNumber?: string; // <-- NEW
 
   }[] = [];
 }

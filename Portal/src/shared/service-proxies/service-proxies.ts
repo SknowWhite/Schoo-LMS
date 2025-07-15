@@ -6068,6 +6068,43 @@ export class EducationalPaymentServiceProxy {
         })
       );
   }
+  SubmitBusPayment(details: StudentPaymentDetails | undefined): Observable<void> {
+    let url_ =
+      this.baseUrl +
+      "/api/services/app/StudentPayment/SubmitBusPayment";
+    url_ = url_.replace(/[?&]$/, "");
+
+    const content_ = JSON.stringify(details);
+
+    let options_: any = {
+      body: content_,
+      observe: "response",
+      responseType: "blob",
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Accept: "text/plain",
+      }),
+    };
+
+    return this.http
+      .request("post", url_, options_)
+      .pipe(
+        _observableMergeMap((response_: any) => {
+          return this.processSubmitPayment(response_);
+        })
+      )
+      .pipe(
+        _observableCatch((response_: any) => {
+          if (response_ instanceof HttpResponseBase) {
+            try {
+              return this.processSubmitPayment(response_ as any);
+            } catch (e) {
+              return _observableThrow(e) as any as Observable<void>;
+            }
+          } else return _observableThrow(response_) as any as Observable<void>;
+        })
+      );
+  }
 
   protected processSubmitPayment(response: HttpResponseBase): Observable<void> {
     const status = response.status;

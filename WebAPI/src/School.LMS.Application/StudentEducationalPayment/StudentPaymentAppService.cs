@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace School.LMS.StudentEducationalPayment
 {
@@ -177,17 +178,105 @@ namespace School.LMS.StudentEducationalPayment
         public async Task<BusPaymentDetails> GetBusPaymentDetailsAsync(string studentId)
         {
             var student = _studentRepo.GetAll()
+                .Include(x =>x.BusSubscriptions).ThenInclude(c=>c.BusFeePlan)
                 .FirstOrDefault(x => x.StudentId == studentId);
 
             if (student == null)
                 throw new UserFriendlyException("Student not found");
 
             var studentDto = student.MapToStudentDto();
+            List<BusPaymentDto> busPayments = new List<BusPaymentDto>();
+            var busLine = student.BusSubscriptions.OrderByDescending(b => b.SubscriptionDate).FirstOrDefault()?.BusFeePlan;
+            if (busLine != null)
+            {
 
-            var actualPayments = _eduPaymentRepo
-                .GetAllIncluding(x => x.Installment)
-                .Where(x => x.StudentId == student.Id)
-                .ToList();
+
+                var studentBusFeePlan = _busFeePlanRepo
+                   .GetAllIncluding(x => x.Installments)
+                   .Where(x => x.Line == x.Line)
+                   .Select(x => new BusFeePlanDto
+                   {
+                       Id = x.Id,
+                       Line = x.Line,
+                       ExpectedTotalAmount = x.ExpectedTotalAmount,
+                       FullAmountWith5PercentDiscount = x.FullAmountWith5PercentDiscount,
+                       FullAmountDueDate = x.FullAmountDueDate,
+                       Installments = x.Installments.Select(i => new BusInstallmentDto
+                       {
+                           Id = i.Id,
+                           Amount = i.Amount,
+                           DueDate = i.DueDate,
+                           Order = i.Order
+                       }).ToList()
+                   })
+                   .FirstOrDefault();
+
+                if (studentBusFeePlan == null)
+                    throw new UserFriendlyException("No bus fee plan found for this grade");
+
+                busPayments = studentBusFeePlan.Installments.Select(i => new BusPaymentDto
+                {
+                    Id = i.Id,
+                    InstallmentName = $"Installment {i.Order}",
+                    PaymentDate = i.DueDate,
+                    AmountPaid = i.Amount,
+                    PaymentStatus = PaymentStatus.New,
+                    IsFullPayment = false,
+                    InvoiceNumber = null
+                }).ToList();
+
+                var actualPayments = _busPaymentRepo
+                    .GetAllIncluding(x => x.Installment, x => x.BusSubscription)
+                    .Where(x => x.BusSubscription.StudentId == student.Id)
+                    .ToList();
+
+                if (actualPayments.Any())
+                {
+                    if (actualPayments.Any(x => x.IsFullPayment))
+                    {
+                        var fullPayment = actualPayments.First(x => x.IsFullPayment);
+
+                        busPayments = new List<BusPaymentDto>
+            {
+                new BusPaymentDto
+                {
+                    Id = fullPayment.Id,
+                    AmountPaid = fullPayment.AmountPaid,
+                    PaymentStatus = fullPayment.Status,
+                    IsFullPayment = true,
+                    InstallmentName = "Full Payment",
+                    PaymentDate = fullPayment.PaymentDate,
+                    InvoiceNumber =     $"{fullPayment.InvoiceNumber}"
+                }
+            };
+                    }
+                    else
+                    {
+                        foreach (var item in actualPayments)
+                        {
+                            var target = busPayments.FirstOrDefault(x => x.Id == item.BusInstallmentId);
+                            if (target != null)
+                            {
+                                target.PaymentDate = item.PaymentDate;
+                                target.PaymentStatus = item.Status;
+                                target.InvoiceNumber = $"{item.InvoiceNumber}";
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    busPayments.Insert(0, new BusPaymentDto
+                    {
+                        InstallmentName = "Full Payment",
+                        PaymentDate = studentBusFeePlan.FullAmountDueDate,
+                        AmountPaid = studentBusFeePlan.FullAmountWith5PercentDiscount,
+                        PaymentStatus = PaymentStatus.New,
+                        IsFullPayment = true,
+                        InvoiceNumber = null
+                    });
+                }
+            }
 
             var studentBusSubscriptions = _busSubscriptionRepo.GetAll()
                 .Where(x => x.StudentId == student.Id)
@@ -204,10 +293,11 @@ namespace School.LMS.StudentEducationalPayment
                 SubscriptionStatus = studentBusSubscriptions
                     .FirstOrDefault(s => s.BusFeePlanId == line.Id)?.Status.ToString() ?? "NotSubscribed"
             }).ToList();
-
+            
             return new BusPaymentDetails
             {
                 StudentInfo = studentDto,
+                BusPayments = busPayments,
                 BusLines = busLines
             };
         }
@@ -327,17 +417,23 @@ namespace School.LMS.StudentEducationalPayment
                 }
             };
         }
-        public async Task SubmitBusPaymentAsync(StudentBusPaymentInputDto input)
+        public async Task<string> SubmitBusPaymentAsync(StudentBusPaymentInputDto input)
         {
             var student = _studentRepo.GetAll()
-             .Where(x => x.StudentId == input.StudentId.ToString())
-             .FirstOrDefault();
+                .FirstOrDefault(x => x.StudentId == input.StudentId.ToString());
 
-            var busSubscription = _busSubscriptionRepo.GetAll().Where(x => x.StudentId == student.Id).FirstOrDefault();
+            if (student == null)
+                throw new UserFriendlyException("Student not found");
+
+            var busSubscription = _busSubscriptionRepo.GetAll()
+                .FirstOrDefault(x => x.StudentId == student.Id);
+
+            if (busSubscription == null)
+                throw new UserFriendlyException("Bus subscription not found");
 
             if (input.IsFullPayment)
             {
-                var payment = new Models.StudentBusPayment
+                var payment = new StudentBusPayment
                 {
                     BusSubscriptionId = busSubscription.Id,
                     BusSubscription = busSubscription,
@@ -346,29 +442,62 @@ namespace School.LMS.StudentEducationalPayment
                     PaymentDate = input.PaymentDate,
                     Status = PaymentStatus.Pending
                 };
+
+                var invoiceData = await _fawryService.CreatePaymentLinkAsync(
+                    student.Name,
+                    student.StudentId,
+                    student.MobileNumber,
+                    Convert.ToDouble(payment.AmountPaid),
+                    "Full amount Bus Fees"
+                );
+
+                if (string.IsNullOrEmpty(invoiceData.invoiceNumber))
+                    throw new UserFriendlyException("Failed to create payment link");
+
+                payment.InvoiceNumber = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{invoiceData.invoiceNumber}";
+                payment.TransactionId = invoiceData.businessReference;
+
                 await _busPaymentRepo.InsertAsync(payment);
-
+                return payment.InvoiceNumber;
             }
-            else if (input.SelectedInstallmentIds?.Any() == true)
+
+            if (input.SelectedInstallmentIds.HasValue)
             {
-                foreach (var installmentId in input.SelectedInstallmentIds)
+                var invoiceLinks = new List<string>();
+
+                var installment = await _busInstallmentRepo.GetAsync(input.SelectedInstallmentIds.Value);
+
+                var payment = new StudentBusPayment
                 {
-                    var installment = await _busInstallmentRepo.GetAsync(installmentId);
+                    BusSubscriptionId = busSubscription.Id,
+                    BusSubscription = busSubscription,
+                    BusInstallmentId = installment.Id,
+                    IsFullPayment = false,
+                    AmountPaid = installment.Amount,
+                    PaymentDate = input.PaymentDate,
+                    Status = PaymentStatus.Pending
+                };
 
-                    var payment = new StudentBusPayment
-                    {
-                        BusSubscriptionId = busSubscription.Id,
-                        BusSubscription = busSubscription,
-                        BusInstallmentId = installment.Id,
-                        IsFullPayment = false,
-                        AmountPaid = installment.Amount,
-                        PaymentDate = input.PaymentDate,
-                        Status = PaymentStatus.Pending
-                    };
+                var invoiceData = await _fawryService.CreatePaymentLinkAsync(
+                    student.Name,
+                    student.StudentId,
+                    student.MobileNumber,
+                    Convert.ToDouble(payment.AmountPaid),
+                    $"Bus Installment #{installment.Order}"
+                );
 
-                    await _busPaymentRepo.InsertAsync(payment);
-                }
+                if (string.IsNullOrEmpty(invoiceData.invoiceNumber))
+                    throw new UserFriendlyException("Failed to create payment link");
+
+                payment.InvoiceNumber = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{invoiceData.invoiceNumber}";
+                payment.TransactionId = invoiceData.businessReference;
+
+                await _busPaymentRepo.InsertAsync(payment);
+                return payment.InvoiceNumber;
             }
+
+
+            throw new UserFriendlyException("Please select a valid installment.");
         }
         public async Task<string> SubmitEducationalPaymentAsync(StudentEducationalPaymentInputDto input)
         {

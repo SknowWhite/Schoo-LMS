@@ -76,30 +76,6 @@
     </div>
   </div>
 
-  <!-- Bus Subscription Section -->
-  <!-- Bus Subscription Section -->
-  <div class="card bus-card" *ngIf="PaymentDetails.busLines?.length > 0 && false">
-    <h5>🚌 Bus Subscription</h5>
-
-    <label class="form-check" *ngFor="let line of PaymentDetails.busLines">
-      <input type="radio" name="busLine" [value]="line.id" [(ngModel)]="PaymentDetails.selectedBusLineId"
-        [disabled]="line.status === 'Paid'" />
-      {{ line.name }} - {{ line.amount | currency }}
-      <span *ngIf="line.status === 'Paid'" class="badge paid">Paid</span>
-    </label>
-
-    <!-- Notes input -->
-    <div class="form-group mt-2">
-      <label for="busNotes" class="form-label">📝 Notes </label>
-      <textarea id="busNotes" rows="2" placeholder="Add any home address..." class="form-control"></textarea>
-    </div>
-
-    <button class="btn warning-btn" [disabled]="isBusLinePaymentDisabled()" (click)="payBus()">
-      🚍 Subscribe to bus
-    </button>
-  </div>
-
-
 
   <!-- Payment Done -->
   <div *ngIf="isFulPaymentPaid " class="alert">

@@ -13,6 +13,7 @@ namespace School.LMS.BusFeePlan.Dto
         public decimal ExpectedTotalAmount { get; set; }
         public decimal FullAmountWith5PercentDiscount { get; set; }
         public DateTime FullAmountDueDate { get; set; }
+        public string InvoiceNumber { get; set; }
 
         public List<BusInstallmentDto> Installments { get; set; }
     }
@@ -22,6 +23,7 @@ namespace School.LMS.BusFeePlan.Dto
         public int Order { get; set; }
         public decimal Amount { get; set; }
         public DateTime DueDate { get; set; }
+        public string InvoiceNumber { get; set; }
     }
 
 }
