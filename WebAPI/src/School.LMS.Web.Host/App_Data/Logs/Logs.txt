@@ -23587,3 +23587,439 @@ Abp.AbpInitializationException: LMS source contains more than one dictionary for
    at System.Collections.Generic.List`1.ForEach(Action`1 action)
    at Abp.Modules.AbpModuleManager.StartModules()
    at Abp.AbpBootstrapper.Initialize()
+DEBUG 2025-07-15 21:08:59,056 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2025-07-15 21:09:00,190 [1    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2025-07-15 21:09:00,215 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.Web.Host.Startup.LMSWebHostModule, School.LMS.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,218 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.LMSWebCoreModule, School.LMS.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,219 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.LMSApplicationModule, School.LMS.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,220 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.LMSCoreModule, School.LMS.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,220 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,221 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,221 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,222 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,223 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.EntityFrameworkCore.LMSEntityFrameworkModule, School.LMS.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,223 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,224 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,224 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,225 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,225 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,225 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:09:00,227 [1    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2025-07-15 21:10:19,929 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2025-07-15 21:10:20,218 [1    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2025-07-15 21:10:20,257 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.Web.Host.Startup.LMSWebHostModule, School.LMS.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,263 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.LMSWebCoreModule, School.LMS.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,265 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.LMSApplicationModule, School.LMS.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,265 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.LMSCoreModule, School.LMS.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,266 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,267 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,267 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,269 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,270 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.EntityFrameworkCore.LMSEntityFrameworkModule, School.LMS.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,270 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,271 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,271 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,272 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,273 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,273 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:20,278 [1    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2025-07-15 21:10:24,500 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2025-07-15 21:10:24,500 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2025-07-15 21:10:24,500 [1    ] o.Configuration.LanguageManagementConfig - Converted LMS (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2025-07-15 21:10:24,500 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2025-07-15 21:10:25,513 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: School.LMS.EntityFrameworkCore.LMSDbContext, School.LMS.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:10:26,048 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2025-07-15 21:10:26,170 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2025-07-15 21:10:26,198 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+FATAL 2025-07-15 21:10:26,276 [1    ] Abp.AbpBootstrapper                      - Abp.AbpInitializationException: LMS source contains more than one dictionary for the culture: fr
+   at Abp.Localization.Dictionaries.LocalizationDictionaryProviderBase.InitializeDictionary[TDictionary](TDictionary dictionary, Boolean isDefault)
+   at Abp.Localization.Dictionaries.Xml.XmlEmbeddedFileLocalizationDictionaryProvider.InitializeDictionaries()
+   at Abp.Localization.Dictionaries.LocalizationDictionaryProviderBase.Initialize(String sourceName)
+   at Abp.Localization.MultiTenantLocalizationDictionaryProvider.Initialize(String sourceName)
+   at Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource.Initialize(ILocalizationConfiguration configuration, IIocResolver iocResolver)
+   at Abp.Localization.MultiTenantLocalizationSource.Initialize(ILocalizationConfiguration configuration, IIocResolver iocResolver)
+   at Abp.Localization.LocalizationManager.InitializeSources()
+   at Abp.Localization.LocalizationManager.Initialize()
+   at Abp.AbpKernelModule.PostInitialize()
+   at Abp.Modules.AbpModuleManager.<>c.<StartModules>b__15_2(AbpModuleInfo module)
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at Abp.Modules.AbpModuleManager.StartModules()
+   at Abp.AbpBootstrapper.Initialize()
+Abp.AbpInitializationException: LMS source contains more than one dictionary for the culture: fr
+   at Abp.Localization.Dictionaries.LocalizationDictionaryProviderBase.InitializeDictionary[TDictionary](TDictionary dictionary, Boolean isDefault)
+   at Abp.Localization.Dictionaries.Xml.XmlEmbeddedFileLocalizationDictionaryProvider.InitializeDictionaries()
+   at Abp.Localization.Dictionaries.LocalizationDictionaryProviderBase.Initialize(String sourceName)
+   at Abp.Localization.MultiTenantLocalizationDictionaryProvider.Initialize(String sourceName)
+   at Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource.Initialize(ILocalizationConfiguration configuration, IIocResolver iocResolver)
+   at Abp.Localization.MultiTenantLocalizationSource.Initialize(ILocalizationConfiguration configuration, IIocResolver iocResolver)
+   at Abp.Localization.LocalizationManager.InitializeSources()
+   at Abp.Localization.LocalizationManager.Initialize()
+   at Abp.AbpKernelModule.PostInitialize()
+   at Abp.Modules.AbpModuleManager.<>c.<StartModules>b__15_2(AbpModuleInfo module)
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at Abp.Modules.AbpModuleManager.StartModules()
+   at Abp.AbpBootstrapper.Initialize()
+DEBUG 2025-07-15 21:11:23,475 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2025-07-15 21:11:23,608 [1    ] Abp.Modules.AbpModuleManager             - Found 15 ABP modules in total.
+DEBUG 2025-07-15 21:11:23,657 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.Web.Host.Startup.LMSWebHostModule, School.LMS.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,662 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.LMSWebCoreModule, School.LMS.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,663 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.LMSApplicationModule, School.LMS.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,664 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.LMSCoreModule, School.LMS.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,664 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,665 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,665 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,668 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,669 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: School.LMS.EntityFrameworkCore.LMSEntityFrameworkModule, School.LMS.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,669 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,670 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,671 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,671 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,672 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,672 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=9.4.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:23,677 [1    ] Abp.Modules.AbpModuleManager             - 15 modules loaded.
+DEBUG 2025-07-15 21:11:28,360 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2025-07-15 21:11:28,361 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2025-07-15 21:11:28,361 [1    ] o.Configuration.LanguageManagementConfig - Converted LMS (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2025-07-15 21:11:28,361 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2025-07-15 21:11:29,053 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: School.LMS.EntityFrameworkCore.LMSDbContext, School.LMS.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2025-07-15 21:11:29,371 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2025-07-15 21:11:29,408 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2025-07-15 21:11:29,419 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2025-07-15 21:11:29,432 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: LMS
+DEBUG 2025-07-15 21:11:29,437 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2025-07-15 21:11:29,447 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2025-07-15 21:11:29,450 [1    ] , Culture=neutral, PublicKeyToken=null]] - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker`2[[School.LMS.MultiTenancy.Tenant, School.LMS.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[School.LMS.Authorization.Users.User, School.LMS.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+DEBUG 2025-07-15 21:11:29,478 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 8 classes define auto mapping attributes
+DEBUG 2025-07-15 21:11:29,478 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - School.LMS.Users.Dto.CreateUserDto
+DEBUG 2025-07-15 21:11:29,483 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - School.LMS.Users.Dto.UserDto
+DEBUG 2025-07-15 21:11:29,484 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - School.LMS.Students.Dto.StudentDto
+DEBUG 2025-07-15 21:11:29,485 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - School.LMS.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2025-07-15 21:11:29,485 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - School.LMS.Sessions.Dto.UserLoginInfoDto
+DEBUG 2025-07-15 21:11:29,485 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - School.LMS.Roles.Dto.PermissionDto
+DEBUG 2025-07-15 21:11:29,485 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - School.LMS.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2025-07-15 21:11:29,485 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - School.LMS.MultiTenancy.Dto.TenantDto
+WARN  2025-07-15 21:11:30,834 [1    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'ExpectedTotalAmount' on entity type 'BusFeePlan'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2025-07-15 21:11:30,838 [1    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'FullAmountWith5PercentDiscount' on entity type 'BusFeePlan'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2025-07-15 21:11:30,843 [1    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'Amount' on entity type 'BusInstallment'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2025-07-15 21:11:30,850 [1    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'ExpectedTotalAmount' on entity type 'EducationalFeePlan'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2025-07-15 21:11:30,857 [1    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'FullAmountWith5PercentDiscount' on entity type 'EducationalFeePlan'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2025-07-15 21:11:30,860 [1    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'Amount' on entity type 'EducationalInstallment'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2025-07-15 21:11:30,864 [1    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'PreviousAmount' on entity type 'Student'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2025-07-15 21:11:30,868 [1    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'AmountPaid' on entity type 'StudentBusPayment'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+WARN  2025-07-15 21:11:30,873 [1    ] oft.EntityFrameworkCore.Model.Validation - No store type was specified for the decimal property 'AmountPaid' on entity type 'StudentEducationalPayment'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+INFO  2025-07-15 21:11:31,518 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (17ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[DisplayName], [a].[IsDeleted], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name]
+FROM [AbpEditions] AS [a]
+WHERE [a].[Name] = N'Standard'
+INFO  2025-07-15 21:11:31,658 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (32ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,664 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,668 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,673 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,676 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,681 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,684 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,688 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,692 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,696 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,700 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,704 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,707 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@__language_Name_1='?' (Size = 128)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpLanguages] AS [a]
+        WHERE [a].[TenantId] IS NULL AND [a].[Name] = @__language_Name_1) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,736 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (14ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[Description], [a].[DisplayName], [a].[IsDefault], [a].[IsDeleted], [a].[IsStatic], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[NormalizedName], [a].[TenantId]
+FROM [AbpRoles] AS [a]
+WHERE [a].[TenantId] IS NULL AND [a].[Name] = N'Admin'
+INFO  2025-07-15 21:11:31,811 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (15ms) [Parameters=[@__adminRoleForHost_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Name]
+FROM [AbpPermissions] AS [a]
+WHERE [a].[Discriminator] = N'RolePermissionSetting' AND [a].[TenantId] IS NULL AND [a].[RoleId] = @__adminRoleForHost_Id_0
+INFO  2025-07-15 21:11:31,833 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[AuthenticationSource], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[EmailAddress], [a].[EmailConfirmationCode], [a].[IsActive], [a].[IsDeleted], [a].[IsEmailConfirmed], [a].[IsLockoutEnabled], [a].[IsPhoneNumberConfirmed], [a].[IsTwoFactorEnabled], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[LockoutEndDateUtc], [a].[Name], [a].[NormalizedEmailAddress], [a].[NormalizedUserName], [a].[Password], [a].[PasswordResetCode], [a].[PhoneNumber], [a].[SecurityStamp], [a].[Surname], [a].[TenantId], [a].[UserName]
+FROM [AbpUsers] AS [a]
+WHERE [a].[TenantId] IS NULL AND [a].[UserName] = N'admin'
+INFO  2025-07-15 21:11:31,929 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (11ms) [Parameters=[@__name_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpSettings] AS [a]
+        WHERE [a].[Name] = @__name_0 AND [a].[TenantId] IS NULL AND [a].[UserId] IS NULL) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,936 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (4ms) [Parameters=[@__name_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpSettings] AS [a]
+        WHERE [a].[Name] = @__name_0 AND [a].[TenantId] IS NULL AND [a].[UserId] IS NULL) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:31,941 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__name_0='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AbpSettings] AS [a]
+        WHERE [a].[Name] = @__name_0 AND [a].[TenantId] IS NULL AND [a].[UserId] IS NULL) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+INFO  2025-07-15 21:11:32,072 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (15ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConnectionString], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[EditionId], [a].[IsActive], [a].[IsDeleted], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[TenancyName]
+FROM [AbpTenants] AS [a]
+WHERE [a].[TenancyName] = N'Default'
+INFO  2025-07-15 21:11:32,125 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (7ms) [Parameters=[@___tenantId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[Description], [a].[DisplayName], [a].[IsDefault], [a].[IsDeleted], [a].[IsStatic], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[NormalizedName], [a].[TenantId]
+FROM [AbpRoles] AS [a]
+WHERE [a].[TenantId] = @___tenantId_0 AND [a].[Name] = N'Admin'
+INFO  2025-07-15 21:11:32,138 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (5ms) [Parameters=[@___tenantId_0='?' (DbType = Int32), @__adminRole_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Name]
+FROM [AbpPermissions] AS [a]
+WHERE [a].[Discriminator] = N'RolePermissionSetting' AND [a].[TenantId] = @___tenantId_0 AND [a].[RoleId] = @__adminRole_Id_1
+INFO  2025-07-15 21:11:32,156 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (5ms) [Parameters=[@___tenantId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[AuthenticationSource], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[EmailAddress], [a].[EmailConfirmationCode], [a].[IsActive], [a].[IsDeleted], [a].[IsEmailConfirmed], [a].[IsLockoutEnabled], [a].[IsPhoneNumberConfirmed], [a].[IsTwoFactorEnabled], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[LockoutEndDateUtc], [a].[Name], [a].[NormalizedEmailAddress], [a].[NormalizedUserName], [a].[Password], [a].[PasswordResetCode], [a].[PhoneNumber], [a].[SecurityStamp], [a].[Surname], [a].[TenantId], [a].[UserName]
+FROM [AbpUsers] AS [a]
+WHERE [a].[TenantId] = @___tenantId_0 AND [a].[UserName] = N'admin'
+INFO  2025-07-15 21:11:32,170 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (4ms) [Parameters=[@___tenantId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[Description], [a].[DisplayName], [a].[IsDefault], [a].[IsDeleted], [a].[IsStatic], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[NormalizedName], [a].[TenantId]
+FROM [AbpRoles] AS [a]
+WHERE [a].[TenantId] = @___tenantId_0 AND [a].[Name] = N'Student'
+INFO  2025-07-15 21:11:32,184 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (8ms) [Parameters=[@___tenantId_0='?' (DbType = Int32), @__studentRole_Id_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Name]
+FROM [AbpPermissions] AS [a]
+WHERE [a].[Discriminator] = N'RolePermissionSetting' AND [a].[TenantId] = @___tenantId_0 AND [a].[RoleId] = @__studentRole_Id_1
+INFO  2025-07-15 21:11:32,197 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [s].[Id], [s].[Grade], [s].[MobileNumber], [s].[Name], [s].[PreviousAmount], [s].[Status], [s].[StudentId]
+FROM [Students] AS [s]
+INFO  2025-07-15 21:11:32,223 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@___tenantId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[Description], [a].[DisplayName], [a].[IsDefault], [a].[IsDeleted], [a].[IsStatic], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[NormalizedName], [a].[TenantId]
+FROM [AbpRoles] AS [a]
+WHERE [a].[TenantId] = @___tenantId_0 AND [a].[Name] = N'Student'
+INFO  2025-07-15 21:11:32,235 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (3ms) [Parameters=[@___tenantId_0='?' (DbType = Int32), @__student_MobileNumber_1='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[AuthenticationSource], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[EmailAddress], [a].[EmailConfirmationCode], [a].[IsActive], [a].[IsDeleted], [a].[IsEmailConfirmed], [a].[IsLockoutEnabled], [a].[IsPhoneNumberConfirmed], [a].[IsTwoFactorEnabled], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[LockoutEndDateUtc], [a].[Name], [a].[NormalizedEmailAddress], [a].[NormalizedUserName], [a].[Password], [a].[PasswordResetCode], [a].[PhoneNumber], [a].[SecurityStamp], [a].[Surname], [a].[TenantId], [a].[UserName]
+FROM [AbpUsers] AS [a]
+WHERE [a].[TenantId] = @___tenantId_0 AND [a].[UserName] = @__student_MobileNumber_1
+INFO  2025-07-15 21:11:32,238 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@___tenantId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[Description], [a].[DisplayName], [a].[IsDefault], [a].[IsDeleted], [a].[IsStatic], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[NormalizedName], [a].[TenantId]
+FROM [AbpRoles] AS [a]
+WHERE [a].[TenantId] = @___tenantId_0 AND [a].[Name] = N'Student'
+INFO  2025-07-15 21:11:32,242 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@___tenantId_0='?' (DbType = Int32), @__student_MobileNumber_1='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[AuthenticationSource], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[EmailAddress], [a].[EmailConfirmationCode], [a].[IsActive], [a].[IsDeleted], [a].[IsEmailConfirmed], [a].[IsLockoutEnabled], [a].[IsPhoneNumberConfirmed], [a].[IsTwoFactorEnabled], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[LockoutEndDateUtc], [a].[Name], [a].[NormalizedEmailAddress], [a].[NormalizedUserName], [a].[Password], [a].[PasswordResetCode], [a].[PhoneNumber], [a].[SecurityStamp], [a].[Surname], [a].[TenantId], [a].[UserName]
+FROM [AbpUsers] AS [a]
+WHERE [a].[TenantId] = @___tenantId_0 AND [a].[UserName] = @__student_MobileNumber_1
+INFO  2025-07-15 21:11:32,246 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@___tenantId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[Description], [a].[DisplayName], [a].[IsDefault], [a].[IsDeleted], [a].[IsStatic], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[NormalizedName], [a].[TenantId]
+FROM [AbpRoles] AS [a]
+WHERE [a].[TenantId] = @___tenantId_0 AND [a].[Name] = N'Student'
+INFO  2025-07-15 21:11:32,250 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (0ms) [Parameters=[@___tenantId_0='?' (DbType = Int32), @__student_MobileNumber_1='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[AuthenticationSource], [a].[ConcurrencyStamp], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[EmailAddress], [a].[EmailConfirmationCode], [a].[IsActive], [a].[IsDeleted], [a].[IsEmailConfirmed], [a].[IsLockoutEnabled], [a].[IsPhoneNumberConfirmed], [a].[IsTwoFactorEnabled], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[LockoutEndDateUtc], [a].[Name], [a].[NormalizedEmailAddress], [a].[NormalizedUserName], [a].[Password], [a].[PasswordResetCode], [a].[PhoneNumber], [a].[SecurityStamp], [a].[Surname], [a].[TenantId], [a].[UserName]
+FROM [AbpUsers] AS [a]
+WHERE [a].[TenantId] = @___tenantId_0 AND [a].[UserName] = @__student_MobileNumber_1
+INFO  2025-07-15 21:11:32,397 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (9ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter__p_1='?' (DbType = Boolean)], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[DisplayName], [a].[Icon], [a].[IsDeleted], [a].[IsDisabled], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[TenantId]
+FROM [AbpLanguages] AS [a]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [a].[IsDeleted] = CAST(0 AS bit)) AND (@__ef_filter__p_1 = CAST(1 AS bit) OR [a].[TenantId] IS NULL)
+INFO  2025-07-15 21:11:32,555 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (3ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConnectionString], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[EditionId], [a].[IsActive], [a].[IsDeleted], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[TenancyName]
+FROM [AbpTenants] AS [a]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [a].[IsDeleted] = CAST(0 AS bit)) AND [a].[Id] = @__p_0
+INFO  2025-07-15 21:11:32,578 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (8ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter__p_1='?' (DbType = Boolean), @__ef_filter__CurrentTenantId_2='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[DeleterUserId], [a].[DeletionTime], [a].[DisplayName], [a].[Icon], [a].[IsDeleted], [a].[IsDisabled], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[TenantId]
+FROM [AbpLanguages] AS [a]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [a].[IsDeleted] = CAST(0 AS bit)) AND (@__ef_filter__p_1 = CAST(1 AS bit) OR [a].[TenantId] = @__ef_filter__CurrentTenantId_2)
+INFO  2025-07-15 21:11:32,643 [1    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (30ms) [Parameters=[@__ef_filter__p_0='?' (DbType = Boolean), @__ef_filter__CurrentTenantId_1='?' (DbType = Int32), @__tenantId_1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[LastModificationTime], [a].[LastModifierUserId], [a].[Name], [a].[TenantId], [a].[UserId], [a].[Value]
+FROM [AbpSettings] AS [a]
+WHERE (@__ef_filter__p_0 = CAST(1 AS bit) OR [a].[TenantId] = @__ef_filter__CurrentTenantId_1) AND [a].[UserId] IS NULL AND [a].[TenantId] = @__tenantId_1
+INFO  2025-07-15 21:11:32,661 [1    ] tCore.Builder.RequestLocalizationOptions - Supported Request Localization Cultures: en,es-MX,fr,de,it,nl,pt-BR,tr,ru,ar,fa,ja,zh-Hans
+INFO  2025-07-15 21:11:33,762 [7    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/ - - -
+INFO  2025-07-15 21:11:33,852 [1    ] Hangfire.BackgroundJobServer             - Starting Hangfire Server using job storage: 'SQL Server: .@LMSDb'
+INFO  2025-07-15 21:11:33,855 [1    ] Hangfire.BackgroundJobServer             - Using the following options for SQL Server job storage: Queue poll interval: 00:00:00.
+INFO  2025-07-15 21:11:33,858 [1    ] Hangfire.BackgroundJobServer             - Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+INFO  2025-07-15 21:11:33,967 [1    ] Microsoft.Hosting.Lifetime               - Application started. Press Ctrl+C to shut down.
+INFO  2025-07-15 21:11:33,972 [1    ] Microsoft.Hosting.Lifetime               - Hosting environment: Development
+INFO  2025-07-15 21:11:33,979 [1    ] Microsoft.Hosting.Lifetime               - Content root path: C:\School.LMS\WebAPI\src\School.LMS.Web.Host
+INFO  2025-07-15 21:11:33,984 [ss #1] Hangfire.Server.BackgroundServerProcess  - Server 25-05-002:10812:a9629cc1 successfully announced in 52.8892 ms
+INFO  2025-07-15 21:11:34,011 [ss #1] Hangfire.Server.BackgroundServerProcess  - Server 25-05-002:10812:a9629cc1 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, SqlServerHeartbeatProcess, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+INFO  2025-07-15 21:11:34,053 [og #1] Hangfire.Server.ServerWatchdog           - 3 servers were removed due to timeout
+INFO  2025-07-15 21:11:34,194 [ss #1] Hangfire.Server.BackgroundServerProcess  - Server 25-05-002:10812:a9629cc1 all the dispatchers started
+INFO  2025-07-15 21:11:34,535 [15   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (17ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]
+INFO  2025-07-15 21:11:34,776 [16   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'School.LMS.Web.Host.Controllers.HomeController.Index (School.LMS.Web.Host)'
+INFO  2025-07-15 21:11:34,899 [7    ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [s].[Id], [s].[AmountPaid], [s].[EducationalInstallmentId], [s].[InvoiceNumber], [s].[IsFullPayment], [s].[PaymentDate], [s].[PaymentStatus], [s].[PaymentStatusLastUpdate], [s].[StudentId], [s].[TransactionId]
+FROM [StudentEducationalPayments] AS [s]
+WHERE [s].[PaymentStatus] = 1 AND [s].[InvoiceNumber] IS NOT NULL
+INFO  2025-07-15 21:11:34,903 [10   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [s].[Id], [s].[AmountPaid], [s].[EducationalInstallmentId], [s].[InvoiceNumber], [s].[IsFullPayment], [s].[PaymentDate], [s].[PaymentStatus], [s].[PaymentStatusLastUpdate], [s].[StudentId], [s].[TransactionId]
+FROM [StudentEducationalPayments] AS [s]
+WHERE [s].[PaymentStatus] = 1 AND [s].[InvoiceNumber] IS NOT NULL
+INFO  2025-07-15 21:11:34,907 [15   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (8ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [s].[Id], [s].[AmountPaid], [s].[EducationalInstallmentId], [s].[InvoiceNumber], [s].[IsFullPayment], [s].[PaymentDate], [s].[PaymentStatus], [s].[PaymentStatusLastUpdate], [s].[StudentId], [s].[TransactionId]
+FROM [StudentEducationalPayments] AS [s]
+WHERE [s].[PaymentStatus] = 1 AND [s].[InvoiceNumber] IS NOT NULL
+INFO  2025-07-15 21:11:34,944 [16   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller School.LMS.Web.Host.Controllers.HomeController (School.LMS.Web.Host).
+INFO  2025-07-15 21:11:35,496 [16   ] c.Infrastructure.ControllerActionInvoker - Executing action method School.LMS.Web.Host.Controllers.HomeController.Index (School.LMS.Web.Host) - Validation state: Valid
+INFO  2025-07-15 21:11:35,518 [16   ] c.Infrastructure.ControllerActionInvoker - Executed action method School.LMS.Web.Host.Controllers.HomeController.Index (School.LMS.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 0.865ms.
+INFO  2025-07-15 21:11:36,022 [16   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (33ms) [Parameters=[@p0='?' (Size = 512), @p1='?' (Size = 64), @p2='?' (Size = 128), @p3='?' (Size = 2000), @p4='?' (Size = 2000), @p5='?' (Size = 1024), @p6='?' (DbType = Int32), @p7='?' (DbType = DateTime2), @p8='?' (DbType = Int32), @p9='?' (DbType = Int64), @p10='?' (Size = 256), @p11='?' (Size = 1024), @p12='?' (Size = 4000), @p13='?' (Size = 256), @p14='?' (DbType = Int32), @p15='?' (DbType = Int64)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AbpAuditLogs] ([BrowserInfo], [ClientIpAddress], [ClientName], [CustomData], [Exception], [ExceptionMessage], [ExecutionDuration], [ExecutionTime], [ImpersonatorTenantId], [ImpersonatorUserId], [MethodName], [Parameters], [ReturnValue], [ServiceName], [TenantId], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15);
+INFO  2025-07-15 21:11:36,155 [16   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2025-07-15 21:11:36,183 [16   ] c.Infrastructure.ControllerActionInvoker - Executed action School.LMS.Web.Host.Controllers.HomeController.Index (School.LMS.Web.Host) in 1219.8572ms
+INFO  2025-07-15 21:11:36,189 [16   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'School.LMS.Web.Host.Controllers.HomeController.Index (School.LMS.Web.Host)'
+INFO  2025-07-15 21:11:36,268 [51   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/swagger/index.html - - -
+INFO  2025-07-15 21:11:36,322 [16   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/ - 302 - - 2584.9875ms
+INFO  2025-07-15 21:11:36,565 [5    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/swagger/index.html - 200 - text/html;charset=utf-8 298.0261ms
+INFO  2025-07-15 21:11:36,607 [5    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/_vs/browserLink - - -
+INFO  2025-07-15 21:11:36,616 [48   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/_framework/aspnetcore-browser-refresh.js - - -
+INFO  2025-07-15 21:11:36,624 [7    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/swagger/ui/abp.swagger.js - - -
+INFO  2025-07-15 21:11:36,630 [11   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/swagger/ui/abp.js - - -
+INFO  2025-07-15 21:11:36,718 [48   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/_framework/aspnetcore-browser-refresh.js - 200 13774 application/javascript;+charset=utf-8 51.9908ms
+INFO  2025-07-15 21:11:36,852 [7    ] NetCore.StaticFiles.StaticFileMiddleware - The file /swagger/ui/abp.swagger.js was not modified
+INFO  2025-07-15 21:11:36,860 [11   ] NetCore.StaticFiles.StaticFileMiddleware - The file /swagger/ui/abp.js was not modified
+INFO  2025-07-15 21:11:36,875 [11   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/swagger/ui/abp.js - 304 - text/javascript 256.5956ms
+INFO  2025-07-15 21:11:36,882 [7    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/swagger/ui/abp.swagger.js - 304 - text/javascript 263.8446ms
+INFO  2025-07-15 21:11:37,157 [7    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/_vs/browserLink - 200 - text/javascript;+charset=UTF-8 566.1310ms
+INFO  2025-07-15 21:11:37,191 [59   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/AntiForgery/SetCookie - - -
+INFO  2025-07-15 21:11:37,206 [59   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'School.LMS.Web.Host.Controllers.AntiForgeryController.SetCookie (School.LMS.Web.Host)'
+INFO  2025-07-15 21:11:37,222 [15   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/2 GET https://localhost:44311/swagger/v1/swagger.json - - -
+INFO  2025-07-15 21:11:37,258 [59   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "SetCookie", controller = "AntiForgery", area = ""}. Executing controller action with signature Void SetCookie() on controller School.LMS.Web.Host.Controllers.AntiForgeryController (School.LMS.Web.Host).
+INFO  2025-07-15 21:11:37,359 [59   ] c.Infrastructure.ControllerActionInvoker - Executing action method School.LMS.Web.Host.Controllers.AntiForgeryController.SetCookie (School.LMS.Web.Host) - Validation state: Valid
+INFO  2025-07-15 21:11:37,390 [59   ] c.Infrastructure.ControllerActionInvoker - Executed action method School.LMS.Web.Host.Controllers.AntiForgeryController.SetCookie (School.LMS.Web.Host), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 19.5838ms.
+INFO  2025-07-15 21:11:37,428 [11   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (6ms) [Parameters=[@p0='?' (Size = 512), @p1='?' (Size = 64), @p2='?' (Size = 128), @p3='?' (Size = 2000), @p4='?' (Size = 2000), @p5='?' (Size = 1024), @p6='?' (DbType = Int32), @p7='?' (DbType = DateTime2), @p8='?' (DbType = Int32), @p9='?' (DbType = Int64), @p10='?' (Size = 256), @p11='?' (Size = 1024), @p12='?' (Size = 4000), @p13='?' (Size = 256), @p14='?' (DbType = Int32), @p15='?' (DbType = Int64)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [AbpAuditLogs] ([BrowserInfo], [ClientIpAddress], [ClientName], [CustomData], [Exception], [ExceptionMessage], [ExecutionDuration], [ExecutionTime], [ImpersonatorTenantId], [ImpersonatorUserId], [MethodName], [Parameters], [ReturnValue], [ServiceName], [TenantId], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15);
+INFO  2025-07-15 21:11:37,461 [11   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2025-07-15 21:11:37,535 [11   ] c.Infrastructure.ControllerActionInvoker - Executed action School.LMS.Web.Host.Controllers.AntiForgeryController.SetCookie (School.LMS.Web.Host) in 268.3808ms
+INFO  2025-07-15 21:11:37,545 [11   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'School.LMS.Web.Host.Controllers.AntiForgeryController.SetCookie (School.LMS.Web.Host)'
+INFO  2025-07-15 21:11:37,647 [11   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/AntiForgery/SetCookie - 200 - application/json;+charset=utf-8 454.8900ms
+INFO  2025-07-15 21:11:38,158 [15   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished HTTP/2 GET https://localhost:44311/swagger/v1/swagger.json - 200 - application/json;charset=utf-8 927.8729ms
+WARN  2025-07-15 21:11:38,301 [r #13] Hangfire.AutomaticRetryAttribute         - Failed to process the job '29': an exception occurred. Retry attempt 9 of 10 will be performed in 01:08:58.
+System.Net.WebException: The remote server returned an error: (404) Not Found.
+   at System.Net.HttpWebRequest.GetResponse()
+   at School.LMS.StudentEducationalPayment.FawryService.GetJson(String uri, String AccessToken) in C:\School.LMS\WebAPI\src\School.LMS.Application\StudentEducationalPayment\FawryService.cs:line 226
+   at School.LMS.StudentEducationalPayment.FawryService.GetInvoiceStatusAsync(String invoiceNumber) in C:\School.LMS\WebAPI\src\School.LMS.Application\StudentEducationalPayment\FawryService.cs:line 214
+   at School.LMS.StudentEducationalPayment.FawryInvoiceStatusChecker.CheckPendingInvoicesAsync() in C:\School.LMS\WebAPI\src\School.LMS.Application\StudentEducationalPayment\FawryInvoiceStatusChecker.cs:line 42
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+WARN  2025-07-15 21:11:38,305 [er #2] Hangfire.AutomaticRetryAttribute         - Failed to process the job '30': an exception occurred. Retry attempt 1 of 10 will be performed in 00:00:15.
+System.Net.WebException: The remote server returned an error: (404) Not Found.
+   at System.Net.HttpWebRequest.GetResponse()
+   at School.LMS.StudentEducationalPayment.FawryService.GetJson(String uri, String AccessToken) in C:\School.LMS\WebAPI\src\School.LMS.Application\StudentEducationalPayment\FawryService.cs:line 226
+   at School.LMS.StudentEducationalPayment.FawryService.GetInvoiceStatusAsync(String invoiceNumber) in C:\School.LMS\WebAPI\src\School.LMS.Application\StudentEducationalPayment\FawryService.cs:line 214
+   at School.LMS.StudentEducationalPayment.FawryInvoiceStatusChecker.CheckPendingInvoicesAsync() in C:\School.LMS\WebAPI\src\School.LMS.Application\StudentEducationalPayment\FawryInvoiceStatusChecker.cs:line 42
+   at InvokeStub_TaskAwaiter.GetResult(Object, Object, IntPtr*)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+WARN  2025-07-15 21:11:38,307 [er #6] Hangfire.AutomaticRetryAttribute         - Failed to process the job '28': an exception occurred. Retry attempt 9 of 10 will be performed in 01:09:16.
+System.Net.WebException: The remote server returned an error: (404) Not Found.
+   at System.Net.HttpWebRequest.GetResponse()
+   at School.LMS.StudentEducationalPayment.FawryService.GetJson(String uri, String AccessToken) in C:\School.LMS\WebAPI\src\School.LMS.Application\StudentEducationalPayment\FawryService.cs:line 226
+   at School.LMS.StudentEducationalPayment.FawryService.GetInvoiceStatusAsync(String invoiceNumber) in C:\School.LMS\WebAPI\src\School.LMS.Application\StudentEducationalPayment\FawryService.cs:line 214
+   at School.LMS.StudentEducationalPayment.FawryInvoiceStatusChecker.CheckPendingInvoicesAsync() in C:\School.LMS\WebAPI\src\School.LMS.Application\StudentEducationalPayment\FawryInvoiceStatusChecker.cs:line 42
+   at InvokeStub_TaskAwaiter.GetResult(Object, Object, IntPtr*)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+INFO  2025-07-15 21:11:39,573 [60   ] oft.EntityFrameworkCore.Database.Command - Executed DbCommand (1ms) [Parameters=[@__p_1='?' (DbType = Int32), @__Now_0='?' (DbType = DateTime2)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(@__p_1) [a].[Id], [a].[CreationTime], [a].[CreatorUserId], [a].[IsAbandoned], [a].[JobArgs], [a].[JobType], [a].[LastTryTime], [a].[NextTryTime], [a].[Priority], [a].[TryCount]
+FROM [AbpBackgroundJobs] AS [a]
+WHERE [a].[IsAbandoned] = CAST(0 AS bit) AND [a].[NextTryTime] <= @__Now_0
+ORDER BY [a].[Priority] DESC, [a].[TryCount], [a].[NextTryTime]

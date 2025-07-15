@@ -36,8 +36,6 @@ namespace School.LMS
 
             Configuration.Settings.Providers.Add<AppSettingProvider>();
             Configuration.Localization.Languages.Add(new LanguageInfo("fr", "فارسي", "famfamfam-flags ir"));
-
-            Configuration.Localization.Languages.Add(new LanguageInfo("ar", "عربي", "famfamfam-flags ir"));
             
             Configuration.Settings.SettingEncryptionConfiguration.DefaultPassPhrase = LMSConsts.DefaultPassPhrase;
             SimpleStringCipher.DefaultPassPhrase = LMSConsts.DefaultPassPhrase;
