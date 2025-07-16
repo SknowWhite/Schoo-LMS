@@ -31,7 +31,7 @@ namespace School.LMS.BusFeePlan.Dto
 
             await Repository.InsertRangeAsync(educationalFeeDtos.Select(MapToEntity).ToList());
         }
-        public async Task<List<BusFeeFromExcelDto>> GetAllEducationalFees()
+        public async Task<List<BusFeeFromExcelDto>> GetAllBusFees()
         {
             var educationalFees = await Repository.GetAllListAsync();
             return educationalFees.Select(MapToDto).ToList();

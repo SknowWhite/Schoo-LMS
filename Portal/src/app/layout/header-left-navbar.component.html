@@ -1,56 +1,40 @@
-<!-- <ul class="navbar-nav">
+<ul class="navbar-nav">
   <li class="nav-item">
     <a class="nav-link" href="javascript:;" (click)="toggleSidebar()">
       <i class="fas fa-bars"></i>
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')" >
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
     <a class="nav-link" [routerLink]="['home']">
       {{ "HomePage" | localize }}
     </a>
   </li>
   <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
-    <a class="nav-link" [routerLink]="['about']">
-      {{ "About" | localize }}
-    </a>
-  </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')"
-  >
     <a class="nav-link" [routerLink]="['students']">
       {{ "Students" | localize }}
     </a>
   </li>
   <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Student')">
-    <a class="nav-link" [routerLink]="['studentPayment']" 
-    >
+    <a class="nav-link" [routerLink]="['studentPayment']">
       {{ "studentPayment" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
-    <a class="nav-link" [routerLink]="['importedStudents']">
-      {{ "ImportedStudents" | localize }}
-    </a>
-  </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin') || hasRole('Student')">
+  <li
+    class="nav-item d-none d-sm-inline-block"
+    *ngIf="hasRole('Admin') || hasRole('Student')"
+  >
     <a class="nav-link" [routerLink]="['AdminBusSubscription']">
       {{ "AdminBusSubscription" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')"
-  >
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
     <a class="nav-link" [routerLink]="['busFees']">
       {{ "BusFees" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')"
-  >
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
     <a class="nav-link" [routerLink]="['StudentEducationalPayments']">
       {{ "StudentEducationalPayments" | localize }}
     </a>
   </li>
-<<<<<<< HEAD
-
 </ul>
-=======
-</ul> -->
->>>>>>> 270128975a180c69006e3cf5208c864aa50f5dea

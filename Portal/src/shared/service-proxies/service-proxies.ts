@@ -5765,9 +5765,7 @@ export class StudentImportServiceProxy {
     skipCount: number | undefined,
     maxResultCount: number | undefined
   ): Observable<BusFeeDTO[]> {
-    let url_ =
-      this.baseUrl +
-      "/api/services/app/EducationFeeService/GetAllEducationalFees?";
+    let url_ = this.baseUrl + "/api/services/app/BusFeeService/GetAllBusFees?";
     if (keyword === null)
       throw new Error("The parameter 'keyword' cannot be null.");
     else if (keyword !== undefined)
@@ -5951,8 +5949,7 @@ export class EducationalPaymentServiceProxy {
   }
   getBusPaymentData(studentId: number): Observable<any[]> {
     let url_ =
-      this.baseUrl +
-      "/api/services/app/StudentPayment/GetBusPaymentDetails?";
+      this.baseUrl + "/api/services/app/StudentPayment/GetBusPaymentDetails?";
     if (studentId === null)
       throw new Error("The parameter 'keyword' cannot be null.");
     else if (studentId !== undefined)
@@ -6068,10 +6065,11 @@ export class EducationalPaymentServiceProxy {
         })
       );
   }
-  SubmitBusPayment(details: StudentPaymentDetails | undefined): Observable<void> {
+  SubmitBusPayment(
+    details: StudentPaymentDetails | undefined
+  ): Observable<void> {
     let url_ =
-      this.baseUrl +
-      "/api/services/app/StudentPayment/SubmitBusPayment";
+      this.baseUrl + "/api/services/app/StudentPayment/SubmitBusPayment";
     url_ = url_.replace(/[?&]$/, "");
 
     const content_ = JSON.stringify(details);
@@ -6723,31 +6721,33 @@ export class studentsPaymentDetailsServiceProxy {
 }
 
 @Injectable()
-export class HomepageDashboard{
+export class HomepageDashboard {
   private http: HttpClient;
   private baseUrl: string;
-  protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
+    undefined;
 
-  constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+  constructor(
+    @Inject(HttpClient) http: HttpClient,
+    @Optional() @Inject(API_BASE_URL) baseUrl?: string
+  ) {
     this.http = http;
-    this.baseUrl = baseUrl ?? ''; 
+    this.baseUrl = baseUrl ?? "";
   }
-getHomepageDashboard(): Observable<{
-  busLinesCount: number;
-  studentCount: number;
-  studentFullPaidCount: number;
-  studentSubscribedToBusCount: number;
-}> {
-
-  const url_ = `${this.baseUrl}/api/services/app/HomePageDashboard/GetHomepageDashboard`;
-  return this.http.get<{
+  getHomepageDashboard(): Observable<{
     busLinesCount: number;
     studentCount: number;
     studentFullPaidCount: number;
     studentSubscribedToBusCount: number;
-  }>(url_);
-}
-
+  }> {
+    const url_ = `${this.baseUrl}/api/services/app/HomePageDashboard/GetHomepageDashboard`;
+    return this.http.get<{
+      busLinesCount: number;
+      studentCount: number;
+      studentFullPaidCount: number;
+      studentSubscribedToBusCount: number;
+    }>(url_);
+  }
 }
 
 export class StudentPaymentDetails {
