@@ -16,7 +16,7 @@
   </li>
   <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Student')">
     <a class="nav-link" [routerLink]="['studentPayment']">
-      {{ "studentPayment" | localize }}
+      {{ "Educational Payment" | localize }}
     </a>
   </li>
   <li
@@ -24,17 +24,17 @@
     *ngIf="hasRole('Admin') || hasRole('Student')"
   >
     <a class="nav-link" [routerLink]="['AdminBusSubscription']">
-      {{ "AdminBusSubscription" | localize }}
+      {{ "Bus Subscription" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
+  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Student')">
     <a class="nav-link" [routerLink]="['busFees']">
-      {{ "BusFees" | localize }}
+      {{ "Bus Payments - under progress" | localize }}
     </a>
   </li>
   <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
     <a class="nav-link" [routerLink]="['StudentEducationalPayments']">
-      {{ "StudentEducationalPayments" | localize }}
+      {{ "Students Payments" | localize }}
     </a>
   </li>
 </ul>

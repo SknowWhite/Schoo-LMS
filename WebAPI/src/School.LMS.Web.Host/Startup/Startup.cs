@@ -158,7 +158,7 @@ namespace School.LMS.Web.Host.Startup
                 options.DisplayRequestDuration(); // Controls the display of the request duration (in milliseconds) for "Try it out" requests.
             }); // URL: /swagger
 
-            RecurringJob.AddOrUpdate<FawryInvoiceStatusChecker>("CheckInvoiceStatus", x => x.CheckPendingInvoicesAsync(), Cron.Hourly());//The same as @daily 
+            RecurringJob.AddOrUpdate<FawryInvoiceStatusChecker>("CheckInvoiceStatus", x => x.CheckPendingInvoicesAsync(), Cron.MinuteInterval(3));//The same as @daily 
 
         }
 

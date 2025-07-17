@@ -47,16 +47,20 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
       return [
         new MenuItem(this.l("HomePage"), "/app/home", "fas fa-home"),
         new MenuItem(
-          this.l("Payments"),
+          this.l("Educational Payments"),
           "/app/studentPayment",
           "fas fa-credit-card"
         ),
         new MenuItem(
-          this.l("Admin Bus Subscription"),
+          this.l(" Bus Subscription"),
           "/app/AdminBusSubscription",
           "fas fa-bus"
         ),
-        new MenuItem(this.l("Bus Fees"), "/app/busFees", "fas fa-money-bill"),
+        new MenuItem(
+          this.l("Bus Fees - under progress"),
+          "/app/busFees",
+          "fas fa-money-bill"
+        ),
       ];
     } else {
       // ✅ Full menu for other users
@@ -83,72 +87,15 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         ),
 
         new MenuItem(
-          this.l("Admin Bus Subscription"),
+          this.l("Bus Subscription"),
           "/app/AdminBusSubscription",
           "fas fa-bus"
         ),
-        new MenuItem(this.l("Bus Fees"), "/app/busFees", "fas fa-money-bill"),
         new MenuItem(
           this.l("Student Payment Details"),
-          "/app/studentspaymentdetails",
+          "/app/StudentEducationalPayments",
           "fas fa-receipt"
         ),
-        new MenuItem(
-          this.l("student Payments"),
-          "/app/studenteducationalpayments",
-          "fas fa-money-bill"
-        ),
-        new MenuItem(this.l("MultiLevelMenu"), "", "fas fa-circle", "", [
-          new MenuItem("ASP.NET Boilerplate", "", "fas fa-dot-circle", "", [
-            new MenuItem(
-              "Home",
-              "https://aspnetboilerplate.com?ref=abptmpl",
-              "far fa-circle"
-            ),
-            new MenuItem(
-              "Templates",
-              "https://aspnetboilerplate.com/Templates?ref=abptmpl",
-              "far fa-circle"
-            ),
-            new MenuItem(
-              "Samples",
-              "https://aspnetboilerplate.com/Samples?ref=abptmpl",
-              "far fa-circle"
-            ),
-            new MenuItem(
-              "Documents",
-              "https://aspnetboilerplate.com/Pages/Documents?ref=abptmpl",
-              "far fa-circle"
-            ),
-          ]),
-          new MenuItem("ASP.NET Zero", "", "fas fa-dot-circle", "", [
-            new MenuItem(
-              "Home",
-              "https://aspnetzero.com?ref=abptmpl",
-              "far fa-circle"
-            ),
-            new MenuItem(
-              "Features",
-              "https://aspnetzero.com/Features?ref=abptmpl",
-              "far fa-circle"
-            ),
-            new MenuItem(
-              "Pricing",
-              "https://aspnetzero.com/Pricing?ref=abptmpl#pricing",
-              "far fa-circle"
-            ),
-            new MenuItem(
-              "Faq",
-              "https://aspnetzero.com/Faq?ref=abptmpl",
-              "far fa-circle"
-            ),
-            new MenuItem(
-              "Documents",
-              "https://aspnetzero.com/Documents?ref=abptmpl",
-              "far fa-circle"
-            ),
-          ]),
-        ]),
       ];
     }
   }

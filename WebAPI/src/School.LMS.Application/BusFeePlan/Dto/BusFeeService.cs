@@ -33,8 +33,9 @@ namespace School.LMS.BusFeePlan.Dto
         }
         public async Task<List<BusFeeFromExcelDto>> GetAllBusFees()
         {
-            var educationalFees = await Repository.GetAllListAsync();
-            return educationalFees.Select(MapToDto).ToList();
+            var educationalFees =  Repository.GetAllIncluding(x => x.Installments).ToList();
+            var x= educationalFees.Select(MapToDto).ToList();
+            return x;
         }
 
         private Models.BusFeePlan MapToEntity(BusFeeFromExcelDto busFeeFromExcelDto)
@@ -77,37 +78,38 @@ namespace School.LMS.BusFeePlan.Dto
 
         private BusFeeFromExcelDto MapToDto(Models.BusFeePlan busFeePlan)
         {
-            return new BusFeeFromExcelDto
-            {
-                Id = busFeePlan.Id,
-                Line = busFeePlan.Line,
-                ExpectedAmount = busFeePlan.ExpectedTotalAmount,
-                FirstInstallment = new Installment
+            BusFeeFromExcelDto x = new BusFeeFromExcelDto();
+
+
+            x.Id = busFeePlan.Id;
+            x.Line = busFeePlan.Line;
+                x.ExpectedAmount = busFeePlan.ExpectedTotalAmount;
+                x.FirstInstallment = new Installment
                 {
-                    Amount = busFeePlan.Installments.First(x=>x.Order==0).Amount,
-                    DueDate = busFeePlan.Installments.First(x => x.Order == 0).DueDate
-                },
-                SecondInstallment = new Installment
-                {
-                    Amount = busFeePlan.Installments.First(x => x.Order == 1).Amount,
+                    Amount = busFeePlan.Installments.First(x=>x.Order==1).Amount,
                     DueDate = busFeePlan.Installments.First(x => x.Order == 1).DueDate
-                },
-                ThirdInstallment = new Installment
+                };
+                x.SecondInstallment = new Installment
                 {
                     Amount = busFeePlan.Installments.First(x => x.Order == 2).Amount,
                     DueDate = busFeePlan.Installments.First(x => x.Order == 2).DueDate
-                },
-                FourthInstallment = new Installment
+                };
+            x.ThirdInstallment = new Installment
                 {
                     Amount = busFeePlan.Installments.First(x => x.Order == 3).Amount,
                     DueDate = busFeePlan.Installments.First(x => x.Order == 3).DueDate
-                },
-                fullAmountWithDiscount = new Installment
+                };
+            x.FourthInstallment = new Installment
                 {
-                    Amount = busFeePlan.FullAmountWith5PercentDiscount,
-                    DueDate = busFeePlan.FullAmountDueDate
-                }
+                    Amount = busFeePlan.Installments.First(x => x.Order == 4).Amount,
+                    DueDate = busFeePlan.Installments.First(x => x.Order == 4).DueDate
+                };
+            x.fullAmountWithDiscount = new Installment
+            {
+                Amount = busFeePlan.FullAmountWith5PercentDiscount,
+                DueDate = busFeePlan.FullAmountDueDate
             };
+            return x;
         }
     }
 }

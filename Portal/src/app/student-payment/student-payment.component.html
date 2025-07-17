@@ -3,35 +3,75 @@
   <div class="card student-info">
     <h5>👋 Welcome, {{ PaymentDetails.student?.name }}</h5>
     <div><strong>🎓 Grade:</strong> {{ PaymentDetails.student?.grade }}</div>
-    <div><strong>📞 Mobile:</strong> {{ PaymentDetails.student?.mobileNumber }}</div>
-    <div><strong>💰 Previous Due:</strong> {{ PaymentDetails.student?.previousAmount | currency }}</div>
+    <div>
+      <strong>📞 Mobile:</strong> {{ PaymentDetails.student?.mobileNumber }}
+    </div>
+    <div>
+      <strong>💰 Previous Due:</strong>
+      {{ PaymentDetails.student?.previousAmount | currency }}
+    </div>
   </div>
 
   <!-- Payment Mode Selection -->
-  <div *ngIf="!isFulPaymentPaid && !isInstallmentsPaid" class="card selection-card">
+  <div
+    *ngIf="!isFulPaymentPaid && !isInstallmentsPaid"
+    class="card selection-card"
+  >
     <label class="form-check">
-      <input type="radio" name="paymentMode" value="full" [(ngModel)]="PaymentDetails.paymentMode" />
+      <input
+        type="radio"
+        name="paymentMode"
+        value="full"
+        [(ngModel)]="PaymentDetails.paymentMode"
+      />
       Full Payment
     </label>
     <label class="form-check">
-      <input type="radio" name="paymentMode" value="installments" [(ngModel)]="PaymentDetails.paymentMode" />
+      <input
+        type="radio"
+        name="paymentMode"
+        value="installments"
+        [(ngModel)]="PaymentDetails.paymentMode"
+      />
       Installments
     </label>
   </div>
 
   <!-- Full Payment UI -->
-  <div *ngIf="PaymentDetails.paymentMode === 'full' && !isFulPaymentPaid && !isInstallmentsPaid" class="card pay-card">
+  <div
+    *ngIf="
+      PaymentDetails.paymentMode === 'full' &&
+      !isFulPaymentPaid &&
+      !isInstallmentsPaid &&
+      false
+    "
+    class="card pay-card"
+  >
     <p class="pay-amount">
       Amount:
-      <strong>{{ isEligibleForDiscount ? PaymentDetails.discountedAmount + this.PaymentDetails.student?.previousAmount : PaymentDetails.fullAmount+this.PaymentDetails.student?.previousAmount | currency }}</strong>
+      <strong>{{
+        isEligibleForDiscount
+          ? PaymentDetails.discountedAmount +
+            this.PaymentDetails.student?.previousAmount
+          : (PaymentDetails.fullAmount +
+              this.PaymentDetails.student?.previousAmount | currency)
+      }}</strong>
     </p>
-    <button class="btn primary-btn" (click)="payFull()">💳 Pay Full <span
-        *ngIf="PaymentDetails.student?.previousAmount > 0" class="button-text">+ Previous amount</span>
+    <button class="btn primary-btn" (click)="payFull()">
+      💳 Pay Full
+      <span
+        *ngIf="PaymentDetails.student?.previousAmount > 0"
+        class="button-text"
+        >+ Previous amount</span
+      >
     </button>
   </div>
 
   <!-- Installments Table -->
-  <div *ngIf="PaymentDetails.paymentMode === 'installments' && !isFulPaymentPaid" class="card table-card">
+  <div
+    *ngIf="PaymentDetails.paymentMode === 'installments' && !isFulPaymentPaid"
+    class="card table-card"
+  >
     <div class="table-responsive">
       <table>
         <thead>
@@ -46,44 +86,77 @@
         <tbody>
           <tr *ngFor="let inst of PaymentDetails.installments">
             <td>
-              <input type="radio" name="selectedInstallment" [value]="inst.id" [(ngModel)]="selectedInstallmentId"
-                [disabled]="inst.status !== 'New'" />
+              <input
+                type="radio"
+                name="selectedInstallment"
+                [value]="inst.id"
+                [(ngModel)]="selectedInstallmentId"
+                [disabled]="inst.status !== 'New'"
+              />
             </td>
-            <td>{{ inst.dueDate | date:'shortDate' }}</td>
+            <td>{{ inst.dueDate | date : "shortDate" }}</td>
             <td>{{ inst.amount | currency }}</td>
-            <td><span class="badge" [ngClass]="{
-              'new': inst.status === 'New',
-              'paid': inst.status === 'Paid',
-              'pending': inst.status === 'Pending',
-              'failed': inst.status === 'Failed',
-              'canceled': inst.status === 'Canceled'
-            }">{{ inst.status }}</span></td>
             <td>
-              <a *ngIf="inst.invoiceNumber && inst.status !== 'Paid'" [href]="inst.invoiceNumber"
-                target="_blank">View</a>
+              <span
+                class="badge"
+                [ngClass]="{
+                  new: inst.status === 'New',
+                  paid: inst.status === 'Paid',
+                  pending: inst.status === 'Pending',
+                  failed: inst.status === 'Failed',
+                  canceled: inst.status === 'Canceled'
+                }"
+                >{{ inst.status }}</span
+              >
+            </td>
+            <td>
+              <a
+                *ngIf="inst.invoiceNumber && inst.status !== 'Paid'"
+                [href]="inst.invoiceNumber"
+                target="_blank"
+                >View</a
+              >
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="installment-action">
-      <div><strong>Selected Amount:</strong> {{ getSelectedInstallmentAmount() | currency }}</div>
-      <button class="btn success-btn" [disabled]="!selectedInstallmentId" (click)="paySelectedInstallment()">
-        🧾 Pay Installment <span *ngIf="PaymentDetails.student?.previousAmount > 0" class="button-text">+ Previous
-          amount</span>
-
+      <div>
+        <strong>Selected Amount:</strong>
+        {{ getSelectedInstallmentAmount() | currency }}
+      </div>
+      <button
+        class="btn success-btn"
+        [disabled]="!selectedInstallmentId"
+        (click)="paySelectedInstallment()"
+      >
+        🧾 Pay Installment
+        <span
+          *ngIf="PaymentDetails.student?.previousAmount > 0"
+          class="button-text"
+          >+ Previous amount</span
+        >
       </button>
     </div>
   </div>
 
   <!-- Bus Subscription Section -->
   <!-- Bus Subscription Section -->
-  <div class="card bus-card" *ngIf="PaymentDetails.busLines?.length > 0 && false">
+  <div
+    class="card bus-card"
+    *ngIf="PaymentDetails.busLines?.length > 0 && false"
+  >
     <h5>🚌 Bus Subscription</h5>
 
     <label class="form-check" *ngFor="let line of PaymentDetails.busLines">
-      <input type="radio" name="busLine" [value]="line.id" [(ngModel)]="PaymentDetails.selectedBusLineId"
-        [disabled]="line.status === 'Paid'" />
+      <input
+        type="radio"
+        name="busLine"
+        [value]="line.id"
+        [(ngModel)]="PaymentDetails.selectedBusLineId"
+        [disabled]="line.status === 'Paid'"
+      />
       {{ line.name }} - {{ line.amount | currency }}
       <span *ngIf="line.status === 'Paid'" class="badge paid">Paid</span>
     </label>
@@ -91,18 +164,27 @@
     <!-- Notes input -->
     <div class="form-group mt-2">
       <label for="busNotes" class="form-label">📝 Notes </label>
-      <textarea id="busNotes" rows="2" placeholder="Add any home address..." class="form-control"></textarea>
+      <textarea
+        id="busNotes"
+        rows="2"
+        placeholder="Add any home address..."
+        class="form-control"
+      ></textarea>
     </div>
 
-    <button class="btn warning-btn" [disabled]="isBusLinePaymentDisabled()" (click)="payBus()">
+    <button
+      class="btn warning-btn"
+      [disabled]="isBusLinePaymentDisabled()"
+      (click)="payBus()"
+    >
       🚍 Subscribe to bus
     </button>
   </div>
 
-
-
   <!-- Payment Done -->
-  <div *ngIf="isFulPaymentPaid " class="alert">
-    ✅ Payment already made (Status: <strong>{{ PaymentDetails.PaymentStatus }}</strong>).
+  <div *ngIf="isFulPaymentPaid" class="alert">
+    ✅ Payment already made (Status:
+    <strong>{{ PaymentDetails.PaymentStatus }}</strong
+    >).
   </div>
 </div>

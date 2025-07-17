@@ -1,7 +1,7 @@
 ﻿<div [@routerTransition]>
   <section class="content-header">
     <div class="container-fluid">
-      <h1>{{ "HomePage" | localize }}</h1>
+      <h1>{{ "Welcome to Nozha school payment gateway" | localize }}</h1>
     </div>
   </section>
 
@@ -57,19 +57,24 @@
           </div>
         </div>
       </div>
-
     </div>
     <div [hidden]="!isStudent" class="container-fluid">
       <!-- ✅ Welcome Phrase for Students -->
-        <div class="alert alert-success text-center">
+      <div class="alert alert-success text-center">
         <h4>🎉 Welcome, {{ appSession.user?.name }}!</h4>
-        <p>We’re glad to see you here. You can manage your educational and bus payments easily below.</p>
+        <p>
+          We’re glad to see you here. You can manage your educational and bus
+          payments easily below.
+        </p>
       </div>
     </div>
     <!-- Student Action Buttons -->
-    <div class="row justify-content-center">
+    <div [hidden]="!isStudent" class="row justify-content-center">
       <div class="col-md-3 mb-3">
-        <button class="btn btn-primary btn-block" routerLink="/app/studentPayment">
+        <button
+          class="btn btn-primary btn-block"
+          routerLink="/app/studentPayment"
+        >
           <i class="fas fa-credit-card"></i> Educational Payments
         </button>
       </div>

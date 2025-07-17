@@ -39,7 +39,7 @@ namespace School.LMS.StudentEducationalPayment
 
                 foreach (var payment in pendingPayments)
                 {
-                    var statusDto = await _fawryService.GetInvoiceStatusAsync(payment.InvoiceNumber);
+                    var statusDto = await _fawryService.GetInvoiceStatusAsync(payment.InvoiceNumber.Substring(payment.InvoiceNumber.LastIndexOf('/') + 1));
 
                     if (statusDto == null || string.IsNullOrEmpty(statusDto.paymentStatus.code))
                         continue;
