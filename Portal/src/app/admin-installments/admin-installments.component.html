@@ -1,0 +1,165 @@
+<div class="container mt-4">
+  <!-- Template Form -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">
+        {{ isEditMode ? "Update" : "Create" }} Installment Template
+      </h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Template Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              required
+            />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Type</label>
+            <select class="form-select" formControlName="type">
+              <option [value]="0">Monthly</option>
+              <option [value]="1">Term</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Total Amount</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="totalAmount"
+            />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Start Date</label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="startDate"
+            />
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">End Date</label>
+            <input type="date" class="form-control" formControlName="endDate" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Notes</label>
+            <textarea
+              class="form-control"
+              formControlName="notes"
+              rows="2"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h6 class="d-flex justify-content-between">
+            Breakdowns
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-success"
+              (click)="addBreakdown()"
+            >
+              <i class="fas fa-plus"></i> Add
+            </button>
+          </h6>
+          <div formArrayName="breakdowns" class="row g-2">
+            <div
+              class="col-md-6 d-flex align-items-center"
+              *ngFor="let bd of breakdowns.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <input
+                type="text"
+                class="form-control me-2"
+                formControlName="label"
+                placeholder="Label"
+              />
+              <input
+                type="number"
+                class="form-control me-2"
+                formControlName="amount"
+                placeholder="Amount"
+              />
+              <button
+                class="btn btn-outline-danger"
+                type="button"
+                (click)="removeBreakdown(i)"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+          <button type="submit" class="btn btn-primary">
+            {{ isEditMode ? "Update" : "Create" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="resetForm()"
+            *ngIf="isEditMode"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Templates Table -->
+  <div class="card shadow-sm">
+    <div class="card-body" *ngIf="templates.length === 0">
+      <div class="alert alert-warning text-center">No templates found</div>
+    </div>
+
+    <div class="card-body table-responsive" *ngIf="templates.length > 0">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Total</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Breakdowns</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let t of templates
+                | paginate : { itemsPerPage: 5, currentPage: page }
+            "
+          >
+            <td>{{ t.name }}</td>
+            <td>{{ t.type === 0 ? "Monthly" : "Term" }}</td>
+            <td>{{ t.totalAmount }}</td>
+            <td>{{ t.startDate | date }}</td>
+            <td>{{ t.endDate | date }}</td>
+            <td>{{ t.breakdowns.length }}</td>
+            <td>
+              <button class="btn btn-sm btn-primary me-1" (click)="edit(t)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-success"
+                (click)="assignToAll(t.id)"
+              >
+                <i class="fas fa-share"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

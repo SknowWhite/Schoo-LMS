@@ -1,6 +1,7 @@
 ﻿using Abp.AutoMapper;
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
+using School.LMS.Models.NewLogic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,6 +34,9 @@ namespace School.LMS.Models
         public virtual ICollection<StudentEducationalPayment> EducationalPayments { get; set; }
 
         public virtual ICollection<StudentBusSubscription> BusSubscriptions { get; set; }
+
+        public ICollection<StudentInstallment> StudentInstallments { get; set; } = new List<StudentInstallment>();
+
     }
 
 

@@ -79,7 +79,6 @@ export class AdminBusSubscriptionComponent extends PagedListingComponentBase<Adm
 
   loadBusLines(): void {
     this.service.GetBusFeesPlanAll("", 0, 1000).subscribe((data: any) => {
-      debugger;
       this.busLines = data;
       this.cd.detectChanges();
     });

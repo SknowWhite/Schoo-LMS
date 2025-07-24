@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.LMS.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using School.LMS.EntityFrameworkCore;
 namespace School.LMS.Migrations
 {
     [DbContext(typeof(LMSDbContext))]
-    partial class LMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250719191042_AddNewLogicForDynamicInstallement")]
+    partial class AddNewLogicForDynamicInstallement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1760,12 +1763,6 @@ namespace School.LMS.Migrations
                     b.Property<Guid>("InstallmentTemplateId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("InvoiceLastUpdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("InvoiceUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
@@ -1774,9 +1771,6 @@ namespace School.LMS.Migrations
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
-
-                    b.Property<string>("TransactionId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

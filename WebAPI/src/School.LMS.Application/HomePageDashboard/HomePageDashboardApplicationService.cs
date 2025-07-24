@@ -17,7 +17,7 @@ namespace School.LMS.HomePageDashboard
     public class HomePageDashboardApplicationService : ApplicationService
     {
         private readonly IRepository<Models.StudentEducationalPayment> _eduPaymentRepo;
-        private readonly IRepository<Models.StudentBusPayment> _busPaymentRepo;
+        private readonly IRepository<Models.StudentBusSubscription> _busSubRepo;
         private readonly IRepository<Models.BusFeePlan> _busFeePlanRepo;
         private readonly IRepository<Student> _studentRepo;
 
@@ -26,12 +26,12 @@ namespace School.LMS.HomePageDashboard
         /// </summary>
 
         public HomePageDashboardApplicationService(IRepository<Models.StudentEducationalPayment> eduPaymentRepo,
-                                                   IRepository<StudentBusPayment> busPaymentRepo,
+                                                   IRepository<StudentBusSubscription> busPaymentRepo,
                                                    IRepository<Student> studentRepo,
                                                    IRepository<Models.BusFeePlan> busFeePlanRepo)
         {
             _eduPaymentRepo = eduPaymentRepo;
-            _busPaymentRepo = busPaymentRepo;
+            _busSubRepo = busPaymentRepo;
             _studentRepo = studentRepo;
             _busFeePlanRepo = busFeePlanRepo;
         }
@@ -47,7 +47,7 @@ namespace School.LMS.HomePageDashboard
                 BusLinesCount = _busFeePlanRepo.Count(),
                 StudentCount = _studentRepo.Count(),
                 StudentFullPaidCount = _eduPaymentRepo.GetAll().Where(e => e.IsFullPayment).Count(),
-                StudentSubscribedToBusCount = _busPaymentRepo.GetAll().Where(e => e.IsFullPayment || e.BusInstallmentId!=null).Count(),
+                StudentSubscribedToBusCount = _busSubRepo.GetAll().Count(),
             };
         }
     }

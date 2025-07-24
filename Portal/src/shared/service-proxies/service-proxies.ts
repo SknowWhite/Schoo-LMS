@@ -21,6 +21,8 @@ import { Injectable, Inject, Optional, InjectionToken } from "@angular/core";
 import {
   HttpClient,
   HttpHeaders,
+  HttpParams,
+  HttpRequest,
   HttpResponse,
   HttpResponseBase,
 } from "@angular/common/http";
@@ -6799,4 +6801,130 @@ export interface BusFeesPlanDto {
 export class pagedBusFeesPlanDto {
   items: BusFeesPlanDto[] | undefined;
   totalCount: number;
+}
+//==========================================================================================
+export interface InstallmentDto {
+  id: string;
+  name: string;
+  dueDate: string;
+  amount: number;
+}
+
+export interface GetInstallmentsInput {
+  name?: string;
+  minAmount?: number;
+  maxAmount?: number;
+  skipCount: number;
+  maxResultCount: number;
+  sorting?: string;
+}
+
+export interface PagedResultDto<T> {
+  items: T[];
+  totalCount: number;
+}
+@Injectable()
+export class InstallmentService {
+  private http: HttpClient;
+  private baseUrl: string;
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
+    undefined;
+
+  constructor(
+    @Inject(HttpClient) http: HttpClient,
+    @Optional() @Inject(API_BASE_URL) baseUrl?: string
+  ) {
+    this.http = http;
+    this.baseUrl = baseUrl ?? "";
+  }
+  getTemplates(): Observable<any[]> {
+    let url_ = `${this.baseUrl}/api/services/app/InstallmentTemplate/GetList`;
+
+    return this.http.get<any[]>(`${url_}`);
+  }
+
+  createTemplate(data: any): Observable<any> {
+    let url_ = `${this.baseUrl}/api/services/app/InstallmentTemplate/Create`;
+    return this.http.post<any>(`${url_}`, data);
+  }
+
+  updateTemplate(id: string, data: any): Observable<any> {
+    const url = `${this.baseUrl}/api/services/app/InstallmentTemplate/Update`;
+    return this.http.put<any>(url, { id: id, input: data });
+  }
+
+  assignToAllStudents(id: string): Observable<any> {
+    const url = `${this.baseUrl}/api/services/app/InstallmentTemplate/AssignToAllStudents`;
+    return this.http.post<any>(url, { id: id });
+  }
+
+  deleteTemplate(id: string): Observable<any> {
+    const url = `${this.baseUrl}/api/services/app/InstallmentTemplate/Delete`;
+    return this.http.delete<any>(url, {
+      body: { id },
+    });
+  }
+  assignToGrade(grade: string, templateId: string): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}/api/services/app/InstallmentTemplate/AssignToGrade`,
+      { grade, templateId }
+    );
+  }
+
+  assignToStudents(studentIds: number[], templateId: string): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}/api/services/app/InstallmentTemplate/AssignToStudents`,
+      { studentIds, templateId }
+    );
+  }
+}
+
+@Injectable({ providedIn: "root" })
+export class StudentPaymentService {
+  private http: HttpClient;
+  private baseUrl: string;
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
+    undefined;
+
+  constructor(
+    @Inject(HttpClient) http: HttpClient,
+    @Optional() @Inject(API_BASE_URL) baseUrl?: string
+  ) {
+    this.http = http;
+    this.baseUrl = baseUrl ?? "";
+  }
+
+  getValidInstallments(studentId: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.baseUrl}/api/services/app/StudentInstallment/GetValidForStudent?studentId=${studentId}`
+    );
+  }
+
+  getAllInstallments(): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.baseUrl}/api/services/app/StudentInstallment/GetAllForAdmin`
+    );
+  }
+
+  updateAmount(id: string, newAmount: number): Observable<any> {
+    return this.http.put<any>(
+      `${this.baseUrl}/api/services/app/StudentInstallment/UpdateAmount`,
+      {
+        id,
+        newAmount,
+      }
+    );
+  }
+  updateAdmin(id, amount, dueDate): Observable<any> {
+    return this.http.put(
+      `${this.baseUrl}/api/services/app/StudentInstallment/UpdateStudentInstallment`,
+      { id: id, Amount: amount, DueDate: dueDate }
+    );
+  }
+
+  generateInvoice(id: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.baseUrl}/api/services/app/StudentInstallment/GenerateInvoice?id=${id}`
+    );
+  }
 }

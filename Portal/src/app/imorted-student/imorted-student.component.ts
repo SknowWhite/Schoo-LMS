@@ -1,29 +1,33 @@
-import { ChangeDetectorRef, Component, Injector } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector } from "@angular/core";
 import {
   PagedListingComponentBase,
-  PagedRequestDto
-} from '@shared/paged-listing-component-base';
-import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { StudentImportServiceProxy, StudentDTO, StudentDtoPagedResultDto } from '@shared/service-proxies/service-proxies';
-import { finalize } from 'rxjs/operators';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { CreateStudentComponent } from './create-student/create-student.component';
-import { EditStudentComponent } from './edit-student/edit-student.component';
-
+  PagedRequestDto,
+} from "@shared/paged-listing-component-base";
+import { appModuleAnimation } from "@shared/animations/routerTransition";
+import {
+  StudentImportServiceProxy,
+  StudentDTO,
+  StudentDtoPagedResultDto,
+} from "@shared/service-proxies/service-proxies";
+import { finalize } from "rxjs/operators";
+import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { CreateStudentComponent } from "./create-student/create-student.component";
+import { EditStudentComponent } from "./edit-student/edit-student.component";
+import { ViewChild, TemplateRef } from "@angular/core";
 
 class PagedStudentRequestDto extends PagedRequestDto {
   keyword: string;
 }
 
 @Component({
-  selector: 'app-imorted-student',
-  templateUrl: './imorted-student.component.html',
-  styleUrl: './imorted-student.component.css',
-  animations: [appModuleAnimation()]
+  selector: "app-imorted-student",
+  templateUrl: "./imorted-student.component.html",
+  styleUrl: "./imorted-student.component.css",
+  animations: [appModuleAnimation()],
 })
 export class ImortedStudentComponent extends PagedListingComponentBase<StudentDTO> {
   students: StudentDTO[] = [];
-  keyword = '';
+  keyword = "";
   constructor(
     injector: Injector,
     private _studentService: StudentImportServiceProxy,
@@ -48,7 +52,7 @@ export class ImortedStudentComponent extends PagedListingComponentBase<StudentDT
       )
       .subscribe((result: StudentDtoPagedResultDto) => {
         this.students = result.items;
-        console.log(this.students)
+        console.log(this.students);
         this.showPaging(result, pageNumber);
         this.cd.detectChanges();
       });
@@ -56,7 +60,7 @@ export class ImortedStudentComponent extends PagedListingComponentBase<StudentDT
 
   delete(student: StudentDTO): void {
     abp.message.confirm(
-      this.l('StudentDeleteWarningMessage', student.name),
+      this.l("StudentDeleteWarningMessage", student.name),
       undefined,
       (result: boolean) => {
         if (result) {
@@ -64,7 +68,7 @@ export class ImortedStudentComponent extends PagedListingComponentBase<StudentDT
             .delete(student.id)
             .pipe(
               finalize(() => {
-                abp.notify.success(this.l('SuccessfullyDeleted'));
+                abp.notify.success(this.l("SuccessfullyDeleted"));
                 this.refresh();
               })
             )
@@ -88,24 +92,23 @@ export class ImortedStudentComponent extends PagedListingComponentBase<StudentDT
       createOrEditStudentDialog = this._modalService.show(
         CreateStudentComponent,
         {
-          class: 'modal-lg',
+          class: "modal-lg",
         }
       );
     } else {
       createOrEditStudentDialog = this._modalService.show(
         EditStudentComponent,
         {
-          class: 'modal-lg',
+          class: "modal-lg",
           initialState: {
             id: id,
           },
         }
-      );  
+      );
     }
 
     createOrEditStudentDialog.content.onSave.subscribe(() => {
       this.refresh();
     });
   }
-
 }

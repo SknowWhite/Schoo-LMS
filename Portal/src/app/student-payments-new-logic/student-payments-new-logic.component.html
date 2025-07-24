@@ -1,0 +1,145 @@
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Student Installments</h5>
+    </div>
+    <div class="card-body p-2 table-responsive">
+      <!-- Filters Row -->
+      <div class="row g-2 mb-3" *ngIf="isAdmin">
+        <div class="col-md-3 col-sm-6">
+          <input
+            class="form-control"
+            placeholder="Search Student"
+            [(ngModel)]="filters.student"
+          />
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <input
+            class="form-control"
+            placeholder="Search Template"
+            [(ngModel)]="filters.template"
+          />
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <select class="form-select" [(ngModel)]="filters.status">
+            <option value="">All Statuses</option>
+            <option [value]="0">New</option>
+            <option [value]="1">Pending</option>
+            <option [value]="2">Paid</option>
+            <option [value]="3">Failed</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <table class="table table-bordered table-hover align-middle text-nowrap">
+        <thead class="table-light">
+          <tr>
+            <th *ngIf="isAdmin">Student</th>
+            <th>Template</th>
+            <th>Type</th>
+            <th>Breakdowns</th>
+            <th>Due Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Invoice</th>
+            <th *ngIf="isAdmin">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of filteredInstallments()" class="align-middle">
+            <td *ngIf="isAdmin">
+              <strong>{{ i.student.name }}</strong
+              ><br />
+              <small
+                >{{ i.student.grade }} - {{ i.student.mobileNumber }}</small
+              >
+            </td>
+            <td>{{ i.installmentTemplate.name }}</td>
+            <td *ngIf="false">
+              {{ i.installmentTemplate.type === 0 ? "Monthly" : "Term" }}
+            </td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'bg-danger': isInstallementOverdue(i.dueDate),
+                  'bg-success': !isInstallementOverdue(i.dueDate)
+                }"
+              >
+                {{ isInstallementOverdue(i.dueDate) ? "Overdue" : "Normal" }}
+              </span>
+            </td>
+
+            <td>
+              <ul class="list-unstyled mb-0 small">
+                <li *ngFor="let b of i.installmentTemplate.breakdowns">
+                  {{ b.label }}: {{ b.amount }}
+                </li>
+              </ul>
+            </td>
+            <td>
+              <span *ngIf="!isAdmin">{{
+                i.dueDate | date : "yyyy-MM-dd"
+              }}</span>
+              <input
+                *ngIf="isAdmin"
+                type="date"
+                class="form-control form-control-sm"
+                [ngModel]="i.dueDate?.slice(0, 10)"
+                (ngModelChange)="i.dueDate = $event"
+              />
+            </td>
+            <td>
+              <span *ngIf="!isAdmin || i.status === 1">{{ i.amount }}</span>
+              <input
+                *ngIf="isAdmin && i.status !== 1"
+                type="number"
+                class="form-control form-control-sm"
+                [(ngModel)]="i.amount"
+              />
+            </td>
+            <td>
+              <span
+                [ngClass]="{
+                  'text-primary': i.status === 1,
+                  'text-success': i.status === 2,
+                  'text-danger': i.status === 3,
+                  'text-muted': i.status === 0
+                }"
+              >
+                {{ getStatusLabel(i.status) }}
+              </span>
+            </td>
+            <td>
+              <a
+                *ngIf="i.invoiceUrl"
+                [href]="i.invoiceUrl"
+                class="btn btn-sm btn-outline-primary"
+                target="_blank"
+              >
+                Pay Now
+              </a>
+              <button
+                *ngIf="!i.invoiceUrl && !isAdmin"
+                class="btn btn-sm btn-primary"
+                (click)="generateInvoice(i)"
+              >
+                Generate Invoice
+              </button>
+            </td>
+            <td *ngIf="isAdmin">
+              <button
+                class="btn btn-sm btn-success"
+                [disabled]="i.status === 1"
+                (click)="saveChanges(i)"
+              >
+                <i class="fas fa-save"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

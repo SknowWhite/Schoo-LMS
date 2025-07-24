@@ -1,0 +1,117 @@
+/* General layout */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding-bottom: 2rem;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  border-radius: 10px 10px 0 0;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+h5,
+h6 {
+  font-weight: 600;
+}
+
+/* Form spacing */
+.form-label {
+  font-weight: 500;
+}
+
+input.form-control,
+select.form-select,
+textarea.form-control {
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+/* Breakdowns section */
+.breakdowns h6 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.breakdowns .row {
+  margin-top: 0.5rem;
+}
+
+.breakdowns .btn-outline-success {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.75rem;
+}
+
+.breakdowns .form-control {
+  min-width: 100px;
+}
+
+/* Table styles */
+.table {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  padding: 0.65rem;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Pagination styles */
+.pagination {
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.pagination li a,
+.pagination li span {
+  padding: 0.5rem 0.75rem;
+  color: #007bff;
+}
+
+.pagination .active span {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Buttons */
+.btn-sm i {
+  margin-right: 4px;
+}
+
+.btn + .btn {
+  margin-left: 0.5rem;
+}
+.card .form-check {
+  margin-bottom: 0.5rem;
+}
+.card .form-check:last-child {
+  margin-bottom: 0;
+}
