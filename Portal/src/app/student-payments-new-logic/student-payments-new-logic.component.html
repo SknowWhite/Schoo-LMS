@@ -38,7 +38,7 @@
             <th *ngIf="isAdmin">Student</th>
             <th>Template</th>
             <th>Type</th>
-            <th>Breakdowns</th>
+            <th>Notes</th>
             <th>Due Date</th>
             <th>Amount</th>
             <th>Status</th>
@@ -71,13 +71,14 @@
               </span>
             </td>
 
-            <td>
+            <td *ngIf="false">
               <ul class="list-unstyled mb-0 small">
                 <li *ngFor="let b of i.installmentTemplate.breakdowns">
                   {{ b.label }}: {{ b.amount }}
                 </li>
               </ul>
             </td>
+            <td>{{ i.installmentTemplate.notes }}</td>
             <td>
               <span *ngIf="!isAdmin">{{
                 i.dueDate | date : "yyyy-MM-dd"

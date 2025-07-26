@@ -30,6 +30,8 @@ import { BusFeesComponent } from "./bus-fees/bus-fees.component";
 import { AdminInstallmentsComponent } from "./admin-installments/admin-installments.component";
 import { StudentsPaymentDetailsComponent } from "./students-payment-details/students-payment-details.component";
 import { StudentPaymentsNewLogicComponent } from "./student-payments-new-logic/student-payments-new-logic.component";
+import { SelectDropDownModule } from "ngx-select-dropdown";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +69,7 @@ import { StudentPaymentsNewLogicComponent } from "./student-payments-new-logic/s
     ServiceProxyModule,
     NgxPaginationModule,
     SharedModule,
+    SelectDropDownModule,
   ],
   providers: [],
 })

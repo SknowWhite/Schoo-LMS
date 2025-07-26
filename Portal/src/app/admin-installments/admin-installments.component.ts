@@ -46,11 +46,31 @@ export class AdminInstallmentsComponent
   isEditMode = false;
   selectedTemplateId: string | null = null;
   templateIdToAssign: string;
-  assignmentType: "all" | "grade" | "selected" = "all";
-  grades: string[] = ["Prim 1", "Prim 2", "Prim 3"];
   selectedGrade: string;
   students: any[] = []; // fetched from backend
-  showAssignSection = false;
+  assignmentTargets: { [templateId: string]: string } = {};
+  grades: string[] = [];
+  assigningIds: string[] = [];
+  studentOptions: any[] = [];
+  customStudents: { [templateId: string]: any[] } = {};
+  uploadSummary: any;
+
+  dropdownConfig = {
+    displayKey: "name", // shown on dropdown
+    search: true,
+    height: "250px",
+    placeholder: "Select Students",
+    customComparator: undefined,
+    limitTo: 0,
+    moreText: "more",
+    noResultsFound: "No results found!",
+    searchPlaceholder: "Search...",
+    searchOnKey: "name",
+    clearOnSelection: false,
+    inputDirection: "ltr",
+    selectAllLabel: "Select All",
+    enableSelectAll: true,
+  };
 
   constructor(
     injector: Injector,
@@ -73,6 +93,7 @@ export class AdminInstallmentsComponent
   }
   ngOnInit(): void {
     this.getTemplates();
+    this.getGrades();
   }
 
   get breakdowns(): FormArray {
@@ -143,48 +164,81 @@ export class AdminInstallmentsComponent
     this.selectedTemplateId = null;
   }
 
-  confirmAssignment(): void {
-    if (!this.templateIdToAssign) return;
+  getGrades(): void {
+    this.installmentService.getAllGrades().subscribe((res: any) => {
+      this.grades = res.result || res.items || [];
+    });
+  }
 
-    if (this.assignmentType === "all") {
-      this.installmentService
-        .assignToAllStudents(this.templateIdToAssign)
-        .subscribe(() => {
-          this.notify.success("Assigned to all students");
-          this.showAssignSection = false;
-        });
-    } else if (this.assignmentType === "grade") {
-      this.installmentService
-        .assignToGrade(this.selectedGrade, this.templateIdToAssign)
-        .subscribe(() => {
-          this.notify.success(`Assigned to grade ${this.selectedGrade}`);
-          this.showAssignSection = false;
-        });
-    } else if (this.assignmentType === "selected") {
-      const selectedIds = this.students
-        .filter((s) => s.selected)
-        .map((s) => s.id);
-      this.installmentService
-        .assignToStudents(selectedIds, this.templateIdToAssign)
-        .subscribe(() => {
-          this.notify.success("Assigned to selected students");
-          this.showAssignSection = false;
-        });
+  assignTemplate(templateId: string): void {
+    const target = this.assignmentTargets[templateId] || "all";
+    this.assigningIds.push(templateId);
+
+    const complete = () => {
+      this.assigningIds = this.assigningIds.filter((id) => id !== templateId);
+    };
+
+    if (target === "all") {
+      this.installmentService.assignToAllStudents(templateId).subscribe({
+        next: () => this.notify.success("Assigned to all students"),
+        error: () => this.notify.error("Assignment failed"),
+        complete,
+      });
+    } else {
+      this.installmentService.assignToGrade(target, templateId).subscribe({
+        next: () => this.notify.success(`Assigned to grade ${target}`),
+        error: () => this.notify.error("Assignment failed"),
+        complete,
+      });
     }
   }
+  deleteTemplate(id: string): void {
+    if (!confirm("Are you sure you want to delete this template?")) return;
 
-  cancelAssign(): void {
-    this.templateIdToAssign = null;
-    this.showAssignSection = false;
+    this.installmentService.deleteTemplate(id).subscribe({
+      next: () => {
+        this.notify.success("Template deleted");
+        this.getTemplates();
+      },
+      error: () => this.notify.error("Failed to delete"),
+    });
+  }
+  isCreateDisabled(): boolean {
+    const name = this.form.get("name")?.value?.trim();
+    const endDate = new Date(this.form.get("endDate")?.value);
+    const amount = this.form.get("totalAmount")?.value;
+
+    const isNameEmpty = !name;
+    const isEndDateInPast = isNaN(endDate.getTime()) || endDate < new Date();
+    const isAmountInvalid = amount == null || amount <= 0;
+
+    return isNameEmpty || isEndDateInPast || isAmountInvalid;
   }
 
-  openAssignSection(templateId: string): void {
-    this.templateIdToAssign = templateId;
-    this.assignmentType = "all";
-    this.showAssignSection = true;
+  uploadExcel(event: any): void {
+    const file = event.target.files[0];
+    if (!file) return;
 
-    this.studentService.getAll("", 0, 100000).subscribe((res) => {
-      this.students = res.items.map((s) => ({ ...s, selected: false }));
+    const formData = new FormData();
+    formData.append("file", file);
+
+    this.installmentService.uploadTemplateExcel(formData).subscribe({
+      next: (res) => {
+        this.uploadSummary = res;
+        this.notify.success(`Processed: ${res.successCount} rows`);
+      },
+      error: () => this.notify.error("Upload failed"),
+    });
+  }
+
+  downloadExcelTemplate(): void {
+    this.installmentService.downloadExcelTemplate().subscribe((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "StudentInstallmentsTemplate.xlsx";
+      a.click();
+      URL.revokeObjectURL(url);
     });
   }
 }

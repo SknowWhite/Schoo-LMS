@@ -6864,6 +6864,7 @@ export class InstallmentService {
       body: { id },
     });
   }
+
   assignToGrade(grade: string, templateId: string): Observable<any> {
     return this.http.post<any>(
       `${this.baseUrl}/api/services/app/InstallmentTemplate/AssignToGrade`,
@@ -6875,6 +6876,26 @@ export class InstallmentService {
     return this.http.post<any>(
       `${this.baseUrl}/api/services/app/InstallmentTemplate/AssignToStudents`,
       { studentIds, templateId }
+    );
+  }
+  getAllGrades(): Observable<any[]> {
+    let url_ = `${this.baseUrl}/api/services/app/InstallmentTemplate/GetGradeList`;
+
+    return this.http.get<any[]>(`${url_}`);
+  }
+  uploadTemplateExcel(data: FormData): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}/api/services/app/InstallmentTemplate/UploadStudentTemplateExcel`,
+      data
+    );
+  }
+
+  downloadExcelTemplate(): Observable<Blob> {
+    return this.http.get(
+      `${this.baseUrl}/api/services/app/InstallmentTemplate/DownloadExcelTemplate`,
+      {
+        responseType: "blob",
+      }
     );
   }
 }

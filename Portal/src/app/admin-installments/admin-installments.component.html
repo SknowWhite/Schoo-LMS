@@ -18,7 +18,7 @@
               required
             />
           </div>
-          <div class="col-md-2">
+          <div *ngIf="false" class="col-md-2">
             <label class="form-label">Type</label>
             <select class="form-select" formControlName="type">
               <option [value]="0">Monthly</option>
@@ -55,7 +55,7 @@
           </div>
         </div>
 
-        <div class="mt-4">
+        <div *ngIf="false" class="mt-4">
           <h6 class="d-flex justify-content-between">
             Breakdowns
             <button
@@ -96,9 +96,18 @@
         </div>
 
         <div class="mt-4 d-flex gap-2">
-          <button type="submit" class="btn btn-primary">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!form.valid || isCreateDisabled()"
+          >
             {{ isEditMode ? "Update" : "Create" }}
           </button>
+          <small class="text-danger" *ngIf="isCreateDisabled()">
+            Please ensure template name is filled, total amount is greater than
+            0, and end date is in the past.
+          </small>
+
           <button
             type="button"
             class="btn btn-secondary"
@@ -123,12 +132,13 @@
         <thead class="table-light">
           <tr>
             <th>Name</th>
-            <th>Type</th>
             <th>Total</th>
             <th>Start</th>
             <th>End</th>
             <th>Breakdowns</th>
-            <th>Actions</th>
+            <th>Update</th>
+            <th>Assign</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -139,20 +149,49 @@
             "
           >
             <td>{{ t.name }}</td>
-            <td>{{ t.type === 0 ? "Monthly" : "Term" }}</td>
             <td>{{ t.totalAmount }}</td>
             <td>{{ t.startDate | date }}</td>
             <td>{{ t.endDate | date }}</td>
             <td>{{ t.breakdowns.length }}</td>
-            <td>
-              <button class="btn btn-sm btn-primary me-1" (click)="edit(t)">
+            <td class="d-flex flex-wrap gap-1 align-items-center">
+              <button class="btn btn-sm btn-primary" (click)="edit(t)">
                 <i class="fas fa-edit"></i>
               </button>
+            </td>
+            <td>
+              <select
+                class="form-select form-select-sm"
+                style="min-width: 140px"
+                [(ngModel)]="assignmentTargets[t.id]"
+              >
+                <option [ngValue]="'all'">All Students</option>
+                <option *ngFor="let g of grades" [ngValue]="g">
+                  Grade: {{ g }}
+                </option>
+              </select>
+
               <button
                 class="btn btn-sm btn-success"
-                (click)="assignToAll(t.id)"
+                [disabled]="assigningIds.includes(t.id)"
+                (click)="assignTemplate(t.id)"
               >
-                <i class="fas fa-share"></i>
+                <span
+                  *ngIf="assigningIds.includes(t.id)"
+                  class="spinner-border spinner-border-sm me-1"
+                ></span>
+                <i
+                  *ngIf="!assigningIds.includes(t.id)"
+                  class="fas fa-check me-1"
+                ></i
+                >Assign
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-sm btn-danger"
+                (click)="deleteTemplate(t.id)"
+              >
+                <i class="fas fa-trash-alt"></i>
               </button>
             </td>
           </tr>
@@ -160,6 +199,27 @@
       </table>
 
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="mb-2">Bulk Assign via Excel</h5>
+      <input type="file" (change)="uploadExcel($event)" accept=".xlsx" />
+      <small class="d-block mt-1">
+        <a (click)="downloadExcelTemplate()" style="cursor: pointer"
+          >Download Excel Template</a
+        >
+      </small>
+
+      <div *ngIf="uploadSummary" class="mt-3">
+        <p class="mb-1">
+          ✅ Success: {{ uploadSummary.successCount }}<br />
+          ❌ Errors: {{ uploadSummary.errorCount }}
+        </p>
+        <ul *ngIf="uploadSummary.errors.length > 0" class="text-danger small">
+          <li *ngFor="let err of uploadSummary.errors">{{ err }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

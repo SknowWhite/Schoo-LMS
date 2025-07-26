@@ -36,6 +36,7 @@
     "ng2-file-upload": "^8.0.0",
     "ngx-bootstrap": "^18.0.2",
     "ngx-pagination": "^6.0.3",
+    "ngx-select-dropdown": "^3.3.2",
     "push.js": "1.0.12",
     "rxjs": "^7.8.1",
     "sweetalert2": "^11.12.2",
