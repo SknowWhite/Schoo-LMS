@@ -226,6 +226,7 @@ export class AdminInstallmentsComponent
       next: (res) => {
         this.uploadSummary = res;
         this.notify.success(`Processed: ${res.successCount} rows`);
+        this.getTemplates();
       },
       error: () => this.notify.error("Upload failed"),
     });

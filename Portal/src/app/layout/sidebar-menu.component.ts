@@ -92,8 +92,13 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
           "fas fa-bus"
         ),
         new MenuItem(
-          this.l("Student Payment Details"),
-          "/app/StudentEducationalPayments",
+          this.l("Installments"),
+          "/app/AdminInstallments",
+          "fas fa-receipt"
+        ),
+        new MenuItem(
+          this.l("Student Payments "),
+          "/app/StudentPaymentsNewLogic",
           "fas fa-receipt"
         ),
       ];

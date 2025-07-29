@@ -26,9 +26,17 @@ namespace School.LMS.EducationalFeePlan
             {
                 throw new ArgumentException("Educational fee data cannot be null or empty.");
             }
-            await _educationalInstallmentsRepository.DeleteAsync(x => x.Id > 0);
-            await Repository.BatchDeleteAsync(x => x.Id > 0);
-            await Repository.InsertRangeAsync(educationalFeeDtos.Select(MapToEntity).ToList());
+
+            foreach (var item in educationalFeeDtos)
+            {
+                var exists = (await Repository.CountAsync(x => x.Grade == item.Grade)) > 0;
+
+                if (!exists)
+                {
+                    await Repository.InsertAsync(MapToEntity(item));
+                }
+
+            }
         }
         public async Task<List<EducationalFeeFromExcelDto>> GetAllEducationalFees()
         {

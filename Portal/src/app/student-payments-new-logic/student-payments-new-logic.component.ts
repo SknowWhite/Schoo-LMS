@@ -59,6 +59,7 @@ export class StudentPaymentsNewLogicComponent
         .getValidInstallments(this.studentId)
         .subscribe((res: any) => {
           this.studentInstallments = res.result;
+          console.log("Student installments loaded:", this.studentInstallments);
           this.cdr.detectChanges(); // Ensure view updates
         });
     }

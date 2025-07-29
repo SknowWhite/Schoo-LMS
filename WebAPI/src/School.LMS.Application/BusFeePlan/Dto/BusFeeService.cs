@@ -1,12 +1,10 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
-using Abp.EntityFrameworkCore.Repositories;
 using School.LMS.EducationalFeePlan.Dto;
 using School.LMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace School.LMS.BusFeePlan.Dto
@@ -26,10 +24,18 @@ namespace School.LMS.BusFeePlan.Dto
             {
                 throw new ArgumentException("Educational fee data cannot be null or empty.");
             }
-            await _busInstallmentsRepository.DeleteAsync(x => x.Id > 0);
-            await Repository.BatchDeleteAsync(x => x.Id > 0);
 
-            await Repository.InsertRangeAsync(educationalFeeDtos.Select(MapToEntity).ToList());
+            foreach (var item in educationalFeeDtos)
+            {
+                var exists = (await Repository.CountAsync(x => x.Line == item.Line)) > 0;
+
+                if (!exists)
+                {
+                    await Repository.InsertAsync(MapToEntity(item));
+                }
+              
+            }
+            
         }
         public async Task<List<BusFeeFromExcelDto>> GetAllBusFees()
         {

@@ -14,11 +14,6 @@
       {{ "Students" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Student')">
-    <a class="nav-link" [routerLink]="['studentPayment']">
-      {{ "Educational Payment" | localize }}
-    </a>
-  </li>
   <li
     class="nav-item d-none d-sm-inline-block"
     *ngIf="hasRole('Admin') || hasRole('Student')"
@@ -27,19 +22,9 @@
       {{ "Bus Subscription" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Student')">
-    <a class="nav-link" [routerLink]="['busFees']">
-      {{ "Bus Payments - under progress" | localize }}
-    </a>
-  </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
-    <a class="nav-link" [routerLink]="['StudentEducationalPayments']">
-      {{ "Students Payments" | localize }}
-    </a>
-  </li>
   <li class="nav-item d-none d-sm-inline-block" *ngIf="hasRole('Admin')">
     <a class="nav-link" [routerLink]="['AdminInstallments']">
-      {{ "Admin Installments" | localize }}
+      {{ "Installments" | localize }}
     </a>
   </li>
   <li
@@ -47,7 +32,7 @@
     *ngIf="hasRole('Admin') || hasRole('Student')"
   >
     <a class="nav-link" [routerLink]="['StudentPaymentsNewLogic']">
-      {{ "Student Payments New Logic" | localize }}
+      {{ "Student Payments " | localize }}
     </a>
   </li>
 </ul>

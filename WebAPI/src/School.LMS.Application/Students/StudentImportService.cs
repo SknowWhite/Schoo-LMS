@@ -59,13 +59,41 @@ namespace School.LMS.Students
             foreach (var studentDto in studentDtos)
             {
                 var student = MapToEntity(studentDto);
+                var exists = (await Repository.CountAsync(x => x.StudentId == student.StudentId)) > 0;
+                if (!exists)
+                {
+                    await Repository.InsertAsync(student);
+                    // create user for the new student
+                    await CreateUsersForStudents(studentDto);
+
+                }
+                else
+                {
+                    // update existing student
+                    var existingStudent = await Repository.FirstOrDefaultAsync(x => x.StudentId == student.StudentId);
+                    if (existingStudent != null)
+                    {
+                        existingStudent.Name = student.Name;
+                        existingStudent.Grade = student.Grade;
+                        existingStudent.MobileNumber = student.MobileNumber;
+                        existingStudent.Status = student.Status;
+                        existingStudent.PreviousAmount = student.PreviousAmount;
+                    }
+                    await Repository.UpdateAsync(existingStudent);
+
+                    var existingUser=_userRole.GetUsersAsync().Result.FirstOrDefault(x=>x.Surname== student.Name);
+                    if (existingUser != null)
+                        await _userRole.DeleteAsync(existingUser); // delete old created user if exists
+
+
+                    await CreateUsersForStudents(studentDto); // create new user for the updated student
+                }
+
                 students.Add(student);
 
 
             }
 
-            Repository.Delete(x => x.Id > 0); // Delete existing records
-            Repository.InsertRange(students);
         // await CreateUsersForStudents(studentDtos);
         }
 
@@ -109,12 +137,8 @@ namespace School.LMS.Students
             return entity.MapToStudentDto();
         }
 
-        private async Task CreateUsersForStudents(List<StudentDto> students)
+        private async Task CreateUsersForStudents(StudentDto student)
         {
-            foreach (var student in students)
-            {
-
-
                 var user = new User
                 {
                     TenantId = 1,
@@ -138,8 +162,8 @@ namespace School.LMS.Students
 
                 await _userRole.CreateAsync(user, student.StudentId);
                
-            }
-            await CurrentUnitOfWork.SaveChangesAsync();
+            
+          //  await CurrentUnitOfWork.SaveChangesAsync();
 
         }
     }

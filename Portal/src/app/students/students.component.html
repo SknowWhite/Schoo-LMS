@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <h1>{{ "ImportPaymentData" | localize }}</h1>
+          <h1>{{ "Import Data" | localize }}</h1>
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@
                         role="tab"
                         aria-selected="false"
                       >
-                        {{ "EducationalFees" | localize }}
+                        {{ "Grades" | localize }}
                       </a>
                     </li>
                     <!-- Bus Fees Tab -->
@@ -136,7 +136,7 @@
                         role="tab"
                         aria-selected="false"
                       >
-                        {{ "BusFees" | localize }}
+                        {{ "Bus Lines" | localize }}
                       </a>
                     </li>
                   </ul>
@@ -157,7 +157,6 @@
                               <th>{{ "Id" | localize }}</th>
                               <th>{{ "Name" | localize }}</th>
                               <th>{{ "Grade" | localize }}</th>
-                              <th>{{ "PreviousAmount" | localize }}</th>
                               <th>{{ "MobileNumber" | localize }}</th>
                               <th>{{ "Status" | localize }}</th>
                             </tr>
@@ -173,7 +172,6 @@
                               <td>{{ student.studentId }}</td>
                               <td>{{ student.name }}</td>
                               <td>{{ student.grade }}</td>
-                              <td>{{ student.previousAmount | currency }}</td>
                               <td>{{ student.mobileNumber }}</td>
                               <td>
                                 <span
@@ -215,12 +213,6 @@
                             <tr>
                               <th>#</th>
                               <th>{{ "Grade" | localize }}</th>
-                              <th>{{ "ExpectedAmount" | localize }}</th>
-                              <th>{{ "FirstInstallment" | localize }}</th>
-                              <th>{{ "SecondInstallment" | localize }}</th>
-                              <th>{{ "ThirdInstallment" | localize }}</th>
-                              <th>{{ "FourthInstallment" | localize }}</th>
-                              <th>{{ "FullAmountWithDiscount" | localize }}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -232,24 +224,6 @@
                             >
                               <td>{{ i + 1 }}</td>
                               <td>{{ fee.grade }}</td>
-                              <td>{{ fee.expectedAmount | currency }}</td>
-                              <td>
-                                {{ fee.firstInstallment.amount | currency }}
-                              </td>
-                              <td>
-                                {{ fee.secondInstallment.amount | currency }}
-                              </td>
-                              <td>
-                                {{ fee.thirdInstallment.amount | currency }}
-                              </td>
-                              <td>
-                                {{ fee.fourthInstallment.amount | currency }}
-                              </td>
-                              <td>
-                                {{
-                                  fee.fullAmountWithDiscount.amount | currency
-                                }}
-                              </td>
                             </tr>
                             <tr *ngIf="educationalFeesData.length === 0">
                               <td colspan="8" class="text-center">
@@ -258,33 +232,6 @@
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-
-                      <div class="alert alert-info mt-3">
-                        <i class="fas fa-info-circle mr-1"></i>
-                        {{ "InstallmentDueDates" | localize }}:
-                        <ul class="mb-0 mt-1">
-                          <li>
-                            {{ "FirstInstallment" | localize }}:
-                            {{ "2025-06-01" | date }}
-                          </li>
-                          <li>
-                            {{ "SecondInstallment" | localize }}:
-                            {{ "2025-08-01" | date }}
-                          </li>
-                          <li>
-                            {{ "ThirdInstallment" | localize }}:
-                            {{ "2025-10-01" | date }}
-                          </li>
-                          <li>
-                            {{ "FourthInstallment" | localize }}:
-                            {{ "2025-12-01" | date }}
-                          </li>
-                          <li>
-                            {{ "FullPaymentDiscount" | localize }}:
-                            {{ "2025-06-01" | date }}
-                          </li>
-                        </ul>
                       </div>
                     </div>
 
@@ -300,36 +247,12 @@
                             <tr>
                               <th>#</th>
                               <th>{{ "Line" | localize }}</th>
-                              <th>{{ "ExpectedAmount" | localize }}</th>
-                              <th>{{ "FirstInstallment" | localize }}</th>
-                              <th>{{ "SecondInstallment" | localize }}</th>
-                              <th>{{ "ThirdInstallment" | localize }}</th>
-                              <th>{{ "FourthInstallment" | localize }}</th>
-                              <th>{{ "FullAmountWithDiscount" | localize }}</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr *ngFor="let fee of busFeesData; let i = index">
                               <td>{{ i + 1 }}</td>
                               <td>{{ fee.line }}</td>
-                              <td>{{ fee.expectedAmount | currency }}</td>
-                              <td>
-                                {{ fee.firstInstallment.amount | currency }}
-                              </td>
-                              <td>
-                                {{ fee.secondInstallment.amount | currency }}
-                              </td>
-                              <td>
-                                {{ fee.thirdInstallment.amount | currency }}
-                              </td>
-                              <td>
-                                {{ fee.fourthInstallment.amount | currency }}
-                              </td>
-                              <td>
-                                {{
-                                  fee.fullAmountWithDiscount.amount | currency
-                                }}
-                              </td>
                             </tr>
                             <tr *ngIf="busFeesData.length === 0">
                               <td colspan="8" class="text-center">
@@ -338,33 +261,6 @@
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-
-                      <div class="alert alert-info mt-3">
-                        <i class="fas fa-info-circle mr-1"></i>
-                        {{ "InstallmentDueDates" | localize }}:
-                        <ul class="mb-0 mt-1">
-                          <li>
-                            {{ "FirstInstallment" | localize }}:
-                            {{ "2025-06-01" | date }}
-                          </li>
-                          <li>
-                            {{ "SecondInstallment" | localize }}:
-                            {{ "2025-08-01" | date }}
-                          </li>
-                          <li>
-                            {{ "ThirdInstallment" | localize }}:
-                            {{ "2025-10-01" | date }}
-                          </li>
-                          <li>
-                            {{ "FourthInstallment" | localize }}:
-                            {{ "2025-12-01" | date }}
-                          </li>
-                          <li>
-                            {{ "FullPaymentDiscount" | localize }}:
-                            {{ "2025-06-01" | date }}
-                          </li>
-                        </ul>
                       </div>
                     </div>
                   </div>

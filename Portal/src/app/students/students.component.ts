@@ -195,7 +195,6 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
     const requiredColumns = [
       "Name",
       "Grade",
-      "Previous Amount",
       "Mobile Number",
       "Status_Des",
       "id",
@@ -226,15 +225,7 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
 
   processEducationalFeesData(rawData: any[]): void {
     // Define required columns
-    const requiredColumns = [
-      "Grade",
-      "Expected Amount",
-      "First Installment Before 1-6",
-      "Second Installment Before 1-8",
-      "Third Installment Before 1-10",
-      "Fourth Installment Before 1-12",
-      "Full Amount Before 1-6",
-    ];
+    const requiredColumns = ["Grade"];
 
     // Check if all required columns exist
     this.checkRequiredColumns(rawData, requiredColumns, "Educational Fees");
@@ -276,15 +267,7 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
 
   processBusFeesData(rawData: any[]): void {
     // Define required columns
-    const requiredColumns = [
-      "Lines",
-      "Expected Amount",
-      "First Installment Before 1-6",
-      "Second Installment Before 1-8",
-      "Third Installment Before 1-10",
-      "Fourth Installment Before 1-12",
-      "Full Amount Before 1-6",
-    ];
+    const requiredColumns = ["Lines"];
 
     // Check if all required columns exist
     this.checkRequiredColumns(rawData, requiredColumns, "Bus Fees");
@@ -342,95 +325,11 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
     if (!fee.grade) {
       this.validationErrors.push(this.l("GradeRequired", index + 1));
     }
-    if (fee.expectedAmount <= 0) {
-      this.validationErrors.push(
-        this.l("InvalidExpectedAmount", "Educational Fee", index + 1)
-      );
-    }
-
-    // Validate installment amounts
-    if (fee.firstInstallment.amount < 0) {
-      this.validationErrors.push(
-        this.l(
-          "InvalidInstallmentAmount",
-          "First",
-          "Educational Fee",
-          index + 1
-        )
-      );
-    }
-    if (fee.secondInstallment.amount < 0) {
-      this.validationErrors.push(
-        this.l(
-          "InvalidInstallmentAmount",
-          "Second",
-          "Educational Fee",
-          index + 1
-        )
-      );
-    }
-    if (fee.thirdInstallment.amount < 0) {
-      this.validationErrors.push(
-        this.l(
-          "InvalidInstallmentAmount",
-          "Third",
-          "Educational Fee",
-          index + 1
-        )
-      );
-    }
-    if (fee.fourthInstallment.amount < 0) {
-      this.validationErrors.push(
-        this.l(
-          "InvalidInstallmentAmount",
-          "Fourth",
-          "Educational Fee",
-          index + 1
-        )
-      );
-    }
-    if (fee.fullAmountWithDiscount.amount < 0) {
-      this.validationErrors.push(
-        this.l("InvalidFullAmountWithDiscount", "Educational Fee", index + 1)
-      );
-    }
   }
 
   validateBusFeeData(fee: BusFeeDTO, index: number): void {
     if (!fee.line) {
       this.validationErrors.push(this.l("LineRequired", index + 1));
-    }
-    if (fee.expectedAmount <= 0) {
-      this.validationErrors.push(
-        this.l("InvalidExpectedAmount", "Bus Fee", index + 1)
-      );
-    }
-
-    // Validate installment amounts
-    if (fee.firstInstallment.amount < 0) {
-      this.validationErrors.push(
-        this.l("InvalidInstallmentAmount", "First", "Bus Fee", index + 1)
-      );
-    }
-    if (fee.secondInstallment.amount < 0) {
-      this.validationErrors.push(
-        this.l("InvalidInstallmentAmount", "Second", "Bus Fee", index + 1)
-      );
-    }
-    if (fee.thirdInstallment.amount < 0) {
-      this.validationErrors.push(
-        this.l("InvalidInstallmentAmount", "Third", "Bus Fee", index + 1)
-      );
-    }
-    if (fee.fourthInstallment.amount < 0) {
-      this.validationErrors.push(
-        this.l("InvalidInstallmentAmount", "Fourth", "Bus Fee", index + 1)
-      );
-    }
-    if (fee.fullAmountWithDiscount.amount < 0) {
-      this.validationErrors.push(
-        this.l("InvalidFullAmountWithDiscount", "Bus Fee", index + 1)
-      );
     }
   }
 
@@ -485,24 +384,28 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
 
     // Simulate successful save for now
 
-    this.isLoading = false;
-    this.notify.success(this.l("DataProcessedSuccessfully"));
-
-    this._importService
-      .ImportEducationalFees(this.educationalFeesData)
-      .subscribe((result) => {
-        this.notify.success(this.l("DataSavedSuccessfully"));
-      });
-    this._importService.ImportBusFees(this.busFeesData).subscribe((result) => {
-      this.notify.success(this.l("DataSavedSuccessfully"));
-    });
-    /*  */
-
-    this._importService
-      .ImportStudents(this.studentsData)
-      .subscribe((result) => {
-        this.notify.success(this.l("DataSavedSuccessfully"));
-      });
+    abp.message.confirm(
+      this.l("Please confirm saving Students, Grades and Bus Lines"),
+      undefined,
+      (result: boolean) => {
+        if (result) {
+          this._importService
+            .ImportEducationalFees(this.educationalFeesData)
+            .subscribe((result) => {
+              this._importService
+                .ImportBusFees(this.busFeesData)
+                .subscribe((result) => {
+                  this._importService
+                    .ImportStudents(this.studentsData)
+                    .subscribe((result) => {
+                      this.isLoading = false;
+                      this.notify.success(this.l("DataSavedSuccessfully"));
+                    });
+                });
+            });
+        }
+      }
+    );
   }
 
   handleError(error: any): void {

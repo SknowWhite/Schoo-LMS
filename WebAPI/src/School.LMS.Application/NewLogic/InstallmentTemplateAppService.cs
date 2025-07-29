@@ -180,26 +180,35 @@ namespace School.LMS.NewLogic
             worksheet.Cell(1, 6).Value = "Amount";
             worksheet.Cell(1, 7).Value = "Notes";
 
-            // Sample row
+            // Sample row with DateTime and formatting
             worksheet.Cell(2, 1).Value = "123";
             worksheet.Cell(2, 2).Value = "Ahmed Ali";
             worksheet.Cell(2, 3).Value = "Term 1";
-            worksheet.Cell(2, 4).Value = "2025-09-01";
-            worksheet.Cell(2, 5).Value = "2025-12-01";
+
+            worksheet.Cell(2, 4).Value = new DateTime(2025, 9, 1);
+            worksheet.Cell(2, 4).Style.DateFormat.Format = "dd-MM-yyyy";
+
+            worksheet.Cell(2, 5).Value = new DateTime(2025, 12, 1);
+            worksheet.Cell(2, 5).Style.DateFormat.Format = "dd-MM-yyyy";
+
             worksheet.Cell(2, 6).Value = 500;
             worksheet.Cell(2, 7).Value = "Optional notes";
+
+            // Optional: Apply format to entire StartDate and DueDate columns
+            worksheet.Column(4).Style.DateFormat.Format = "dd-MM-yyyy";
+            worksheet.Column(5).Style.DateFormat.Format = "dd-MM-yyyy";
 
             using var stream = new MemoryStream();
             workbook.SaveAs(stream);
             stream.Seek(0, SeekOrigin.Begin);
 
             return new FileContentResult(stream.ToArray(),
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             {
                 FileDownloadName = "StudentInstallmentsTemplate.xlsx"
             };
-
         }
+
 
         [HttpPost]
         public async Task<ExcelUploadResult> UploadStudentTemplateExcel(IFormFile file)
@@ -278,7 +287,7 @@ namespace School.LMS.NewLogic
                     Amount = dto.Amount,
                     Notes = dto.Notes,
                     DueDate = dto.DueDate,
-                    Status = InstallmentStatus.Pending,
+                    Status = InstallmentStatus.New,
                     InvoiceLastUpdate = DateTime.UtcNow
                 };
 
