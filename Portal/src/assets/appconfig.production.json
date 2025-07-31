@@ -1,6 +1,6 @@
 {
-  "remoteServiceBaseUrl": "https://nozhaschool-chfchwdaesbyd7e0.canadacentral-01.azurewebsites.net/",
-  "appBaseUrl": "https://nozhaschool.z1.web.core.windows.net/",
+  "remoteServiceBaseUrl": "https://nozhaapi-dbe0cag8g5h5d7bd.canadacentral-01.azurewebsites.net/",
+  "appBaseUrl": "https://agreeable-rock-028a43303.2.azurestaticapps.net/",
   "localeMappings": [
     {
       "from": "pt-BR",
