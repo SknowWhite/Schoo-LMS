@@ -1,31 +1,36 @@
 ﻿using Abp.Application.Services;
+using Abp.Application.Services.Dto;
+using Abp.Authorization.Users;
+using Abp.Domain.Repositories;
+using Abp.Domain.Uow;
+using Abp.EntityFrameworkCore.Repositories;
+using Microsoft.AspNetCore.Identity;
+using School.LMS.Authorization;
 using School.LMS.Authorization.Roles;
+using School.LMS.Authorization.Users;
+using School.LMS.Helpers;
 using School.LMS.Models;
 using School.LMS.Students.Dto;
-using Abp.Domain.Repositories;
-using System.Threading.Tasks;
-using Abp.Application.Services.Dto;
 using System.Collections.Generic;
-using Abp.EntityFrameworkCore.Repositories;
 using System.Linq;
-using School.LMS.Helpers;
-using School.LMS.Authorization.Users;
-using Abp.Authorization.Users;
+using System.Threading.Tasks;
 
 namespace School.LMS.Students
 {
     public class StudentImportService : AsyncCrudAppService<Student, StudentDto, int, PagedStudentResultRequestDto, StudentDto, StudentDto>, IStudentImportService
     {
         private readonly RoleManager _roleManager;
-        private readonly UserManager _userRole;
+        private readonly UserManager _userManager;
         private readonly UserRegistrationManager _userRegisterationManager;
+        private readonly IUnitOfWorkManager _unitOfWorkManager;
 
-        public StudentImportService(IRepository<Student> repository, UserManager userRegistrationManager,RoleManager roleManager,UserRegistrationManager registrationManager)
+        public StudentImportService(IRepository<Student> repository, UserManager userRegistrationManager,RoleManager roleManager,UserRegistrationManager registrationManager, IUnitOfWorkManager unitofWorkManager)
             : base(repository)
         {
-            _userRole = userRegistrationManager;
+            _userManager = userRegistrationManager;
             _roleManager = roleManager;
             _userRegisterationManager = registrationManager;
+            _unitOfWorkManager = unitofWorkManager;
         }
         public override async Task<PagedResultDto<StudentDto>> GetAllAsync(PagedStudentResultRequestDto input)
         {
@@ -75,18 +80,18 @@ namespace School.LMS.Students
                     {
                         existingStudent.Name = student.Name;
                         existingStudent.Grade = student.Grade;
-                        existingStudent.MobileNumber = student.MobileNumber;
+                      //  existingStudent.MobileNumber = student.MobileNumber;
                         existingStudent.Status = student.Status;
                         existingStudent.PreviousAmount = student.PreviousAmount;
                     }
                     await Repository.UpdateAsync(existingStudent);
 
-                    var existingUser=_userRole.GetUsersAsync().Result.FirstOrDefault(x=>x.Surname== student.Name);
-                    if (existingUser != null)
-                        await _userRole.DeleteAsync(existingUser); // delete old created user if exists
+                    //var existingUser= _userManager.GetUsersAsync().Result.FirstOrDefault(x=>x.Surname== student.Name);
+                  //  if (existingUser != null)
+                  //      await _userManager.DeleteAsync(existingUser); // delete old created user if exists
 
 
-                    await CreateUsersForStudents(studentDto); // create new user for the updated student
+                 //   await CreateUsersForStudents(studentDto); // create new user for the updated student
                 }
 
                 students.Add(student);
@@ -94,7 +99,6 @@ namespace School.LMS.Students
 
             }
 
-        // await CreateUsersForStudents(studentDtos);
         }
 
         public override async Task<StudentDto> CreateAsync(StudentDto input)
@@ -153,18 +157,35 @@ namespace School.LMS.Students
 
                 user.SetNormalizedNames();
 
-                foreach (var defaultRole in _roleManager.Roles.Where(r => r.IsDefault).ToList())
-                {
-                    user.Roles.Add(new UserRole(1, user.Id, defaultRole.Id));
-                }
-
-                await _userRole.InitializeOptionsAsync(1);
-
-                await _userRole.CreateAsync(user, student.StudentId);
                
-            
+
+                await _userManager.InitializeOptionsAsync(1);
+
+            _userManager.UserValidators.Clear();
+            _userManager.UserValidators.Add(new UserValidator());
+            _userManager.PasswordValidators.Clear();
+            var x=    _userManager.CreateAsync(user, student.StudentId).Result;
             await CurrentUnitOfWork.SaveChangesAsync();
+            await _unitOfWorkManager.Current.SaveChangesAsync();
+            User user1 = await _userManager.FindByNameAsync(student.MobileNumber);
+            await _userManager.SetRolesAsync(user1, ["Student"]);
+
+
+            await CurrentUnitOfWork.SaveChangesAsync();
+            await _unitOfWorkManager.Current.SaveChangesAsync();
+
+
 
         }
     }
-}
+
+    public  class UserValidator: IUserValidator<User>
+    {
+        public Task<IdentityResult> ValidateAsync(UserManager<User> manager, User user)
+        {
+            // Implement custom validation logic here
+            return Task.FromResult(IdentityResult.Success);
+        }
+    }
+   
+    }
