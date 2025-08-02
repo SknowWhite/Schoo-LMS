@@ -94,7 +94,8 @@ namespace School.LMS.NewLogic
 
             installment.InvoiceUrl = $"https://atfawry.fawrystaging.com/invoice-ui/pay/{invoiceData.invoiceNumber}";
             installment.TransactionId = invoiceData.businessReference;
-           
+            installment.Status = InstallmentStatus.Pending;
+
             await _studentInstallmentRepo.UpdateAsync(installment);
             return _mapper.Map<StudentInstallment, StudentInstallmentDto>(installment);
         }
