@@ -163,7 +163,7 @@ namespace School.LMS.Students
                 await _userRole.CreateAsync(user, student.StudentId);
                
             
-          //  await CurrentUnitOfWork.SaveChangesAsync();
+            await CurrentUnitOfWork.SaveChangesAsync();
 
         }
     }
