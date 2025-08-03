@@ -88,6 +88,7 @@ namespace School.LMS.NewLogic
             return _mapper.Map<InstallmentTemplate, InstallmentTemplateDto>(entity);
         }
 
+        [HttpPost]
         public async Task DeleteAsync(AssignInstallmentTemplateInput input)
         {
             await _templateRepo.DeleteAsync(input.Id);
