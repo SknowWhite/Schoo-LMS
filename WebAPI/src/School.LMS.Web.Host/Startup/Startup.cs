@@ -61,16 +61,16 @@ namespace School.LMS.Web.Host.Startup
 
 
             // Configure CORS for angular2 UI
-            services.AddCors(options =>
-            {
-                options.AddPolicy(_defaultCorsPolicyName,
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                               .AllowAnyMethod()
-                               .AllowAnyHeader();
-                    });
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(_defaultCorsPolicyName,
+            //        builder =>
+            //        {
+            //            builder.AllowAnyOrigin()
+            //                   .AllowAnyMethod()
+            //                   .AllowAnyHeader();
+            //        });
+            //});
 
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             ConfigureSwagger(services);
@@ -107,7 +107,7 @@ namespace School.LMS.Web.Host.Startup
         {
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
-            app.UseCors(_defaultCorsPolicyName); // Enable CORS!
+          //  app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
             app.UseStaticFiles();
 

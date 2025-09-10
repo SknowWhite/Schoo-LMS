@@ -11,6 +11,11 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <LangVersion>7.2</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+	  <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
+	  <AspNetCoreModuleStdoutLogEnabled>true</AspNetCoreModuleStdoutLogEnabled>
+	  <AspNetCoreModuleStdoutLogFile>.\logs\stdout</AspNetCoreModuleStdoutLogFile>
+
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="wwwroot\swagger\ui\index.html" />
